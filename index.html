@@ -3,1258 +3,3399 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>BOOSTER</title>
+<title>BOOSTER X</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#050507;color:white;font-family:Arial,sans-serif;min-height:100vh}
-button{cursor:pointer}
-.app{width:94%;max-width:1200px;margin:auto;padding:20px}
-header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:#0d0d12;border:1px solid #252532;border-radius:20px}
-.logo{font-size:25px;font-weight:900;letter-spacing:2px}
-.logo span{color:#8b5cf6}
-.stats{display:flex;gap:10px}
-.pill{background:#15151d;border:1px solid #292936;padding:10px 15px;border-radius:999px;font-size:13px}
-.hero{text-align:center;padding:70px 10px 45px}
-.badge{display:inline-block;background:#171027;border:1px solid #51338e;color:#bda5ff;padding:9px 15px;border-radius:30px;font-size:12px}
-h1{font-size:clamp(55px,9vw,105px);line-height:.9;margin:25px 0;letter-spacing:-5px}
-.gradient{background:linear-gradient(90deg,#fff,#9b72ff,#22d3ee);color:transparent;background-clip:text}
-.hero p{max-width:650px;margin:auto;color:#858592;line-height:1.7}
-.layout{display:grid;grid-template-columns:1.4fr .8fr;gap:18px}
-.panel{background:#0d0d12;border:1px solid #252532;border-radius:24px;padding:22px}
-.title{display:flex;justify-content:space-between;margin-bottom:18px}
-.title h2{font-size:17px}
-.muted{color:#777;font-size:12px}
-.boost{height:270px;width:100%;border-radius:28px;border:1px solid #57369b;background:radial-gradient(circle,#382064,#100c17 65%);color:white;box-shadow:0 0 70px #6d35d822}
-.boost:hover{box-shadow:0 0 100px #7c3aed55}
-.boost:active{transform:scale(.98)}
-.core{display:block;font-size:70px}
-.boostText{display:block;font-size:27px;font-weight:900}
-.gain{display:block;color:#b99cff;margin-top:8px}
-.progress{height:10px;background:#191923;border-radius:20px;overflow:hidden;margin:12px 0 20px}
-.fill{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#22d3ee);transition:.2s}
-.statGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:#101017;border:1px solid #22222d;border-radius:15px;padding:16px}
-.stat small{color:#777;font-size:10px}
-.stat strong{display:block;font-size:22px;margin-top:7px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.action{padding:15px;background:#12121a;border:1px solid #272733;border-radius:14px;color:white;text-align:left}
-.action:hover{border-color:#6845ad}
-.action b{display:block}
-.action span{font-size:11px;color:#777}
-.log{height:260px;overflow:auto;margin-top:15px;color:#999;font-size:12px}
-.log div{padding:9px 0;border-bottom:1px solid #191921}
-.tabs{display:flex;gap:8px;margin:20px 0;overflow:auto}
-.tab{padding:12px 17px;border-radius:13px;background:#0d0d12;border:1px solid #252532;color:#999;white-space:nowrap}
-.tab.active{color:white;background:#241641;border-color:#6542a5}
-.view{display:none}
-.view.active{display:block}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.card{background:#101017;border:1px solid #242430;border-radius:18px;padding:18px}
-.card h3{margin-bottom:9px}
-.card p{color:#777;font-size:12px;line-height:1.6;margin-bottom:15px}
-.buy{width:100%;padding:11px;border:0;border-radius:10px;font-weight:bold}
-.buy:disabled{opacity:.3}
-.quest{display:flex;justify-content:space-between;align-items:center;gap:15px;background:#101017;border:1px solid #242430;border-radius:15px;padding:15px;margin-bottom:10px}
-.questInfo{flex:1}
-.questInfo span{font-size:12px;color:#777}
-.qbar{height:6px;background:#1b1b23;border-radius:9px;margin-top:9px;overflow:hidden}
-.qbar i{display:block;height:100%;background:#34d399}
-.reward{color:#8ff0c4;font-size:12px;font-weight:bold}
-.float{position:fixed;color:#c4b5fd;font-weight:900;pointer-events:none;animation:f .8s forwards}
-@keyframes f{to{opacity:0;transform:translateY(-90px)}}
-.toast{position:fixed;right:20px;bottom:20px;background:#171720;border:1px solid #403650;padding:14px 18px;border-radius:13px;opacity:0;transition:.2s}
-.toast.show{opacity:1}
-footer{text-align:center;color:#555;padding:45px}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}}
-@media(max-width:550px){.stats{display:none}.cards{grid-template-columns:1fr}.actions{grid-template-columns:1fr}h1{letter-spacing:-3px}}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#050509;
+color:#fff;
+font-family:Arial,Helvetica,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+button{
+font-family:inherit;
+}
+
+:root{
+--cyan:#00f6ff;
+--purple:#8b5cf6;
+--pink:#ff2bd6;
+--green:#38ff91;
+--yellow:#ffd84d;
+--red:#ff426d;
+--panel:#0d0d17;
+--panel2:#11111e;
+--border:#24243b;
+--muted:#777891;
+}
+
+#background{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:-5;
+background:
+radial-gradient(circle at 20% 20%,#24105d 0,transparent 30%),
+radial-gradient(circle at 80% 30%,#073d52 0,transparent 28%),
+radial-gradient(circle at 50% 100%,#320b32 0,transparent 35%),
+#050509;
+}
+
+.grid{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:-4;
+opacity:.18;
+background-image:
+linear-gradient(#ffffff08 1px,transparent 1px),
+linear-gradient(90deg,#ffffff08 1px,transparent 1px);
+background-size:45px 45px;
+transform:perspective(500px) rotateX(60deg) scale(1.8);
+transform-origin:center bottom;
+}
+
+.app{
+width:min(1500px,100%);
+margin:auto;
+padding:18px;
+}
+
+header{
+height:72px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+padding:12px 18px;
+background:#090910dd;
+border:1px solid var(--border);
+border-radius:20px;
+backdrop-filter:blur(20px);
+position:sticky;
+top:12px;
+z-index:100;
+box-shadow:0 20px 80px #0009;
+}
+
+.logo{
+font-size:25px;
+font-weight:1000;
+letter-spacing:5px;
+}
+
+.logo span{
+color:var(--cyan);
+text-shadow:0 0 20px var(--cyan);
+}
+
+.headerStats{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+justify-content:flex-end;
+}
+
+.statPill{
+background:#11111d;
+border:1px solid #292941;
+border-radius:12px;
+padding:9px 13px;
+font-size:12px;
+color:#85869d;
+}
+
+.statPill b{
+color:#fff;
+margin-left:5px;
+}
+
+.hero{
+display:grid;
+grid-template-columns:1fr 380px;
+gap:18px;
+margin-top:18px;
+}
+
+.panel{
+background:linear-gradient(145deg,#11111df5,#090910f5);
+border:1px solid var(--border);
+border-radius:25px;
+box-shadow:0 25px 100px #0008;
+}
+
+.main{
+min-height:700px;
+padding:30px;
+position:relative;
+overflow:hidden;
+}
+
+.main:before{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+border-radius:50%;
+background:#00f6ff10;
+filter:blur(80px);
+top:20%;
+left:25%;
+pointer-events:none;
+}
+
+.kicker{
+color:var(--cyan);
+font-size:11px;
+font-weight:900;
+letter-spacing:4px;
+position:relative;
+}
+
+h1{
+font-size:clamp(55px,9vw,115px);
+line-height:.78;
+letter-spacing:-7px;
+margin:15px 0;
+position:relative;
+}
+
+.subtitle{
+max-width:650px;
+color:#7d7e98;
+line-height:1.6;
+font-size:14px;
+position:relative;
+}
+
+.coreArea{
+display:grid;
+place-items:center;
+margin-top:35px;
+}
+
+.core{
+width:310px;
+height:310px;
+border-radius:50%;
+display:grid;
+place-items:center;
+cursor:pointer;
+user-select:none;
+position:relative;
+background:
+radial-gradient(circle at 50% 45%,#fff 0 2%,#a8ffff 3% 7%,#00eaff 9% 18%,#704cff 30%,#221048 50%,#0b0718 68%,transparent 69%);
+box-shadow:
+0 0 25px #00f6ff,
+0 0 70px #00f6ff66,
+0 0 150px #8b5cf655;
+transition:transform .08s;
+}
+
+.core:hover{
+transform:scale(1.025);
+}
+
+.core:active{
+transform:scale(.91);
+}
+
+.core:before{
+content:"";
+position:absolute;
+inset:-20px;
+border:1px solid #00f6ff77;
+border-radius:50%;
+animation:spin 8s linear infinite;
+}
+
+.core:after{
+content:"";
+position:absolute;
+inset:-45px;
+border:1px solid #ff2bd655;
+border-radius:50%;
+animation:spin 13s linear infinite reverse;
+}
+
+.coreInner{
+text-align:center;
+z-index:2;
+font-weight:1000;
+text-shadow:0 0 15px #000;
+}
+
+.coreInner strong{
+display:block;
+font-size:28px;
+letter-spacing:3px;
+}
+
+.coreInner small{
+display:block;
+font-size:9px;
+letter-spacing:3px;
+margin-top:8px;
+color:#061014;
+}
+
+.combo{
+margin-top:25px;
+text-align:center;
+font-weight:1000;
+font-size:20px;
+}
+
+.combo span{
+color:var(--cyan);
+text-shadow:0 0 15px var(--cyan);
+}
+
+.progressBox{
+margin-top:25px;
+}
+
+.progressTop{
+display:flex;
+justify-content:space-between;
+color:#777891;
+font-size:12px;
+margin-bottom:7px;
+}
+
+.progress{
+height:12px;
+background:#191927;
+border:1px solid #292940;
+border-radius:20px;
+overflow:hidden;
+}
+
+.progress i{
+display:block;
+height:100%;
+width:0;
+background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
+box-shadow:0 0 20px var(--cyan);
+transition:.25s;
+}
+
+.side{
+padding:22px;
+}
+
+.sideTitle{
+font-size:18px;
+font-weight:900;
+margin-bottom:15px;
+}
+
+.engine{
+padding:15px;
+background:#0a0a12;
+border:1px solid #222237;
+border-radius:17px;
+margin-bottom:10px;
+}
+
+.engineTop{
+display:flex;
+justify-content:space-between;
+font-size:11px;
+color:#777891;
+margin-bottom:8px;
+}
+
+.engineTop b{
+color:#fff;
+}
+
+.engineBar{
+height:8px;
+border-radius:20px;
+background:#191925;
+overflow:hidden;
+}
+
+.engineBar i{
+height:100%;
+display:block;
+width:0;
+background:linear-gradient(90deg,var(--green),var(--cyan));
+border-radius:20px;
+transition:.25s;
+}
+
+.quickButtons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin-top:15px;
+}
+
+.btn{
+border:1px solid #30304a;
+background:#141421;
+color:#fff;
+padding:12px;
+border-radius:13px;
+cursor:pointer;
+font-weight:900;
+font-size:12px;
+transition:.15s;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+background:#1b1b2b;
+border-color:#56567a;
+}
+
+.btn:active{
+transform:scale(.97);
+}
+
+.primary{
+background:linear-gradient(135deg,#007e91,#5732bd);
+border-color:#39edff;
+}
+
+.green{
+background:#0d2a1c;
+border-color:#28b86c;
+}
+
+.red{
+background:#2a0e18;
+border-color:#b53055;
+}
+
+.gold{
+background:#2b2208;
+border-color:#d3ae35;
+}
+
+.event{
+margin-top:12px;
+padding:15px;
+border-radius:17px;
+background:linear-gradient(135deg,#1d1238,#10182c);
+border:1px solid #6d4ec1;
+}
+
+.event h3{
+color:#d2b7ff;
+margin-bottom:5px;
+}
+
+.event p{
+font-size:11px;
+color:#8f90a9;
+line-height:1.5;
+}
+
+.event button{
+width:100%;
+margin-top:10px;
+}
+
+.section{
+margin-top:18px;
+padding:22px;
+}
+
+.sectionHeader{
+display:flex;
+align-items:end;
+justify-content:space-between;
+gap:15px;
+margin-bottom:17px;
+}
+
+.sectionHeader h2{
+font-size:23px;
+}
+
+.sectionHeader span{
+color:#666780;
+font-size:11px;
+}
+
+.tabs{
+display:flex;
+gap:8px;
+overflow:auto;
+padding-bottom:4px;
+}
+
+.tab{
+white-space:nowrap;
+}
+
+.tab.active{
+background:#242442;
+border-color:#7272a0;
+}
+
+.tabPanel{
+margin-top:18px;
+}
+
+.hidden{
+display:none!important;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:11px;
+}
+
+.card{
+background:#0b0b13;
+border:1px solid #24243a;
+border-radius:17px;
+padding:16px;
+min-height:150px;
+position:relative;
+overflow:hidden;
+}
+
+.card:after{
+content:"";
+position:absolute;
+width:80px;
+height:80px;
+border-radius:50%;
+background:#00f6ff08;
+right:-25px;
+top:-25px;
+}
+
+.card h3{
+font-size:14px;
+margin-bottom:8px;
+}
+
+.card p{
+font-size:11px;
+color:#70718b;
+line-height:1.5;
+}
+
+.cardValue{
+font-size:23px;
+font-weight:1000;
+margin:12px 0;
+}
+
+.price{
+color:var(--yellow)!important;
+font-weight:900;
+margin-top:8px;
+}
+
+.card button{
+width:100%;
+margin-top:10px;
+}
+
+.miniProgress{
+height:7px;
+background:#181824;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.miniProgress i{
+height:100%;
+display:block;
+background:linear-gradient(90deg,var(--cyan),var(--purple));
+}
+
+.shop{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:11px;
+}
+
+.shopCard{
+padding:18px;
+background:#0b0b13;
+border:1px solid #24243a;
+border-radius:18px;
+}
+
+.shopIcon{
+font-size:35px;
+margin-bottom:8px;
+}
+
+.shopCard h3{
+margin-bottom:5px;
+}
+
+.shopCard p{
+font-size:11px;
+color:#70718b;
+line-height:1.5;
+}
+
+.shopCard button{
+width:100%;
+margin-top:12px;
+}
+
+.log{
+display:flex;
+flex-direction:column;
+gap:6px;
+max-height:250px;
+overflow:auto;
+}
+
+.log div{
+padding:9px;
+background:#0b0b13;
+border:1px solid #1d1d2d;
+border-radius:9px;
+font-size:11px;
+color:#777891;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:#000c;
+backdrop-filter:blur(12px);
+z-index:500;
+display:none;
+place-items:center;
+padding:20px;
+}
+
+.modal.open{
+display:grid;
+}
+
+.modalBox{
+width:min(650px,100%);
+background:#0c0c15;
+border:1px solid #373754;
+border-radius:24px;
+padding:25px;
+box-shadow:0 30px 120px #000;
+}
+
+.modalBox h2{
+font-size:27px;
+margin-bottom:10px;
+}
+
+.modalBox p{
+color:#85869d;
+line-height:1.6;
+font-size:13px;
+}
+
+.modalActions{
+display:flex;
+gap:8px;
+margin-top:18px;
+}
+
+.modalActions button{
+flex:1;
+}
+
+#toast{
+position:fixed;
+right:18px;
+bottom:18px;
+display:flex;
+flex-direction:column;
+gap:8px;
+z-index:700;
+}
+
+.toast{
+background:#11111d;
+border:1px solid #383852;
+padding:12px 15px;
+border-radius:13px;
+box-shadow:0 15px 50px #000;
+font-size:12px;
+font-weight:900;
+animation:toastIn .25s ease;
+}
+
+.floatXP{
+position:fixed;
+pointer-events:none;
+z-index:600;
+color:#6ffaff;
+font-size:18px;
+font-weight:1000;
+text-shadow:0 0 15px #00f6ff;
+animation:floatUp .8s ease-out forwards;
+}
+
+footer{
+text-align:center;
+padding:30px;
+color:#414158;
+font-size:10px;
+letter-spacing:2px;
+}
+
+@keyframes spin{
+to{
+transform:rotate(360deg);
+}
+}
+
+@keyframes toastIn{
+from{
+opacity:0;
+transform:translateY(15px);
+}
+to{
+opacity:1;
+transform:none;
+}
+}
+
+@keyframes floatUp{
+from{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+to{
+opacity:0;
+transform:translateY(-90px) scale(1.3);
+}
+}
+
+@media(max-width:1100px){
+.hero{
+grid-template-columns:1fr;
+}
+
+.cards{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:650px){
+.app{
+padding:8px;
+}
+
+header{
+position:relative;
+top:0;
+height:auto;
+align-items:flex-start;
+flex-direction:column;
+}
+
+.headerStats{
+justify-content:flex-start;
+}
+
+.main{
+padding:20px;
+}
+
+h1{
+font-size:65px;
+letter-spacing:-4px;
+}
+
+.core{
+width:245px;
+height:245px;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+.shop{
+grid-template-columns:1fr;
+}
+
+.section{
+padding:15px;
+}
+}
 </style>
 </head>
+
 <body>
+
+<div id="background"></div>
+<div class="grid"></div>
+
 <div class="app">
 
 <header>
-<div class="logo">BOOST<span>ER</span></div>
-<div class="stats">
-<div class="pill">⚡ <b id="coins">0</b> XP</div>
-<div class="pill">LVL <b id="level">1</b></div>
-<div class="pill">🔥 <b id="streak">0</b></div>
+<div class="logo">
+BOOST<span>ER</span>
+</div>
+
+<div class="headerStats">
+
+<div class="statPill">
+LVL
+<b id="level">1</b>
+</div>
+
+<div class="statPill">
+XP
+<b id="xp">0</b>
+</div>
+
+<div class="statPill">
+BOOST
+<b id="clicks">0</b>
+</div>
+
+<div class="statPill">
+♻
+<b id="prestige">0</b>
+</div>
+
 </div>
 </header>
 
 <section class="hero">
-<div class="badge">INFINITE PROGRESSION</div>
-<h1>BOOST<br><span class="gradient">EVERY DAY</span></h1>
-<p>Monte de niveau améliore tes capacités débloque des récompenses et construis ton meilleur score.</p>
-</section>
 
-<div class="layout">
+<div class="panel main">
 
-<section class="panel">
-<div class="title">
-<h2>CORE BOOST</h2>
-<span class="muted" id="status">READY</span>
+<div class="kicker">
+BOOSTER ENGINE // ONLINE
 </div>
 
-<button class="boost" id="boostButton">
-<span class="core">⚡</span>
-<span class="boostText">BOOST</span>
-<span class="gain">+<b id="gain">1</b> XP</span>
-</button>
+<h1>
+BREAK<br>
+YOUR<br>
+LIMIT.
+</h1>
 
-<div style="margin-top:20px">
-<div class="title">
-<span class="muted">PROGRESSION</span>
-<span class="muted"><b id="xp">0</b> / <b id="next">100</b></span>
+<p class="subtitle">
+Chaque boost fait avancer ton moteur.
+Construis ta puissance, enchaîne les combos,
+débloque des systèmes et pousse ta progression
+toujours plus loin.
+</p>
+
+<div class="coreArea">
+
+<div class="core" id="core">
+
+<div class="coreInner">
+
+<strong>BOOST</strong>
+
+<small>
+CLICK / SPACE
+</small>
+
 </div>
+
+</div>
+
+</div>
+
+<div class="combo">
+COMBO
+<span id="combo">0</span>
+x
+</div>
+
+<div class="progressBox">
+
+<div class="progressTop">
+
+<span>
+PROCHAIN NIVEAU
+</span>
+
+<b id="progressText">
+0 / 100
+</b>
+
+</div>
+
 <div class="progress">
-<div class="fill" id="fill"></div>
-</div>
+
+<i id="progressBar"></i>
+
 </div>
 
-<div class="statGrid">
-<div class="stat"><small>TOTAL XP</small><strong id="total">0</strong></div>
-<div class="stat"><small>BOOSTS</small><strong id="clicks">0</strong></div>
-<div class="stat"><small>COMBO</small><strong id="combo">0</strong></div>
-<div class="stat"><small>BEST COMBO</small><strong id="best">0</strong></div>
 </div>
+
+</div>
+
+<aside class="panel side">
+
+<div class="sideTitle">
+⚡ ENGINE STATUS
+</div>
+
+<div class="engine">
+
+<div class="engineTop">
+
+<span>
+POWER
+</span>
+
+<b id="power">
+1
+</b>
+
+</div>
+
+<div class="engineBar">
+<i id="powerBar"></i>
+</div>
+
+</div>
+
+<div class="engine">
+
+<div class="engineTop">
+
+<span>
+AUTO XP / SEC
+</span>
+
+<b id="auto">
+0
+</b>
+
+</div>
+
+<div class="engineBar">
+<i id="autoBar"></i>
+</div>
+
+</div>
+
+<div class="engine">
+
+<div class="engineTop">
+
+<span>
+MULTIPLIER
+</span>
+
+<b id="multiplier">
+x1
+</b>
+
+</div>
+
+<div class="engineBar">
+<i id="multiBar"></i>
+</div>
+
+</div>
+
+<div class="engine">
+
+<div class="engineTop">
+
+<span>
+STREAK
+</span>
+
+<b id="streak">
+0
+</b>
+
+</div>
+
+<div class="engineBar">
+<i id="streakBar"></i>
+</div>
+
+</div>
+
+<div class="quickButtons">
+
+<button class="btn primary" id="eventButton">
+⚡ EVENT
+</button>
+
+<button class="btn gold" id="dailyButton">
+🎁 DAILY
+</button>
+
+<button class="btn green" id="saveButton">
+💾 SAVE
+</button>
+
+<button class="btn red" id="resetButton">
+↻ RESET
+</button>
+
+</div>
+
+<div id="eventBox" class="event hidden">
+
+<h3 id="eventTitle">
+EVENT
+</h3>
+
+<p id="eventDescription">
+Un événement spécial arrive.
+</p>
+
+<button class="btn primary" id="claimEvent">
+ACTIVER
+</button>
+
+</div>
+
+</aside>
+
 </section>
 
-<aside class="panel">
-<div class="title">
-<h2>ACTIONS</h2>
-<span class="muted">LIVE</span>
+<section class="panel section">
+
+<div class="sectionHeader">
+
+<div>
+
+<h2>
+🎛️ CONTROL CENTER
+</h2>
+
+<span>
+Développe ton moteur
+</span>
+
 </div>
-
-<div class="actions">
-<button class="action" onclick="buy('power')">
-<b>⚡ POWER</b>
-<span id="powerInfo">+1 XP</span>
-</button>
-
-<button class="action" onclick="buy('auto')">
-<b>🤖 AUTO</b>
-<span id="autoInfo">0 XP/s</span>
-</button>
-
-<button class="action" onclick="buy('combo')">
-<b>🔥 COMBO</b>
-<span id="comboInfo">x1.0</span>
-</button>
-
-<button class="action" onclick="reward()">
-<b>🎁 REWARD</b>
-<span>Récompense quotidienne</span>
-</button>
-</div>
-
-<div class="title" style="margin-top:25px">
-<h2>ACTIVITY</h2>
-</div>
-
-<div class="log" id="log"></div>
-</aside>
 
 </div>
 
 <div class="tabs">
-<button class="tab active" onclick="tab('upgrades',this)">UPGRADES</button>
-<button class="tab" onclick="tab('quests',this)">QUÊTES</button>
-<button class="tab" onclick="tab('achievements',this)">ACHIEVEMENTS</button>
-<button class="tab" onclick="tab('statsView',this)">STATS</button>
+
+<button class="btn tab active" data-tab="upgrades">
+⚡ UPGRADES
+</button>
+
+<button class="btn tab" data-tab="quests">
+🎯 QUÊTES
+</button>
+
+<button class="btn tab" data-tab="achievements">
+🏆 ACHIEVEMENTS
+</button>
+
+<button class="btn tab" data-tab="shop">
+🎨 SHOP
+</button>
+
+<button class="btn tab" data-tab="stats">
+📊 STATS
+</button>
+
 </div>
 
-<section id="upgrades" class="view active panel">
-<div class="title">
-<h2>UPGRADES</h2>
-<span class="muted">Améliore ton système</span>
-</div>
-<div class="cards" id="upgradeCards"></div>
 </section>
 
-<section id="quests" class="view panel">
-<div class="title">
-<h2>QUÊTES</h2>
-<span class="muted">Objectifs</span>
+<section
+id="upgrades"
+class="panel section tabPanel"
+>
+
+<div class="sectionHeader">
+
+<div>
+<h2>
+⚡ UPGRADES
+</h2>
+
+<span>
+Construis ton moteur
+</span>
 </div>
-<div id="questList"></div>
+
+</div>
+
+<div
+id="upgradeGrid"
+class="cards"
+>
+</div>
+
 </section>
 
-<section id="achievements" class="view panel">
-<div class="title">
-<h2>ACHIEVEMENTS</h2>
-<span class="muted" id="achCount">0</span>
+<section
+id="quests"
+class="panel section tabPanel hidden"
+>
+
+<div class="sectionHeader">
+
+<div>
+<h2>
+🎯 QUÊTES
+</h2>
+
+<span>
+Des objectifs pendant ta run
+</span>
 </div>
-<div class="cards" id="achievementList"></div>
+
+</div>
+
+<div
+id="questGrid"
+class="cards"
+>
+</div>
+
 </section>
 
-<section id="statsView" class="view panel">
-<div class="title">
-<h2>STATISTIQUES</h2>
+<section
+id="achievements"
+class="panel section tabPanel hidden"
+>
+
+<div class="sectionHeader">
+
+<div>
+<h2>
+🏆 ACHIEVEMENTS
+</h2>
+
+<span>
+Débloque les gros paliers
+</span>
 </div>
-<div class="statGrid">
-<div class="stat"><small>NIVEAU</small><strong id="sLevel">1</strong></div>
-<div class="stat"><small>XP TOTAL</small><strong id="sTotal">0</strong></div>
-<div class="stat"><small>XP / BOOST</small><strong id="sPower">1</strong></div>
-<div class="stat"><small>AUTO / SEC</small><strong id="sAuto">0</strong></div>
-<div class="stat"><small>MULTIPLICATEUR</small><strong id="sMulti">x1.0</strong></div>
-<div class="stat"><small>MEILLEUR COMBO</small><strong id="sBest">0</strong></div>
+
 </div>
+
+<div
+id="achievementGrid"
+class="cards"
+>
+</div>
+
 </section>
 
-<footer>BOOSTER • local progression system</footer>
+<section
+id="shop"
+class="panel section tabPanel hidden"
+>
+
+<div class="sectionHeader">
+
+<div>
+<h2>
+🎨 COSMETICS
+</h2>
+
+<span>
+Change ton moteur
+</span>
 </div>
 
-<div class="toast" id="toast"></div>
-<script>
-/* PARTIE 2 À COLLER DIRECTEMENT APRÈS CE BLOC */
-</script>
-</body>
-</html>/* =========================
-   BOOSTER ENGINE
-   PARTIE 2
-   ========================= */
+</div>
 
-const state = JSON.parse(localStorage.getItem("BOOSTER_SAVE") || "null") || {
-  xp:0,
-  total:0,
-  level:1,
-  clicks:0,
-  combo:0,
-  best:0,
-  streak:0,
-  lastClick:0,
-  lastReward:0,
-  power:1,
-  auto:0,
-  multi:1,
-  quests:{},
-  achievements:{},
-  sounds:true
+<div
+id="shopGrid"
+class="shop"
+>
+</div>
+
+</section>
+
+<section
+id="stats"
+class="panel section tabPanel hidden"
+>
+
+<div class="sectionHeader">
+
+<div>
+<h2>
+📊 STATISTIQUES
+</h2>
+
+<span>
+Ta progression
+</span>
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>XP TOTAL</h3>
+<div class="cardValue" id="totalXP">0</div>
+<p>
+XP gagnée pendant toutes tes runs.
+</p>
+</div>
+
+<div class="card">
+<h3>BEST COMBO</h3>
+<div class="cardValue" id="bestCombo">0</div>
+<p>
+Ton meilleur enchaînement.
+</p>
+</div>
+
+<div class="card">
+<h3>POWER</h3>
+<div class="cardValue" id="statPower">1</div>
+<p>
+Puissance actuelle.
+</p>
+</div>
+
+<div class="card">
+<h3>RUNS</h3>
+<div class="cardValue" id="runs">0</div>
+<p>
+Nombre de prestiges.
+</p>
+</div>
+
+</div>
+
+<div
+class="sectionHeader"
+style="margin-top:20px"
+>
+
+<div>
+<h2>
+📜 JOURNAL
+</h2>
+</div>
+
+</div>
+
+<div id="log" class="log">
+</div>
+
+</section>
+
+<section class="panel section">
+
+<div class="sectionHeader">
+
+<div>
+
+<h2>
+♻️ PRESTIGE
+</h2>
+
+<span>
+Recommence plus fort
+</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>
+RESET YOUR RUN
+</h3>
+
+<div
+class="cardValue"
+id="prestigeNeed"
+>
+5000 XP
+</div>
+
+<p>
+Réinitialise ta progression actuelle
+et gagne un bonus permanent de prestige.
+</p>
+
+<button
+class="btn primary"
+id="prestigeButton"
+>
+♻️ PRESTIGE
+</button>
+
+</div>
+
+</section>
+
+<footer>
+BOOSTER X // LOCAL SAVE // NO REAL MONEY
+</footer>
+
+</div>
+
+<div id="toast"></div>
+
+<div id="modal" class="modal">
+
+<div class="modalBox">
+
+<h2 id="modalTitle">
+BOOSTER
+</h2>
+
+<p id="modalText">
+</p>
+
+<div class="modalActions">
+
+<button
+class="btn primary"
+id="modalClose"
+>
+FERMER
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>const SAVE_KEY="BOOSTER_X_SAVE";
+
+const DEFAULT_STATE={
+xp:0,
+totalXP:0,
+level:1,
+clicks:0,
+power:1,
+auto:0,
+multiplier:1,
+combo:0,
+bestCombo:0,
+streak:0,
+prestige:0,
+runs:0,
+lastClick:0,
+lastDaily:0,
+event:null,
+eventEnd:0,
+upgrades:{},
+quests:{},
+achievements:{},
+skins:{
+neon:true
+},
+skin:"neon",
+logs:[
+"Système BOOSTER X initialisé.",
+"Ton moteur est prêt."
+]
 };
 
-const upgrades = [
-  {
-    id:"power",
-    name:"Power Core",
-    desc:"Augmente ton gain de XP par boost",
-    base:25
-  },
-  {
-    id:"auto",
-    name:"Auto Engine",
-    desc:"Produit automatiquement de l XP",
-    base:100
-  },
-  {
-    id:"combo",
-    name:"Combo Reactor",
-    desc:"Augmente le multiplicateur",
-    base:250
-  },
-  {
-    id:"power2",
-    name:"Hyper Core",
-    desc:"Augmente encore plus les boosts",
-    base:1000
-  },
-  {
-    id:"auto2",
-    name:"Quantum Auto",
-    desc:"Une machine automatique améliorée",
-    base:3000
-  },
-  {
-    id:"multi2",
-    name:"Infinity Reactor",
-    desc:"Boost massif du multiplicateur",
-    base:7500
-  }
+let state=loadGame();
+
+const upgrades=[
+
+{
+id:"power1",
+name:"CORE I",
+type:"power",
+base:20,
+amount:1,
+description:"+1 puissance par boost."
+},
+
+{
+id:"power2",
+name:"CORE II",
+type:"power",
+base:90,
+amount:3,
+description:"+3 puissance par boost."
+},
+
+{
+id:"power3",
+name:"CORE III",
+type:"power",
+base:300,
+amount:8,
+description:"+8 puissance par boost."
+},
+
+{
+id:"power4",
+name:"CORE IV",
+type:"power",
+base:900,
+amount:20,
+description:"+20 puissance par boost."
+},
+
+{
+id:"power5",
+name:"CORE V",
+type:"power",
+base:2500,
+amount:50,
+description:"+50 puissance par boost."
+},
+
+{
+id:"auto1",
+name:"AUTO NODE",
+type:"auto",
+base:150,
+amount:1,
+description:"+1 XP automatique par seconde."
+},
+
+{
+id:"auto2",
+name:"AUTO NODE II",
+type:"auto",
+base:600,
+amount:4,
+description:"+4 XP automatique par seconde."
+},
+
+{
+id:"auto3",
+name:"AUTO NODE III",
+type:"auto",
+base:2200,
+amount:12,
+description:"+12 XP automatique par seconde."
+},
+
+{
+id:"auto4",
+name:"AUTO NODE IV",
+type:"auto",
+base:7000,
+amount:35,
+description:"+35 XP automatique par seconde."
+},
+
+{
+id:"multi1",
+name:"AMPLIFIER",
+type:"multi",
+base:500,
+amount:.1,
+description:"+10% multiplicateur."
+},
+
+{
+id:"multi2",
+name:"AMPLIFIER II",
+type:"multi",
+base:2500,
+amount:.25,
+description:"+25% multiplicateur."
+},
+
+{
+id:"multi3",
+name:"AMPLIFIER III",
+type:"multi",
+base:9000,
+amount:.5,
+description:"+50% multiplicateur."
+},
+
+{
+id:"combo1",
+name:"COMBO CHIP",
+type:"combo",
+base:800,
+amount:2,
+description:"Le combo augmente plus vite."
+},
+
+{
+id:"combo2",
+name:"COMBO CHIP II",
+type:"combo",
+base:3500,
+amount:5,
+description:"Le combo augmente fortement."
+},
+
+{
+id:"combo3",
+name:"COMBO CHIP III",
+type:"combo",
+base:12000,
+amount:10,
+description:"Combo ultra rapide."
+}
+
 ];
 
-const quests = [
-  {
-    id:"q1",
-    name:"Premier départ",
-    desc:"Fais 25 boosts",
-    target:25,
-    type:"clicks",
-    reward:100
-  },
-  {
-    id:"q2",
-    name:"Petit grind",
-    desc:"Obtiens 500 XP",
-    target:500,
-    type:"total",
-    reward:250
-  },
-  {
-    id:"q3",
-    name:"Combo débutant",
-    desc:"Atteins un combo de 10",
-    target:10,
-    type:"best",
-    reward:300
-  },
-  {
-    id:"q4",
-    name:"Niveau supérieur",
-    desc:"Atteins le niveau 5",
-    target:5,
-    type:"level",
-    reward:500
-  },
-  {
-    id:"q5",
-    name:"Machine",
-    desc:"Fais 250 boosts",
-    target:250,
-    type:"clicks",
-    reward:1000
-  },
-  {
-    id:"q6",
-    name:"Gros grind",
-    desc:"Obtiens 10000 XP",
-    target:10000,
-    type:"total",
-    reward:2500
-  },
-  {
-    id:"q7",
-    name:"Combo monster",
-    desc:"Atteins un combo de 50",
-    target:50,
-    type:"best",
-    reward:5000
-  },
-  {
-    id:"q8",
-    name:"Elite",
-    desc:"Atteins le niveau 15",
-    target:15,
-    type:"level",
-    reward:10000
-  }
+const quests=[
+
+{
+id:"q1",
+name:"FIRST PUSH",
+type:"clicks",
+target:25,
+reward:50
+},
+
+{
+id:"q2",
+name:"WARM UP",
+type:"clicks",
+target:100,
+reward:150
+},
+
+{
+id:"q3",
+name:"PUSHER",
+type:"clicks",
+target:500,
+reward:600
+},
+
+{
+id:"q4",
+name:"ENGINEER",
+type:"clicks",
+target:1000,
+reward:1500
+},
+
+{
+id:"q5",
+name:"MACHINE",
+type:"clicks",
+target:2500,
+reward:4000
+},
+
+{
+id:"q6",
+name:"OVERLOAD",
+type:"clicks",
+target:5000,
+reward:8000
+},
+
+{
+id:"q7",
+name:"RUNNER",
+type:"total",
+target:1000,
+reward:250
+},
+
+{
+id:"q8",
+name:"GRINDER",
+type:"total",
+target:5000,
+reward:900
+},
+
+{
+id:"q9",
+name:"BUILDER",
+type:"total",
+target:25000,
+reward:4000
+},
+
+{
+id:"q10",
+name:"FACTORY",
+type:"total",
+target:100000,
+reward:15000
+},
+
+{
+id:"q11",
+name:"TITAN",
+type:"total",
+target:500000,
+reward:75000
+},
+
+{
+id:"q12",
+name:"LEGEND",
+type:"total",
+target:2000000,
+reward:300000
+}
+
 ];
 
-const achievements = [
-  {
-    id:"a1",
-    name:"FIRST BOOST",
-    desc:"Effectue ton premier boost",
-    reward:50,
-    check:()=>state.clicks>=1
-  },
-  {
-    id:"a2",
-    name:"CLICKER",
-    desc:"Effectue 100 boosts",
-    reward:250,
-    check:()=>state.clicks>=100
-  },
-  {
-    id:"a3",
-    name:"GRINDER",
-    desc:"Obtiens 5000 XP",
-    reward:500,
-    check:()=>state.total>=5000
-  },
-  {
-    id:"a4",
-    name:"COMBO KING",
-    desc:"Atteins un combo de 25",
-    reward:1000,
-    check:()=>state.best>=25
-  },
-  {
-    id:"a5",
-    name:"LEVEL 10",
-    desc:"Atteins le niveau 10",
-    reward:2000,
-    check:()=>state.level>=10
-  },
-  {
-    id:"a6",
-    name:"POWERHOUSE",
-    desc:"Atteins 25 XP par boost",
-    reward:3000,
-    check:()=>state.power>=25
-  },
-  {
-    id:"a7",
-    name:"AUTOMATION",
-    desc:"Atteins 10 XP automatique par seconde",
-    reward:4000,
-    check:()=>state.auto>=10
-  },
-  {
-    id:"a8",
-    name:"INFINITE",
-    desc:"Atteins le niveau 25",
-    reward:10000,
-    check:()=>state.level>=25
-  }
+const achievements=[
+
+{
+id:"a1",
+name:"START",
+target:1,
+reward:10
+},
+
+{
+id:"a2",
+name:"TEN",
+target:10,
+reward:25
+},
+
+{
+id:"a3",
+name:"HUNDRED",
+target:100,
+reward:100
+},
+
+{
+id:"a4",
+name:"THOUSAND",
+target:1000,
+reward:1000
+},
+
+{
+id:"a5",
+name:"FIVE K",
+target:5000,
+reward:5000
+},
+
+{
+id:"a6",
+name:"TEN K",
+target:10000,
+reward:12000
+},
+
+{
+id:"a7",
+name:"TWENTY FIVE K",
+target:25000,
+reward:30000
+},
+
+{
+id:"a8",
+name:"FIFTY K",
+target:50000,
+reward:75000
+},
+
+{
+id:"a9",
+name:"HUNDRED K",
+target:100000,
+reward:200000
+},
+
+{
+id:"a10",
+name:"MILLION",
+target:1000000,
+reward:1000000
+}
+
 ];
 
-function save(){
-  localStorage.setItem(
-    "BOOSTER_SAVE",
-    JSON.stringify(state)
-  );
+const skins=[
+
+{
+id:"neon",
+name:"NEON CORE",
+price:0,
+color:"#00f6ff"
+},
+
+{
+id:"purple",
+name:"VOID",
+price:1000,
+color:"#a855f7"
+},
+
+{
+id:"pink",
+name:"CYBER PINK",
+price:5000,
+color:"#ff2bd6"
+},
+
+{
+id:"green",
+name:"TOXIC",
+price:15000,
+color:"#38ff91"
+},
+
+{
+id:"gold",
+name:"GOLDEN",
+price:50000,
+color:"#ffd84d"
+},
+
+{
+id:"red",
+name:"OVERDRIVE",
+price:150000,
+color:"#ff426d"
+},
+
+{
+id:"ice",
+name:"ICE",
+price:500000,
+color:"#8be9ff"
 }
 
-function number(n){
-  if(n < 1000){
-    return Math.floor(n);
-  }
+];
 
-  if(n < 1000000){
-    return (n/1000).toFixed(1)+"K";
-  }
+const events=[
 
-  if(n < 1000000000){
-    return (n/1000000).toFixed(1)+"M";
-  }
+{
+name:"XP RUSH",
+description:"Les boosts donnent x5 pendant 15 secondes.",
+type:"xp",
+value:5,
+duration:15000
+},
 
-  if(n < 1000000000000){
-    return (n/1000000000).toFixed(1)+"B";
-  }
+{
+name:"POWER SURGE",
+description:"La puissance est multipliée par 4 pendant 15 secondes.",
+type:"power",
+value:4,
+duration:15000
+},
 
-  return (n/1000000000000).toFixed(1)+"T";
+{
+name:"COMBO FEVER",
+description:"Chaque boost donne +3 combo supplémentaire.",
+type:"combo",
+value:3,
+duration:15000
+},
+
+{
+name:"AUTO STORM",
+description:"L'auto-production est multipliée par 6.",
+type:"auto",
+value:6,
+duration:20000
 }
 
-function neededXP(){
-  return Math.floor(
-    100 * Math.pow(1.18,state.level-1)
-  );
+];
+
+function loadGame(){
+
+try{
+
+const saved=localStorage.getItem(SAVE_KEY);
+
+if(!saved){
+
+return structuredClone(DEFAULT_STATE);
+
 }
 
-function gain(){
-  let result = state.power;
+const parsed=JSON.parse(saved);
 
-  result *= state.multi;
+return mergeState(
+structuredClone(DEFAULT_STATE),
+parsed
+);
 
-  if(state.hyper){
-    result *= 1 + state.hyper * 0.05;
-  }
+}catch(error){
 
-  return Math.max(1,Math.floor(result));
+return structuredClone(DEFAULT_STATE);
+
 }
 
-function addXP(amount){
+}
 
-  state.xp += amount;
-  state.total += amount;
+function mergeState(base,data){
 
-  while(state.xp >= neededXP()){
+Object.keys(data).forEach(key=>{
 
-    state.xp -= neededXP();
+if(
+typeof data[key]==="object" &&
+data[key]!==null &&
+!Array.isArray(data[key]) &&
+typeof base[key]==="object"
+){
 
-    state.level++;
+base[key]={
+...base[key],
+...data[key]
+};
 
-    addLog(
-      "🎉 Niveau "+state.level+" atteint"
-    );
+}else{
 
-    toast(
-      "LEVEL UP • "+state.level
-    );
-  }
+base[key]=data[key];
 
-  checkAchievements();
-  checkQuests();
+}
 
-  save();
-  render();
+});
+
+return base;
+
+}
+
+function saveGame(show=true){
+
+localStorage.setItem(
+SAVE_KEY,
+JSON.stringify(state)
+);
+
+if(show){
+
+toast("💾 Progression sauvegardée");
+
+}
+
+}
+
+function formatNumber(number){
+
+if(!Number.isFinite(number)){
+
+return "0";
+
+}
+
+if(number<1000){
+
+return Math.floor(number).toString();
+
+}
+
+if(number<1000000){
+
+return (
+number/1000
+).toFixed(
+number<10000?1:0
+)+"K";
+
+}
+
+if(number<1000000000){
+
+return (
+number/1000000
+).toFixed(
+number<10000000?1:0
+)+"M";
+
+}
+
+if(number<1000000000000){
+
+return (
+number/1000000000
+).toFixed(1)+"B";
+
+}
+
+return (
+number/1000000000000
+).toFixed(1)+"T";
+
+}
+
+function levelRequirement(level){
+
+return Math.floor(
+100*Math.pow(1.18,level-1)
+);
+
+}
+
+function prestigeRequirement(){
+
+return Math.floor(
+5000*Math.pow(
+1.75,
+state.prestige
+)
+);
+
+}
+
+function getUpgradeLevel(id){
+
+return state.upgrades[id]||0;
+
+}
+
+function getUpgradeCost(upgrade){
+
+const level=getUpgradeLevel(
+upgrade.id
+);
+
+return Math.floor(
+upgrade.base*
+Math.pow(1.45,level)
+);
+
+}
+
+function getComboPower(){
+
+let value=1;
+
+const chip1=getUpgradeLevel("combo1");
+const chip2=getUpgradeLevel("combo2");
+const chip3=getUpgradeLevel("combo3");
+
+value+=chip1*2;
+value+=chip2*5;
+value+=chip3*10;
+
+return value;
+
+}
+
+function getPrestigeMultiplier(){
+
+return 1+
+state.prestige*.15;
+
+}
+
+function getEventMultiplier(type){
+
+if(
+!state.event ||
+Date.now()>=state.eventEnd
+){
+
+return 1;
+
+}
+
+if(
+state.event.type===type
+){
+
+return state.event.value;
+
+}
+
+return 1;
+
+}
+
+function getBoostValue(){
+
+let value=
+state.power*
+state.multiplier*
+getPrestigeMultiplier();
+
+value*=getEventMultiplier("power");
+
+value*=getEventMultiplier("xp");
+
+if(state.combo>0){
+
+value*=
+1+
+Math.min(
+state.combo,
+100
+)*.01;
+
+}
+
+return Math.max(
+1,
+Math.floor(value)
+);
+
 }
 
 function boost(){
 
-  const now = Date.now();
+const now=Date.now();
 
-  if(now - state.lastClick < 1400){
-    state.combo++;
-  }
-  else{
-    state.combo = 1;
-  }
+const delta=
+now-state.lastClick;
 
-  state.lastClick = now;
+if(delta<1300){
 
-  if(state.combo > state.best){
-    state.best = state.combo;
-  }
+state.combo+=getComboPower();
 
-  state.clicks++;
+}else{
 
-  let comboMultiplier =
-    1 + Math.min(state.combo,100) * 0.02;
+state.combo=1;
 
-  let amount =
-    Math.floor(
-      gain() * comboMultiplier
-    );
-
-  addXP(amount);
-
-  floating(
-    "+"+amount+" XP"
-  );
-
-  document.getElementById(
-    "status"
-  ).textContent = "BOOSTING";
-
-  setTimeout(()=>{
-    document.getElementById(
-      "status"
-    ).textContent = "READY";
-  },300);
-
-  if(state.combo % 10 === 0){
-    addLog(
-      "🔥 Combo x"+state.combo
-    );
-
-    toast(
-      "COMBO x"+state.combo
-    );
-  }
 }
 
-function floating(text){
+state.bestCombo=Math.max(
+state.bestCombo,
+state.combo
+);
 
-  const element =
-    document.createElement("div");
+state.lastClick=now;
 
-  element.className = "float";
+let gain=getBoostValue();
 
-  element.textContent = text;
+if(
+state.event &&
+Date.now()<state.eventEnd &&
+state.event.type==="combo"
+){
 
-  element.style.left =
-    Math.random()*70+15+"%";
+gain+=state.event.value*
+Math.max(1,state.combo);
 
-  element.style.top =
-    Math.random()*40+35+"%";
-
-  document.body.appendChild(element);
-
-  setTimeout(()=>{
-    element.remove();
-  },800);
 }
 
-function cost(up){
+state.xp+=gain;
 
-  let level = 0;
+state.totalXP+=gain;
 
-  if(up.id==="power"){
-    level = Math.max(0,state.power-1);
-  }
+state.clicks++;
 
-  if(up.id==="auto"){
-    level = state.auto;
-  }
+updateLevel();
 
-  if(up.id==="combo"){
-    level = Math.floor(
-      (state.multi-1)*10
-    );
-  }
+floatXP(gain);
 
-  if(up.id==="power2"){
-    level = state.hyper || 0;
-  }
+checkQuests();
 
-  if(up.id==="auto2"){
-    level = state.auto2 || 0;
-  }
+checkAchievements();
 
-  if(up.id==="multi2"){
-    level = state.multi2 || 0;
-  }
+updateUI();
 
-  return Math.floor(
-    up.base * Math.pow(1.55,level)
-  );
 }
 
-function buy(type){
+function updateLevel(){
 
-  const up =
-    upgrades.find(
-      x=>x.id===type
-    );
+let safety=0;
 
-  if(!up){
-    return;
-  }
+while(
+state.xp>=levelRequirement(state.level) &&
+safety<1000
+){
 
-  const price =
-    cost(up);
+const required=
+levelRequirement(state.level);
 
-  if(state.total < price){
+state.xp-=required;
 
-    toast(
-      "Pas assez de XP"
-    );
+state.level++;
 
-    return;
-  }
+state.power+=1;
 
-  state.total -= price;
+state.streak++;
 
-  if(type==="power"){
-    state.power++;
-  }
+addLog(
+"🌟 Niveau "+
+state.level+
+" atteint."
+);
 
-  if(type==="auto"){
-    state.auto++;
-  }
+toast(
+"🌟 LEVEL UP "+
+state.level
+);
 
-  if(type==="combo"){
-    state.multi += 0.1;
-  }
+safety++;
 
-  if(type==="power2"){
-    state.hyper =
-      (state.hyper || 0)+1;
-
-    state.power += 5;
-  }
-
-  if(type==="auto2"){
-    state.auto2 =
-      (state.auto2 || 0)+1;
-
-    state.auto += 5;
-  }
-
-  if(type==="multi2"){
-    state.multi2 =
-      (state.multi2 || 0)+1;
-
-    state.multi += 0.5;
-  }
-
-  addLog(
-    "⬆️ "+up.name+" amélioré"
-  );
-
-  toast(
-    "UPGRADE ACHETÉ"
-  );
-
-  checkAchievements();
-
-  save();
-  render();
 }
 
-function reward(){
-
-  const now =
-    Date.now();
-
-  const day =
-    86400000;
-
-  if(
-    state.lastReward &&
-    now-state.lastReward < day
-  ){
-
-    const remaining =
-      day-(now-state.lastReward);
-
-    const hours =
-      Math.ceil(
-        remaining/3600000
-      );
-
-    toast(
-      "Reward dans "+hours+"h"
-    );
-
-    return;
-  }
-
-  state.lastReward = now;
-
-  state.streak++;
-
-  const amount =
-    250 + state.streak*100;
-
-  state.total += amount;
-
-  addLog(
-    "🎁 Reward +"+amount+" XP"
-  );
-
-  toast(
-    "+"+amount+" XP"
-  );
-
-  checkAchievements();
-  save();
-  render();
 }
 
-function questValue(q){
+function autoTick(){
 
-  if(q.type==="clicks"){
-    return state.clicks;
-  }
+if(state.auto<=0){
 
-  if(q.type==="total"){
-    return state.total;
-  }
+return;
 
-  if(q.type==="best"){
-    return state.best;
-  }
+}
 
-  if(q.type==="level"){
-    return state.level;
-  }
+let gain=
+state.auto*
+state.multiplier*
+getPrestigeMultiplier();
 
-  return 0;
+gain*=
+getEventMultiplier("auto");
+
+gain=Math.max(
+1,
+Math.floor(gain)
+);
+
+state.xp+=gain;
+
+state.totalXP+=gain;
+
+updateLevel();
+
+checkQuests();
+
+checkAchievements();
+
+updateUI();
+
+}
+
+function buyUpgrade(id){
+
+const upgrade=
+upgrades.find(
+item=>item.id===id
+);
+
+if(!upgrade){
+
+return;
+
+}
+
+const cost=
+getUpgradeCost(upgrade);
+
+if(state.totalXP<cost){
+
+toast(
+"❌ XP insuffisante"
+);
+
+return;
+
+}
+
+state.totalXP-=cost;
+
+const level=
+getUpgradeLevel(id)+1;
+
+state.upgrades[id]=level;
+
+if(upgrade.type==="power"){
+
+state.power+=upgrade.amount;
+
+}
+
+if(upgrade.type==="auto"){
+
+state.auto+=upgrade.amount;
+
+}
+
+if(upgrade.type==="multi"){
+
+state.multiplier+=upgrade.amount;
+
+}
+
+addLog(
+"⚡ "+
+upgrade.name+
+" niveau "+
+level+
+" acheté."
+);
+
+toast(
+"⚡ Upgrade acheté"
+);
+
+updateUI();
+
+}
+
+function claimQuest(id){
+
+const quest=
+quests.find(
+item=>item.id===id
+);
+
+if(!quest){
+
+return;
+
+}
+
+if(state.quests[id]){
+
+toast("🎯 Déjà récupérée");
+
+return;
+
+}
+
+let current=0;
+
+if(quest.type==="clicks"){
+
+current=state.clicks;
+
+}
+
+if(quest.type==="total"){
+
+current=state.totalXP;
+
+}
+
+if(current<quest.target){
+
+toast(
+"🎯 Objectif non atteint"
+);
+
+return;
+
+}
+
+state.quests[id]=true;
+
+state.xp+=quest.reward;
+
+state.totalXP+=quest.reward;
+
+updateLevel();
+
+addLog(
+"🎯 Quête "+
+quest.name+
+" terminée."
+);
+
+toast(
+"🎯 +"+
+formatNumber(quest.reward)+
+" XP"
+);
+
+updateUI();
+
 }
 
 function checkQuests(){
 
-  quests.forEach(q=>{
+quests.forEach(quest=>{
 
-    if(state.quests[q.id]){
-      return;
-    }
+if(state.quests[quest.id]){
 
-    if(
-      questValue(q) >=
-      q.target
-    ){
+return;
 
-      state.quests[q.id] = true;
+}
 
-      state.total += q.reward;
+let value=
+quest.type==="clicks"
+?state.clicks
+:state.totalXP;
 
-      addLog(
-        "✅ Quête terminée • "+
-        q.name+
-        " • +"+
-        q.reward+
-        " XP"
-      );
+if(value>=quest.target){
 
-      toast(
-        "QUÊTE TERMINÉE"
-      );
-    }
+toast(
+"🎯 Quête disponible : "+
+quest.name
+);
 
-  });
+}
+
+});
+
+}
+
+function claimAchievement(id){
+
+const achievement=
+achievements.find(
+item=>item.id===id
+);
+
+if(!achievement){
+
+return;
+
+}
+
+if(state.achievements[id]){
+
+return;
+
+}
+
+if(
+state.clicks<
+achievement.target
+){
+
+toast(
+"🏆 Continue..."
+);
+
+return;
+
+}
+
+state.achievements[id]=true;
+
+state.xp+=achievement.reward;
+
+state.totalXP+=achievement.reward;
+
+updateLevel();
+
+addLog(
+"🏆 Achievement "+
+achievement.name+
+" débloqué."
+);
+
+toast(
+"🏆 Achievement !"
+);
+
+updateUI();
+
 }
 
 function checkAchievements(){
 
-  achievements.forEach(a=>{
+achievements.forEach(
+achievement=>{
 
-    if(state.achievements[a.id]){
-      return;
-    }
+if(
+!state.achievements[
+achievement.id
+] &&
+state.clicks>=achievement.target
+){
 
-    if(a.check()){
+toast(
+"🏆 "+
+achievement.name+
+" débloqué !"
+);
 
-      state.achievements[a.id] = true;
-
-      state.total += a.reward;
-
-      addLog(
-        "🏆 Achievement • "+
-        a.name+
-        " • +"+
-        a.reward+
-        " XP"
-      );
-
-      toast(
-        "ACHIEVEMENT DÉBLOQUÉ"
-      );
-    }
-
-  });
 }
 
-function renderUpgrades(){
+});
 
-  const container =
-    document.getElementById(
-      "upgradeCards"
-    );
-
-  container.innerHTML = "";
-
-  upgrades.forEach(up=>{
-
-    const price =
-      cost(up);
-
-    const card =
-      document.createElement(
-        "div"
-      );
-
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${up.name}</h3>
-      <p>${up.desc}</p>
-      <div style="
-        color:#777;
-        font-size:11px;
-        margin-bottom:12px
-      ">
-        Coût ${number(price)}
-      </div>
-      <button
-        class="buy"
-        ${state.total<price?"disabled":""}
-        onclick="buy('${up.id}')"
-      >
-        AMÉLIORER
-      </button>
-    `;
-
-    container.appendChild(card);
-
-  });
 }
 
-function renderQuests(){
+function triggerEvent(){
 
-  const container =
-    document.getElementById(
-      "questList"
-    );
+const event=
+events[
+Math.floor(
+Math.random()*events.length
+)
+];
 
-  container.innerHTML = "";
+state.event={
+...event
+};
 
-  quests.forEach(q=>{
+state.eventEnd=
+Date.now()+
+event.duration;
 
-    const value =
-      Math.min(
-        q.target,
-        questValue(q)
-      );
+document
+.getElementById("eventBox")
+.classList.remove("hidden");
 
-    const percent =
-      Math.min(
-        100,
-        value/q.target*100
-      );
+document
+.getElementById("eventTitle")
+.textContent=
+"⚡ "+
+event.name;
 
-    const completed =
-      !!state.quests[q.id];
+document
+.getElementById("eventDescription")
+.textContent=
+event.description;
 
-    const row =
-      document.createElement(
-        "div"
-      );
+addLog(
+"⚡ EVENT "+
+event.name+
+" activé."
+);
 
-    row.className = "quest";
+toast(
+"⚡ "+
+event.name
+);
 
-    row.innerHTML = `
-      <div class="questInfo">
-        <b>
-          ${completed?"✅":"🎯"}
-          ${q.name}
-        </b>
+updateUI();
 
-        <span>
-          ${q.desc}
-          • ${value}/${q.target}
-        </span>
-
-        <div class="qbar">
-          <i style="
-            width:${percent}%
-          "></i>
-        </div>
-      </div>
-
-      <div class="reward">
-        +${q.reward}
-      </div>
-    `;
-
-    container.appendChild(row);
-
-  });
 }
 
-function renderAchievements(){
+function claimEvent(){
 
-  const container =
-    document.getElementById(
-      "achievementList"
-    );
+if(
+!state.event ||
+Date.now()>=state.eventEnd
+){
 
-  container.innerHTML = "";
+toast(
+"⌛ Event terminé"
+);
 
-  let count = 0;
+return;
 
-  achievements.forEach(a=>{
-
-    const done =
-      !!state.achievements[a.id];
-
-    if(done){
-      count++;
-    }
-
-    const card =
-      document.createElement(
-        "div"
-      );
-
-    card.className = "card";
-
-    card.style.opacity =
-      done ? "1" : ".45";
-
-    card.innerHTML = `
-      <h3>
-        ${done?"🏆":"🔒"}
-        ${a.name}
-      </h3>
-
-      <p>
-        ${a.desc}
-      </p>
-
-      <div style="
-        color:#777;
-        font-size:11px
-      ">
-        ${done?"DÉBLOQUÉ":"VERROUILLÉ"}
-        • +${a.reward} XP
-      </div>
-    `;
-
-    container.appendChild(card);
-
-  });
-
-  document.getElementById(
-    "achCount"
-  ).textContent =
-    count+" / "+achievements.length;
 }
 
-function render(){
+const reward=
+Math.floor(
+200+
+state.level*50
+);
 
-  document.getElementById(
-    "coins"
-  ).textContent =
-    number(state.total);
+state.xp+=reward;
 
-  document.getElementById(
-    "level"
-  ).textContent =
-    state.level;
+state.totalXP+=reward;
 
-  document.getElementById(
-    "streak"
-  ).textContent =
-    state.streak;
+state.eventEnd=
+Date.now()-1;
 
-  document.getElementById(
-    "xp"
-  ).textContent =
-    Math.floor(state.xp);
+document
+.getElementById("eventBox")
+.classList.add("hidden");
 
-  document.getElementById(
-    "next"
-  ).textContent =
-    neededXP();
+addLog(
+"⚡ Bonus event récupéré."
+);
 
-  document.getElementById(
-    "total"
-  ).textContent =
-    number(state.total);
+toast(
+"⚡ +"+
+formatNumber(reward)+
+" XP"
+);
 
-  document.getElementById(
-    "clicks"
-  ).textContent =
-    number(state.clicks);
+updateLevel();
 
-  document.getElementById(
-    "combo"
-  ).textContent =
-    state.combo;
+updateUI();
 
-  document.getElementById(
-    "best"
-  ).textContent =
-    state.best;
-
-  document.getElementById(
-    "gain"
-  ).textContent =
-    gain();
-
-  document.getElementById(
-    "fill"
-  ).style.width =
-    Math.min(
-      100,
-      state.xp/
-      neededXP()*
-      100
-    )+"%";
-
-  document.getElementById(
-    "powerInfo"
-  ).textContent =
-    state.power+
-    " XP par boost";
-
-  document.getElementById(
-    "autoInfo"
-  ).textContent =
-    state.auto+
-    " XP/s";
-
-  document.getElementById(
-    "comboInfo"
-  ).textContent =
-    "x"+
-    state.multi.toFixed(1);
-
-  document.getElementById(
-    "sLevel"
-  ).textContent =
-    state.level;
-
-  document.getElementById(
-    "sTotal"
-  ).textContent =
-    number(state.total);
-
-  document.getElementById(
-    "sPower"
-  ).textContent =
-    gain();
-
-  document.getElementById(
-    "sAuto"
-  ).textContent =
-    state.auto+"/s";
-
-  document.getElementById(
-    "sMulti"
-  ).textContent =
-    "x"+
-    state.multi.toFixed(1);
-
-  document.getElementById(
-    "sBest"
-  ).textContent =
-    state.best;
-
-  renderUpgrades();
-  renderQuests();
-  renderAchievements();
-
-  save();
 }
 
-function tab(id,button){
+function dailyReward(){
 
-  document
-    .querySelectorAll(".view")
-    .forEach(v=>{
-      v.classList.remove(
-        "active"
-      );
-    });
+const now=Date.now();
 
-  document
-    .querySelectorAll(".tab")
-    .forEach(v=>{
-      v.classList.remove(
-        "active"
-      );
-    });
+const day=
+86400000;
 
-  document
-    .getElementById(id)
-    .classList.add(
-      "active"
-    );
+if(
+now-state.lastDaily<day
+){
 
-  button.classList.add(
-    "active"
-  );
+const remaining=
+day-
+(now-state.lastDaily);
+
+const hours=
+Math.ceil(
+remaining/3600000
+);
+
+toast(
+"🎁 Reviens dans "+
+hours+
+"h"
+);
+
+return;
+
+}
+
+const reward=
+500+
+state.level*100+
+state.prestige*500;
+
+state.lastDaily=now;
+
+state.xp+=reward;
+
+state.totalXP+=reward;
+
+updateLevel();
+
+addLog(
+"🎁 Daily reward : "+
+reward+
+" XP."
+);
+
+toast(
+"🎁 DAILY +"+
+formatNumber(reward)
+);
+
+updateUI();
+
+}
+
+function prestige(){
+
+const requirement=
+prestigeRequirement();
+
+if(
+state.totalXP<
+requirement
+){
+
+toast(
+"♻️ Il faut "+
+formatNumber(requirement)+
+" XP"
+);
+
+return;
+
+}
+
+state.prestige++;
+
+state.runs++;
+
+state.xp=0;
+
+state.totalXP=0;
+
+state.level=1;
+
+state.clicks=0;
+
+state.power=
+1+
+state.prestige;
+
+state.auto=0;
+
+state.multiplier=1;
+
+state.combo=0;
+
+state.streak=0;
+
+state.upgrades={};
+
+state.quests={};
+
+state.achievements={};
+
+addLog(
+"♻️ Prestige "+
+state.prestige+
+" effectué."
+);
+
+toast(
+"♻️ PRESTIGE "+
+state.prestige
+);
+
+updateUI();
+
 }
 
 function addLog(text){
 
-  const log =
-    document.getElementById(
-      "log"
-    );
+state.logs.unshift(
+new Date().toLocaleTimeString()+
+" · "+
+text
+);
 
-  const row =
-    document.createElement(
-      "div"
-    );
+state.logs=
+state.logs.slice(0,80);
 
-  row.textContent =
-    new Date()
-    .toLocaleTimeString()+
-    "  "+
-    text;
-
-  log.prepend(row);
-
-  while(
-    log.children.length > 50
-  ){
-    log.lastChild.remove();
-  }
 }
-
-let toastTimer;
 
 function toast(text){
 
-  const box =
-    document.getElementById(
-      "toast"
-    );
+const container=
+document.getElementById("toast");
 
-  box.textContent =
-    text;
+const element=
+document.createElement("div");
 
-  box.classList.add(
-    "show"
-  );
+element.className="toast";
 
-  clearTimeout(
-    toastTimer
-  );
+element.textContent=text;
 
-  toastTimer =
-    setTimeout(()=>{
-      box.classList.remove(
-        "show"
-      );
-    },1800);
+container.appendChild(element);
+
+setTimeout(
+()=>{
+element.remove();
+},
+2500
+);
+
 }
 
-setInterval(()=>{
+function floatXP(value){
 
-  if(state.auto>0){
+const element=
+document.createElement("div");
 
-    let amount =
-      state.auto;
+element.className="floatXP";
 
-    if(state.auto2){
-      amount +=
-        state.auto2*5;
-    }
+element.textContent=
+"+"+
+formatNumber(value)+
+" XP";
 
-    if(state.quantum){
-      amount *=
-        1+state.quantum*.02;
-    }
+element.style.left=
+(
+50+
+Math.random()*18-9
+)+
+"%";
 
-    state.total +=
-      Math.floor(amount);
+element.style.top=
+(
+45+
+Math.random()*12
+)+
+"%";
 
-    state.xp +=
-      Math.floor(amount);
+document.body.appendChild(
+element
+);
 
-    while(
-      state.xp >= neededXP()
-    ){
+setTimeout(
+()=>{
+element.remove();
+},
+800
+);
 
-      state.xp -=
-        neededXP();
+}
 
-      state.level++;
+function renderUpgrades(){
 
-      addLog(
-        "🚀 Auto level "+state.level
-      );
+const grid=
+document.getElementById(
+"upgradeGrid"
+);
 
-    }
+grid.innerHTML="";
 
-    checkAchievements();
-    checkQuests();
+upgrades.forEach(
+upgrade=>{
 
-    save();
-    render();
+const level=
+getUpgradeLevel(
+upgrade.id
+);
 
-  }
+const cost=
+getUpgradeCost(
+upgrade
+);
 
-},1000);
+const card=
+document.createElement(
+"div"
+);
 
-setInterval(()=>{
+card.className="card";
 
-  if(
-    Date.now()-
-    state.lastClick >
-    1700
-  ){
+card.innerHTML=`
 
-    if(state.combo!==0){
+<h3>
+⚡ ${upgrade.name}
+</h3>
 
-      state.combo=0;
+<div class="cardValue">
+LV ${level}
+</div>
 
-      render();
+<p>
+${upgrade.description}
+</p>
 
-    }
+<p class="price">
+${formatNumber(cost)} XP
+</p>
 
-  }
+<button class="btn primary">
+ACHETER
+</button>
 
-},300);
+`;
+
+card
+.querySelector("button")
+.onclick=()=>{
+buyUpgrade(
+upgrade.id
+);
+};
+
+grid.appendChild(card);
+
+});
+
+}
+
+function renderQuests(){
+
+const grid=
+document.getElementById(
+"questGrid"
+);
+
+grid.innerHTML="";
+
+quests.forEach(
+quest=>{
+
+const value=
+quest.type==="clicks"
+?state.clicks
+:state.totalXP;
+
+const percent=
+Math.min(
+100,
+value/
+quest.target*
+100
+);
+
+const claimed=
+!!state.quests[
+quest.id
+];
+
+const card=
+document.createElement(
+"div"
+);
+
+card.className="card";
+
+card.innerHTML=`
+
+<h3>
+🎯 ${quest.name}
+</h3>
+
+<div class="cardValue">
+${formatNumber(value)}
+/
+${formatNumber(quest.target)}
+</div>
+
+<div class="miniProgress">
+<i style="width:${percent}%"></i>
+</div>
+
+<p class="price">
++${formatNumber(quest.reward)} XP
+</p>
+
+<button
+class="btn ${claimed?"green":"primary"}"
+${claimed?"disabled":""}
+>
+${claimed?"RÉCUPÉRÉ":"RÉCUPÉRER"}
+</button>
+
+`;
+
+if(!claimed){
+
+card
+.querySelector("button")
+.onclick=()=>{
+claimQuest(
+quest.id
+);
+};
+
+}
+
+grid.appendChild(card);
+
+});
+
+}
+
+function renderAchievements(){
+
+const grid=
+document.getElementById(
+"achievementGrid"
+);
+
+grid.innerHTML="";
+
+achievements.forEach(
+achievement=>{
+
+const value=
+state.clicks;
+
+const percent=
+Math.min(
+100,
+value/
+achievement.target*
+100
+);
+
+const claimed=
+!!state.achievements[
+achievement.id
+];
+
+const card=
+document.createElement(
+"div"
+);
+
+card.className="card";
+
+card.innerHTML=`
+
+<h3>
+🏆 ${achievement.name}
+</h3>
+
+<div class="cardValue">
+${formatNumber(value)}
+/
+${formatNumber(achievement.target)}
+</div>
+
+<div class="miniProgress">
+<i style="width:${percent}%"></i>
+</div>
+
+<p class="price">
++${formatNumber(achievement.reward)} XP
+</p>
+
+<button
+class="btn ${claimed?"green":"primary"}"
+>
+${claimed?"DÉBLOQUÉ":"OUVRIR"}
+</button>
+
+`;
+
+if(!claimed){
+
+card
+.querySelector("button")
+.onclick=()=>{
+claimAchievement(
+achievement.id
+);
+};
+
+}
+
+grid.appendChild(card);
+
+});
+
+}
+
+function renderShop(){
+
+const grid=
+document.getElementById(
+"shopGrid"
+);
+
+grid.innerHTML="";
+
+skins.forEach(
+skin=>{
+
+const owned=
+!!state.skins[
+skin.id
+];
+
+const active=
+state.skin===
+skin.id;
+
+const card=
+document.createElement(
+"div"
+);
+
+card.className=
+"shopCard";
+
+card.innerHTML=`
+
+<div class="shopIcon">
+🎨
+</div>
+
+<h3>
+${skin.name}
+</h3>
+
+<p>
+Thème visuel du moteur.
+</p>
+
+<p
+style="
+color:${skin.color};
+font-weight:900;
+margin-top:10px;
+"
+>
+${owned?"DÉBLOQUÉ":
+formatNumber(skin.price)+" XP"}
+</p>
+
+<button class="btn ${
+active
+?"green"
+:"primary"
+}">
+${
+active
+?"ACTIF"
+:owned
+?"ÉQUIPER"
+:"DÉBLOQUER"
+}
+</button>
+
+`;
+
+card
+.querySelector("button")
+.onclick=()=>{
+useSkin(
+skin.id
+);
+};
+
+grid.appendChild(card);
+
+});
+
+}
+
+function useSkin(id){
+
+const skin=
+skins.find(
+item=>item.id===id
+);
+
+if(!skin){
+
+return;
+
+}
+
+if(
+!state.skins[id]
+){
+
+if(
+state.totalXP<
+skin.price
+){
+
+toast(
+"🎨 XP insuffisante"
+);
+
+return;
+
+}
+
+state.totalXP-=
+skin.price;
+
+state.skins[id]=true;
+
+}
+
+state.skin=id;
+
+applySkin();
+
+updateUI();
+
+toast(
+"🎨 "+
+skin.name+
+" équipé"
+);
+
+}
+
+function applySkin(){
+
+const skin=
+skins.find(
+item=>item.id===state.skin
+)||
+skins[0];
 
 document
-  .getElementById(
-    "boostButton"
-  )
-  .addEventListener(
-    "click",
-    boost
-  );
-
-document.addEventListener(
-  "keydown",
-  event=>{
-
-    if(
-      event.code==="Space" &&
-      !event.repeat
-    ){
-
-      event.preventDefault();
-
-      boost();
-
-    }
-
-  }
+.documentElement
+.style
+.setProperty(
+"--cyan",
+skin.color
 );
 
-addLog(
-  "🚀 BOOSTER démarré"
+}
+
+function renderLog(){
+
+const log=
+document.getElementById(
+"log"
 );
 
-addLog(
-  "⚡ Clique sur BOOST pour commencer"
+log.innerHTML=
+state.logs
+.map(
+item=>`<div>${item}</div>`
+)
+.join("");
+
+}
+
+function updateUI(){
+
+const requirement=
+levelRequirement(
+state.level
 );
 
-render();
+const percent=
+Math.min(
+100,
+state.xp/
+requirement*
+100
+);
+
+document
+.getElementById("level")
+.textContent=
+state.level;
+
+document
+.getElementById("xp")
+.textContent=
+formatNumber(
+state.xp
+);
+
+document
+.getElementById("clicks")
+.textContent=
+formatNumber(
+state.clicks
+);
+
+document
+.getElementById("prestige")
+.textContent=
+state.prestige;
+
+document
+.getElementById("combo")
+.textContent=
+formatNumber(
+state.combo
+);
+
+document
+.getElementById("power")
+.textContent=
+formatNumber(
+getBoostValue()
+);
+
+document
+.getElementById("auto")
+.textContent=
+formatNumber(
+state.auto
+);
+
+document
+.getElementById("multiplier")
+.textContent=
+"x"+
+state.multiplier.toFixed(2);
+
+document
+.getElementById("streak")
+.textContent=
+state.streak;
+
+document
+.getElementById("progressText")
+.textContent=
+formatNumber(
+state.xp
+)+
+" / "+
+formatNumber(
+requirement
+);
+
+document
+.getElementById("progressBar")
+.style.width=
+percent+
+"%";
+
+document
+.getElementById("powerBar")
+.style.width=
+Math.min(
+100,
+getBoostValue()
+)+
+"%";
+
+document
+.getElementById("autoBar")
+.style.width=
+Math.min(
+100,
+state.auto
+)+
+"%";
+
+document
+.getElementById("multiBar")
+.style.width=
+Math.min(
+100,
+state.multiplier*25
+)+
+"%";
+
+document
+.getElementById("streakBar")
+.style.width=
+Math.min(
+100,
+state.streak
+)+
+"%";
+
+document
+.getElementById("totalXP")
+.textContent=
+formatNumber(
+state.totalXP
+);
+
+document
+.getElementById("bestCombo")
+.textContent=
+formatNumber(
+state.bestCombo
+);
+
+document
+.getElementById("statPower")
+.textContent=
+formatNumber(
+state.power
+);
+
+document
+.getElementById("runs")
+.textContent=
+formatNumber(
+state.runs
+);
+
+document
+.getElementById("prestigeNeed")
+.textContent=
+formatNumber(
+prestigeRequirement()
+)+
+" XP";
+
+renderUpgrades();
+
+renderQuests();
+
+renderAchievements();
+
+renderShop();
+
+renderLog();
+
+if(
+state.event &&
+Date.now()>=state.eventEnd
+){
+
+state.event=null;
+
+document
+.getElementById("eventBox")
+.classList
+.add("hidden");
+
+}
+
+}
+
+document
+.getElementById("core")
+.addEventListener(
+"click",
+boost
+);
+
+document
+.addEventListener(
+"keydown",
+event=>{
+
+if(
+event.code==="Space" &&
+!event.repeat
+){
+
+event.preventDefault();
+
+boost();
+
+}
+
+}
+);
+
+document
+.getElementById("eventButton")
+.onclick=
+triggerEvent;
+
+document
+.getElementById("claimEvent")
+.onclick=
+claimEvent;
+
+document
+.getElementById("dailyButton")
+.onclick=
+dailyReward;
+
+document
+.getElementById("saveButton")
+.onclick=
+()=>saveGame(true);
+
+document
+.getElementById("prestigeButton")
+.onclick=
+prestige;
+
+document
+.getElementById("resetButton")
+.onclick=
+()=>{
+
+const answer=
+confirm(
+"Supprimer toute ta progression ?"
+);
+
+if(!answer){
+
+return;
+
+}
+
+localStorage.removeItem(
+SAVE_KEY
+);
+
+state=
+structuredClone(
+DEFAULT_STATE
+);
+
+applySkin();
+
+updateUI();
+
+toast(
+"↻ Progression supprimée"
+);
+
+};
+
+document
+.querySelectorAll(".tab")
+.forEach(
+button=>{
+
+button.onclick=()=>{
+
+document
+.querySelectorAll(".tab")
+.forEach(
+item=>
+item.classList
+.remove("active")
+);
+
+document
+.querySelectorAll(".tabPanel")
+.forEach(
+panel=>
+panel.classList
+.add("hidden")
+);
+
+button
+.classList
+.add("active");
+
+document
+.getElementById(
+button.dataset.tab
+)
+.classList
+.remove("hidden");
+
+};
+
+}
+);
+
+applySkin();
+
+updateUI();
+
+setInterval(
+autoTick,
+1000
+);
+
+setInterval(
+()=>{
+
+if(
+state.combo>0 &&
+Date.now()-
+state.lastClick>
+1800
+){
+
+state.combo=
+Math.max(
+0,
+state.combo-1
+);
+
+updateUI();
+
+}
+
+},
+500
+);
+
+setInterval(
+()=>{
+
+if(
+state.event &&
+Date.now()>=
+state.eventEnd
+){
+
+state.event=null;
+
+document
+.getElementById(
+"eventBox"
+)
+.classList
+.add("hidden");
+
+updateUI();
+
+}
+
+},
+500
+);
+
+setInterval(
+()=>{
+
+saveGame(false);
+
+},
+15000
+);
+
+window.addEventListener(
+"beforeunload",
+()=>saveGame(false)
+);</script>
+
+</body>
+</html>
