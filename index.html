@@ -4,616 +4,1257 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>BOOSTER</title>
-
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif
-}
-
-body{
-background:#050505;
-color:white;
-overflow-x:hidden
-}
-
-body:before{
-content:"";
-position:fixed;
-width:500px;
-height:500px;
-background:#6c2cff;
-filter:blur(180px);
-opacity:.25;
-top:-180px;
-left:-150px;
-z-index:-1
-}
-
-body:after{
-content:"";
-position:fixed;
-width:500px;
-height:500px;
-background:#00e5ff;
-filter:blur(180px);
-opacity:.12;
-bottom:-200px;
-right:-150px;
-z-index:-1
-}
-
-nav{
-height:75px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 7%;
-border-bottom:1px solid #191919;
-background:rgba(5,5,5,.75);
-backdrop-filter:blur(20px);
-position:sticky;
-top:0;
-z-index:100
-}
-
-.logo{
-font-size:25px;
-font-weight:900;
-letter-spacing:2px
-}
-
-.logo span{
-color:#7b3cff
-}
-
-.navlinks{
-display:flex;
-gap:30px
-}
-
-.navlinks a{
-color:#aaa;
-text-decoration:none;
-font-size:14px;
-transition:.2s
-}
-
-.navlinks a:hover{
-color:white
-}
-
-.hero{
-min-height:calc(100vh - 75px);
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:80px 20px;
-position:relative
-}
-
-.hero-content{
-max-width:900px
-}
-
-.badge{
-display:inline-block;
-padding:9px 16px;
-border:1px solid #292929;
-background:#111;
-border-radius:30px;
-color:#b99cff;
-font-size:13px;
-margin-bottom:25px;
-box-shadow:0 0 30px rgba(123,60,255,.12)
-}
-
-h1{
-font-size:clamp(55px,9vw,110px);
-line-height:.9;
-font-weight:1000;
-letter-spacing:-6px
-}
-
-.gradient{
-background:linear-gradient(90deg,#fff,#9c70ff,#00e5ff);
--webkit-background-clip:text;
-color:transparent
-}
-
-.hero p{
-color:#999;
-font-size:18px;
-max-width:620px;
-margin:30px auto;
-line-height:1.6
-}
-
-.buttons{
-display:flex;
-justify-content:center;
-gap:14px;
-flex-wrap:wrap
-}
-
-.btn{
-padding:15px 25px;
-border-radius:12px;
-border:1px solid #292929;
-text-decoration:none;
-font-weight:bold;
-font-size:14px;
-transition:.25s;
-cursor:pointer
-}
-
-.primary{
-background:white;
-color:black
-}
-
-.primary:hover{
-transform:translateY(-3px);
-box-shadow:0 10px 35px rgba(255,255,255,.15)
-}
-
-.secondary{
-background:#101010;
-color:white
-}
-
-.secondary:hover{
-background:#181818;
-transform:translateY(-3px)
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-max-width:850px;
-margin:70px auto 0;
-border:1px solid #1c1c1c;
-background:rgba(12,12,12,.75);
-border-radius:20px;
-overflow:hidden
-}
-
-.stat{
-padding:25px;
-border-right:1px solid #1c1c1c
-}
-
-.stat:last-child{
-border:0
-}
-
-.stat h2{
-font-size:28px
-}
-
-.stat p{
-font-size:12px;
-color:#777;
-margin-top:7px
-}
-
-section{
-padding:100px 7%
-}
-
-.section-title{
-text-align:center;
-font-size:45px;
-font-weight:900;
-letter-spacing:-2px
-}
-
-.section-sub{
-text-align:center;
-color:#777;
-margin:15px auto 50px;
-max-width:550px
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-max-width:1100px;
-margin:auto
-}
-
-.card{
-background:linear-gradient(145deg,#111,#090909);
-border:1px solid #202020;
-border-radius:22px;
-padding:30px;
-transition:.3s;
-position:relative;
-overflow:hidden
-}
-
-.card:hover{
-transform:translateY(-8px);
-border-color:#5130a8;
-box-shadow:0 20px 50px rgba(0,0,0,.4)
-}
-
-.card:before{
-content:"";
-position:absolute;
-width:100px;
-height:100px;
-background:#713cff;
-filter:blur(70px);
-opacity:.12;
-top:-30px;
-right:-30px
-}
-
-.icon{
-width:50px;
-height:50px;
-border-radius:14px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#17121f;
-color:#9c70ff;
-font-size:23px;
-margin-bottom:25px
-}
-
-.card h3{
-font-size:21px;
-margin-bottom:12px
-}
-
-.card p{
-color:#777;
-font-size:14px;
-line-height:1.6
-}
-
-.dashboard{
-max-width:1100px;
-margin:auto;
-background:#0b0b0b;
-border:1px solid #202020;
-border-radius:25px;
-padding:25px;
-box-shadow:0 30px 100px rgba(0,0,0,.5)
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px
-}
-
-.live{
-color:#52ff9a;
-font-size:12px;
-background:#0c2015;
-padding:8px 12px;
-border-radius:20px
-}
-
-.chart{
-height:260px;
-border:1px solid #181818;
-border-radius:18px;
-position:relative;
-overflow:hidden;
-background:
-linear-gradient(#151515 1px,transparent 1px),
-linear-gradient(90deg,#151515 1px,transparent 1px);
-background-size:50px 50px
-}
-
-.line{
-position:absolute;
-left:0;
-right:0;
-bottom:40px;
-height:150px;
-background:linear-gradient(135deg,transparent 0 10%,#713cff 10% 11%,transparent 11% 18%,#713cff 18% 19%,transparent 19% 28%,#713cff 28% 29%,transparent 29% 39%,#713cff 39% 40%,transparent 40% 48%,#713cff 48% 49%,transparent 49% 60%,#713cff 60% 61%,transparent 61% 70%,#713cff 70% 71%,transparent 71% 79%,#713cff 79% 80%,transparent 80% 88%,#713cff 88% 89%,transparent 89%);
-opacity:.8;
-filter:drop-shadow(0 0 8px #713cff)
-}
-
-.dashboard-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-top:15px
-}
-
-.mini{
-background:#101010;
-border:1px solid #1d1d1d;
-padding:20px;
-border-radius:16px
-}
-
-.mini small{
-color:#666
-}
-
-.mini strong{
-display:block;
-font-size:25px;
-margin-top:8px
-}
-
-.cta{
-text-align:center;
-max-width:850px;
-margin:auto;
-padding:70px 30px;
-border:1px solid #222;
-border-radius:30px;
-background:radial-gradient(circle at center,#171020,#090909)
-}
-
-.cta h2{
-font-size:50px;
-letter-spacing:-3px
-}
-
-.cta p{
-color:#777;
-margin:15px auto 30px;
-max-width:500px
-}
-
-footer{
-border-top:1px solid #181818;
-padding:30px 7%;
-display:flex;
-justify-content:space-between;
-color:#555;
-font-size:12px
-}
-
-@media(max-width:800px){
-.navlinks{
-display:none
-}
-
-.stats{
-grid-template-columns:1fr
-}
-
-.stat{
-border-right:0;
-border-bottom:1px solid #1c1c1c
-}
-
-.cards{
-grid-template-columns:1fr
-}
-
-.dashboard-grid{
-grid-template-columns:1fr
-}
-
-.cta h2{
-font-size:38px
-}
-
-h1{
-letter-spacing:-4px
-}
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#050507;color:white;font-family:Arial,sans-serif;min-height:100vh}
+button{cursor:pointer}
+.app{width:94%;max-width:1200px;margin:auto;padding:20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:#0d0d12;border:1px solid #252532;border-radius:20px}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px}
+.logo span{color:#8b5cf6}
+.stats{display:flex;gap:10px}
+.pill{background:#15151d;border:1px solid #292936;padding:10px 15px;border-radius:999px;font-size:13px}
+.hero{text-align:center;padding:70px 10px 45px}
+.badge{display:inline-block;background:#171027;border:1px solid #51338e;color:#bda5ff;padding:9px 15px;border-radius:30px;font-size:12px}
+h1{font-size:clamp(55px,9vw,105px);line-height:.9;margin:25px 0;letter-spacing:-5px}
+.gradient{background:linear-gradient(90deg,#fff,#9b72ff,#22d3ee);color:transparent;background-clip:text}
+.hero p{max-width:650px;margin:auto;color:#858592;line-height:1.7}
+.layout{display:grid;grid-template-columns:1.4fr .8fr;gap:18px}
+.panel{background:#0d0d12;border:1px solid #252532;border-radius:24px;padding:22px}
+.title{display:flex;justify-content:space-between;margin-bottom:18px}
+.title h2{font-size:17px}
+.muted{color:#777;font-size:12px}
+.boost{height:270px;width:100%;border-radius:28px;border:1px solid #57369b;background:radial-gradient(circle,#382064,#100c17 65%);color:white;box-shadow:0 0 70px #6d35d822}
+.boost:hover{box-shadow:0 0 100px #7c3aed55}
+.boost:active{transform:scale(.98)}
+.core{display:block;font-size:70px}
+.boostText{display:block;font-size:27px;font-weight:900}
+.gain{display:block;color:#b99cff;margin-top:8px}
+.progress{height:10px;background:#191923;border-radius:20px;overflow:hidden;margin:12px 0 20px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#22d3ee);transition:.2s}
+.statGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#101017;border:1px solid #22222d;border-radius:15px;padding:16px}
+.stat small{color:#777;font-size:10px}
+.stat strong{display:block;font-size:22px;margin-top:7px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.action{padding:15px;background:#12121a;border:1px solid #272733;border-radius:14px;color:white;text-align:left}
+.action:hover{border-color:#6845ad}
+.action b{display:block}
+.action span{font-size:11px;color:#777}
+.log{height:260px;overflow:auto;margin-top:15px;color:#999;font-size:12px}
+.log div{padding:9px 0;border-bottom:1px solid #191921}
+.tabs{display:flex;gap:8px;margin:20px 0;overflow:auto}
+.tab{padding:12px 17px;border-radius:13px;background:#0d0d12;border:1px solid #252532;color:#999;white-space:nowrap}
+.tab.active{color:white;background:#241641;border-color:#6542a5}
+.view{display:none}
+.view.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:#101017;border:1px solid #242430;border-radius:18px;padding:18px}
+.card h3{margin-bottom:9px}
+.card p{color:#777;font-size:12px;line-height:1.6;margin-bottom:15px}
+.buy{width:100%;padding:11px;border:0;border-radius:10px;font-weight:bold}
+.buy:disabled{opacity:.3}
+.quest{display:flex;justify-content:space-between;align-items:center;gap:15px;background:#101017;border:1px solid #242430;border-radius:15px;padding:15px;margin-bottom:10px}
+.questInfo{flex:1}
+.questInfo span{font-size:12px;color:#777}
+.qbar{height:6px;background:#1b1b23;border-radius:9px;margin-top:9px;overflow:hidden}
+.qbar i{display:block;height:100%;background:#34d399}
+.reward{color:#8ff0c4;font-size:12px;font-weight:bold}
+.float{position:fixed;color:#c4b5fd;font-weight:900;pointer-events:none;animation:f .8s forwards}
+@keyframes f{to{opacity:0;transform:translateY(-90px)}}
+.toast{position:fixed;right:20px;bottom:20px;background:#171720;border:1px solid #403650;padding:14px 18px;border-radius:13px;opacity:0;transition:.2s}
+.toast.show{opacity:1}
+footer{text-align:center;color:#555;padding:45px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}}
+@media(max-width:550px){.stats{display:none}.cards{grid-template-columns:1fr}.actions{grid-template-columns:1fr}h1{letter-spacing:-3px}}
 </style>
 </head>
-
 <body>
+<div class="app">
 
-<nav>
+<header>
 <div class="logo">BOOST<span>ER</span></div>
-
-<div class="navlinks">
-<a href="#features">Features</a>
-<a href="#dashboard">Dashboard</a>
-<a href="#start">Start</a>
+<div class="stats">
+<div class="pill">⚡ <b id="coins">0</b> XP</div>
+<div class="pill">LVL <b id="level">1</b></div>
+<div class="pill">🔥 <b id="streak">0</b></div>
 </div>
-
-<a href="#start" class="btn primary">Commencer</a>
-</nav>
-
-<main>
+</header>
 
 <section class="hero">
-
-<div class="hero-content">
-
-<div class="badge">⚡ BOOSTER • NEXT GENERATION</div>
-
-<h1>
-BOOST YOUR<br>
-<span class="gradient">GAME.</span>
-</h1>
-
-<p>
-Une plateforme moderne pour suivre tes performances,
-visualiser ta progression et transformer tes statistiques
-en vrais résultats.
-</p>
-
-<div class="buttons">
-<a href="#dashboard" class="btn primary">Voir le dashboard</a>
-<a href="#features" class="btn secondary">Découvrir</a>
-</div>
-
-<div class="stats">
-
-<div class="stat">
-<h2>98.7%</h2>
-<p>PERFORMANCE</p>
-</div>
-
-<div class="stat">
-<h2>24/7</h2>
-<p>MONITORING</p>
-</div>
-
-<div class="stat">
-<h2>+247K</h2>
-<p>BOOSTS</p>
-</div>
-
-</div>
-
-</div>
-
+<div class="badge">INFINITE PROGRESSION</div>
+<h1>BOOST<br><span class="gradient">EVERY DAY</span></h1>
+<p>Monte de niveau améliore tes capacités débloque des récompenses et construis ton meilleur score.</p>
 </section>
 
-<section id="features">
+<div class="layout">
 
-<div class="section-title">Tout pour booster</div>
-
-<div class="section-sub">
-Un système simple rapide et propre pour garder toutes tes performances sous contrôle.
+<section class="panel">
+<div class="title">
+<h2>CORE BOOST</h2>
+<span class="muted" id="status">READY</span>
 </div>
 
-<div class="cards">
+<button class="boost" id="boostButton">
+<span class="core">⚡</span>
+<span class="boostText">BOOST</span>
+<span class="gain">+<b id="gain">1</b> XP</span>
+</button>
 
-<div class="card">
-<div class="icon">⚡</div>
-<h3>Boost instantané</h3>
-<p>
-Active ton boost en quelques secondes et suis directement son évolution depuis ton espace.
-</p>
+<div style="margin-top:20px">
+<div class="title">
+<span class="muted">PROGRESSION</span>
+<span class="muted"><b id="xp">0</b> / <b id="next">100</b></span>
+</div>
+<div class="progress">
+<div class="fill" id="fill"></div>
+</div>
 </div>
 
-<div class="card">
-<div class="icon">📈</div>
-<h3>Analytics</h3>
-<p>
-Visualise tes statistiques avec un dashboard moderne et des données faciles à comprendre.
-</p>
+<div class="statGrid">
+<div class="stat"><small>TOTAL XP</small><strong id="total">0</strong></div>
+<div class="stat"><small>BOOSTS</small><strong id="clicks">0</strong></div>
+<div class="stat"><small>COMBO</small><strong id="combo">0</strong></div>
+<div class="stat"><small>BEST COMBO</small><strong id="best">0</strong></div>
 </div>
-
-<div class="card">
-<div class="icon">🚀</div>
-<h3>Ultra rapide</h3>
-<p>
-Une interface légère conçue pour charger rapidement même sur mobile.
-</p>
-</div>
-
-</div>
-
 </section>
 
-<section id="dashboard">
-
-<div class="section-title">Dashboard</div>
-
-<div class="section-sub">
-Ton activité en temps réel dans une interface clean.
+<aside class="panel">
+<div class="title">
+<h2>ACTIONS</h2>
+<span class="muted">LIVE</span>
 </div>
 
-<div class="dashboard">
+<div class="actions">
+<button class="action" onclick="buy('power')">
+<b>⚡ POWER</b>
+<span id="powerInfo">+1 XP</span>
+</button>
 
-<div class="topbar">
-<strong>Performance</strong>
-<div class="live">● LIVE</div>
+<button class="action" onclick="buy('auto')">
+<b>🤖 AUTO</b>
+<span id="autoInfo">0 XP/s</span>
+</button>
+
+<button class="action" onclick="buy('combo')">
+<b>🔥 COMBO</b>
+<span id="comboInfo">x1.0</span>
+</button>
+
+<button class="action" onclick="reward()">
+<b>🎁 REWARD</b>
+<span>Récompense quotidienne</span>
+</button>
 </div>
 
-<div class="chart">
-<div class="line"></div>
+<div class="title" style="margin-top:25px">
+<h2>ACTIVITY</h2>
 </div>
 
-<div class="dashboard-grid">
-
-<div class="mini">
-<small>BOOSTS</small>
-<strong id="boosts">12,482</strong>
-</div>
-
-<div class="mini">
-<small>GROWTH</small>
-<strong>+38.4%</strong>
-</div>
-
-<div class="mini">
-<small>SCORE</small>
-<strong id="score">94.8</strong>
-</div>
-
-</div>
+<div class="log" id="log"></div>
+</aside>
 
 </div>
 
+<div class="tabs">
+<button class="tab active" onclick="tab('upgrades',this)">UPGRADES</button>
+<button class="tab" onclick="tab('quests',this)">QUÊTES</button>
+<button class="tab" onclick="tab('achievements',this)">ACHIEVEMENTS</button>
+<button class="tab" onclick="tab('statsView',this)">STATS</button>
+</div>
+
+<section id="upgrades" class="view active panel">
+<div class="title">
+<h2>UPGRADES</h2>
+<span class="muted">Améliore ton système</span>
+</div>
+<div class="cards" id="upgradeCards"></div>
 </section>
 
-<section id="start">
-
-<div class="cta">
-
-<h2>READY TO BOOST?</h2>
-
-<p>
-Passe au niveau supérieur avec BOOSTER.
-Simple. Rapide. Puissant.
-</p>
-
-<div class="buttons">
-<button class="btn primary" onclick="startBoost()">ACTIVER LE BOOST</button>
-<a href="#features" class="btn secondary">EN SAVOIR PLUS</a>
+<section id="quests" class="view panel">
+<div class="title">
+<h2>QUÊTES</h2>
+<span class="muted">Objectifs</span>
 </div>
-
-</div>
-
+<div id="questList"></div>
 </section>
 
-</main>
+<section id="achievements" class="view panel">
+<div class="title">
+<h2>ACHIEVEMENTS</h2>
+<span class="muted" id="achCount">0</span>
+</div>
+<div class="cards" id="achievementList"></div>
+</section>
 
-<footer>
-<div>© 2026 BOOSTER</div>
-<div>Built for performance</div>
-</footer>
+<section id="statsView" class="view panel">
+<div class="title">
+<h2>STATISTIQUES</h2>
+</div>
+<div class="statGrid">
+<div class="stat"><small>NIVEAU</small><strong id="sLevel">1</strong></div>
+<div class="stat"><small>XP TOTAL</small><strong id="sTotal">0</strong></div>
+<div class="stat"><small>XP / BOOST</small><strong id="sPower">1</strong></div>
+<div class="stat"><small>AUTO / SEC</small><strong id="sAuto">0</strong></div>
+<div class="stat"><small>MULTIPLICATEUR</small><strong id="sMulti">x1.0</strong></div>
+<div class="stat"><small>MEILLEUR COMBO</small><strong id="sBest">0</strong></div>
+</div>
+</section>
 
+<footer>BOOSTER • local progression system</footer>
+</div>
+
+<div class="toast" id="toast"></div>
 <script>
-let boosts=12482
-let score=94.8
+/* PARTIE 2 À COLLER DIRECTEMENT APRÈS CE BLOC */
+</script>
+</body>
+</html>/* =========================
+   BOOSTER ENGINE
+   PARTIE 2
+   ========================= */
 
-function startBoost(){
+const state = JSON.parse(localStorage.getItem("BOOSTER_SAVE") || "null") || {
+  xp:0,
+  total:0,
+  level:1,
+  clicks:0,
+  combo:0,
+  best:0,
+  streak:0,
+  lastClick:0,
+  lastReward:0,
+  power:1,
+  auto:0,
+  multi:1,
+  quests:{},
+  achievements:{},
+  sounds:true
+};
 
-boosts += Math.floor(Math.random()*100)+50
-score = Math.min(100,score + Math.random()*0.5)
+const upgrades = [
+  {
+    id:"power",
+    name:"Power Core",
+    desc:"Augmente ton gain de XP par boost",
+    base:25
+  },
+  {
+    id:"auto",
+    name:"Auto Engine",
+    desc:"Produit automatiquement de l XP",
+    base:100
+  },
+  {
+    id:"combo",
+    name:"Combo Reactor",
+    desc:"Augmente le multiplicateur",
+    base:250
+  },
+  {
+    id:"power2",
+    name:"Hyper Core",
+    desc:"Augmente encore plus les boosts",
+    base:1000
+  },
+  {
+    id:"auto2",
+    name:"Quantum Auto",
+    desc:"Une machine automatique améliorée",
+    base:3000
+  },
+  {
+    id:"multi2",
+    name:"Infinity Reactor",
+    desc:"Boost massif du multiplicateur",
+    base:7500
+  }
+];
 
-document.getElementById("boosts").textContent =
-boosts.toLocaleString("fr-FR")
+const quests = [
+  {
+    id:"q1",
+    name:"Premier départ",
+    desc:"Fais 25 boosts",
+    target:25,
+    type:"clicks",
+    reward:100
+  },
+  {
+    id:"q2",
+    name:"Petit grind",
+    desc:"Obtiens 500 XP",
+    target:500,
+    type:"total",
+    reward:250
+  },
+  {
+    id:"q3",
+    name:"Combo débutant",
+    desc:"Atteins un combo de 10",
+    target:10,
+    type:"best",
+    reward:300
+  },
+  {
+    id:"q4",
+    name:"Niveau supérieur",
+    desc:"Atteins le niveau 5",
+    target:5,
+    type:"level",
+    reward:500
+  },
+  {
+    id:"q5",
+    name:"Machine",
+    desc:"Fais 250 boosts",
+    target:250,
+    type:"clicks",
+    reward:1000
+  },
+  {
+    id:"q6",
+    name:"Gros grind",
+    desc:"Obtiens 10000 XP",
+    target:10000,
+    type:"total",
+    reward:2500
+  },
+  {
+    id:"q7",
+    name:"Combo monster",
+    desc:"Atteins un combo de 50",
+    target:50,
+    type:"best",
+    reward:5000
+  },
+  {
+    id:"q8",
+    name:"Elite",
+    desc:"Atteins le niveau 15",
+    target:15,
+    type:"level",
+    reward:10000
+  }
+];
 
-document.getElementById("score").textContent =
-score.toFixed(1)
+const achievements = [
+  {
+    id:"a1",
+    name:"FIRST BOOST",
+    desc:"Effectue ton premier boost",
+    reward:50,
+    check:()=>state.clicks>=1
+  },
+  {
+    id:"a2",
+    name:"CLICKER",
+    desc:"Effectue 100 boosts",
+    reward:250,
+    check:()=>state.clicks>=100
+  },
+  {
+    id:"a3",
+    name:"GRINDER",
+    desc:"Obtiens 5000 XP",
+    reward:500,
+    check:()=>state.total>=5000
+  },
+  {
+    id:"a4",
+    name:"COMBO KING",
+    desc:"Atteins un combo de 25",
+    reward:1000,
+    check:()=>state.best>=25
+  },
+  {
+    id:"a5",
+    name:"LEVEL 10",
+    desc:"Atteins le niveau 10",
+    reward:2000,
+    check:()=>state.level>=10
+  },
+  {
+    id:"a6",
+    name:"POWERHOUSE",
+    desc:"Atteins 25 XP par boost",
+    reward:3000,
+    check:()=>state.power>=25
+  },
+  {
+    id:"a7",
+    name:"AUTOMATION",
+    desc:"Atteins 10 XP automatique par seconde",
+    reward:4000,
+    check:()=>state.auto>=10
+  },
+  {
+    id:"a8",
+    name:"INFINITE",
+    desc:"Atteins le niveau 25",
+    reward:10000,
+    check:()=>state.level>=25
+  }
+];
 
-const button=document.querySelector("#start button")
+function save(){
+  localStorage.setItem(
+    "BOOSTER_SAVE",
+    JSON.stringify(state)
+  );
+}
 
-button.textContent="BOOST ACTIVÉ ✓"
+function number(n){
+  if(n < 1000){
+    return Math.floor(n);
+  }
 
-setTimeout(()=>{
-button.textContent="ACTIVER LE BOOST"
-},1800)
+  if(n < 1000000){
+    return (n/1000).toFixed(1)+"K";
+  }
+
+  if(n < 1000000000){
+    return (n/1000000).toFixed(1)+"M";
+  }
+
+  if(n < 1000000000000){
+    return (n/1000000000).toFixed(1)+"B";
+  }
+
+  return (n/1000000000000).toFixed(1)+"T";
+}
+
+function neededXP(){
+  return Math.floor(
+    100 * Math.pow(1.18,state.level-1)
+  );
+}
+
+function gain(){
+  let result = state.power;
+
+  result *= state.multi;
+
+  if(state.hyper){
+    result *= 1 + state.hyper * 0.05;
+  }
+
+  return Math.max(1,Math.floor(result));
+}
+
+function addXP(amount){
+
+  state.xp += amount;
+  state.total += amount;
+
+  while(state.xp >= neededXP()){
+
+    state.xp -= neededXP();
+
+    state.level++;
+
+    addLog(
+      "🎉 Niveau "+state.level+" atteint"
+    );
+
+    toast(
+      "LEVEL UP • "+state.level
+    );
+  }
+
+  checkAchievements();
+  checkQuests();
+
+  save();
+  render();
+}
+
+function boost(){
+
+  const now = Date.now();
+
+  if(now - state.lastClick < 1400){
+    state.combo++;
+  }
+  else{
+    state.combo = 1;
+  }
+
+  state.lastClick = now;
+
+  if(state.combo > state.best){
+    state.best = state.combo;
+  }
+
+  state.clicks++;
+
+  let comboMultiplier =
+    1 + Math.min(state.combo,100) * 0.02;
+
+  let amount =
+    Math.floor(
+      gain() * comboMultiplier
+    );
+
+  addXP(amount);
+
+  floating(
+    "+"+amount+" XP"
+  );
+
+  document.getElementById(
+    "status"
+  ).textContent = "BOOSTING";
+
+  setTimeout(()=>{
+    document.getElementById(
+      "status"
+    ).textContent = "READY";
+  },300);
+
+  if(state.combo % 10 === 0){
+    addLog(
+      "🔥 Combo x"+state.combo
+    );
+
+    toast(
+      "COMBO x"+state.combo
+    );
+  }
+}
+
+function floating(text){
+
+  const element =
+    document.createElement("div");
+
+  element.className = "float";
+
+  element.textContent = text;
+
+  element.style.left =
+    Math.random()*70+15+"%";
+
+  element.style.top =
+    Math.random()*40+35+"%";
+
+  document.body.appendChild(element);
+
+  setTimeout(()=>{
+    element.remove();
+  },800);
+}
+
+function cost(up){
+
+  let level = 0;
+
+  if(up.id==="power"){
+    level = Math.max(0,state.power-1);
+  }
+
+  if(up.id==="auto"){
+    level = state.auto;
+  }
+
+  if(up.id==="combo"){
+    level = Math.floor(
+      (state.multi-1)*10
+    );
+  }
+
+  if(up.id==="power2"){
+    level = state.hyper || 0;
+  }
+
+  if(up.id==="auto2"){
+    level = state.auto2 || 0;
+  }
+
+  if(up.id==="multi2"){
+    level = state.multi2 || 0;
+  }
+
+  return Math.floor(
+    up.base * Math.pow(1.55,level)
+  );
+}
+
+function buy(type){
+
+  const up =
+    upgrades.find(
+      x=>x.id===type
+    );
+
+  if(!up){
+    return;
+  }
+
+  const price =
+    cost(up);
+
+  if(state.total < price){
+
+    toast(
+      "Pas assez de XP"
+    );
+
+    return;
+  }
+
+  state.total -= price;
+
+  if(type==="power"){
+    state.power++;
+  }
+
+  if(type==="auto"){
+    state.auto++;
+  }
+
+  if(type==="combo"){
+    state.multi += 0.1;
+  }
+
+  if(type==="power2"){
+    state.hyper =
+      (state.hyper || 0)+1;
+
+    state.power += 5;
+  }
+
+  if(type==="auto2"){
+    state.auto2 =
+      (state.auto2 || 0)+1;
+
+    state.auto += 5;
+  }
+
+  if(type==="multi2"){
+    state.multi2 =
+      (state.multi2 || 0)+1;
+
+    state.multi += 0.5;
+  }
+
+  addLog(
+    "⬆️ "+up.name+" amélioré"
+  );
+
+  toast(
+    "UPGRADE ACHETÉ"
+  );
+
+  checkAchievements();
+
+  save();
+  render();
+}
+
+function reward(){
+
+  const now =
+    Date.now();
+
+  const day =
+    86400000;
+
+  if(
+    state.lastReward &&
+    now-state.lastReward < day
+  ){
+
+    const remaining =
+      day-(now-state.lastReward);
+
+    const hours =
+      Math.ceil(
+        remaining/3600000
+      );
+
+    toast(
+      "Reward dans "+hours+"h"
+    );
+
+    return;
+  }
+
+  state.lastReward = now;
+
+  state.streak++;
+
+  const amount =
+    250 + state.streak*100;
+
+  state.total += amount;
+
+  addLog(
+    "🎁 Reward +"+amount+" XP"
+  );
+
+  toast(
+    "+"+amount+" XP"
+  );
+
+  checkAchievements();
+  save();
+  render();
+}
+
+function questValue(q){
+
+  if(q.type==="clicks"){
+    return state.clicks;
+  }
+
+  if(q.type==="total"){
+    return state.total;
+  }
+
+  if(q.type==="best"){
+    return state.best;
+  }
+
+  if(q.type==="level"){
+    return state.level;
+  }
+
+  return 0;
+}
+
+function checkQuests(){
+
+  quests.forEach(q=>{
+
+    if(state.quests[q.id]){
+      return;
+    }
+
+    if(
+      questValue(q) >=
+      q.target
+    ){
+
+      state.quests[q.id] = true;
+
+      state.total += q.reward;
+
+      addLog(
+        "✅ Quête terminée • "+
+        q.name+
+        " • +"+
+        q.reward+
+        " XP"
+      );
+
+      toast(
+        "QUÊTE TERMINÉE"
+      );
+    }
+
+  });
+}
+
+function checkAchievements(){
+
+  achievements.forEach(a=>{
+
+    if(state.achievements[a.id]){
+      return;
+    }
+
+    if(a.check()){
+
+      state.achievements[a.id] = true;
+
+      state.total += a.reward;
+
+      addLog(
+        "🏆 Achievement • "+
+        a.name+
+        " • +"+
+        a.reward+
+        " XP"
+      );
+
+      toast(
+        "ACHIEVEMENT DÉBLOQUÉ"
+      );
+    }
+
+  });
+}
+
+function renderUpgrades(){
+
+  const container =
+    document.getElementById(
+      "upgradeCards"
+    );
+
+  container.innerHTML = "";
+
+  upgrades.forEach(up=>{
+
+    const price =
+      cost(up);
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+    card.className = "card";
+
+    card.innerHTML = `
+      <h3>${up.name}</h3>
+      <p>${up.desc}</p>
+      <div style="
+        color:#777;
+        font-size:11px;
+        margin-bottom:12px
+      ">
+        Coût ${number(price)}
+      </div>
+      <button
+        class="buy"
+        ${state.total<price?"disabled":""}
+        onclick="buy('${up.id}')"
+      >
+        AMÉLIORER
+      </button>
+    `;
+
+    container.appendChild(card);
+
+  });
+}
+
+function renderQuests(){
+
+  const container =
+    document.getElementById(
+      "questList"
+    );
+
+  container.innerHTML = "";
+
+  quests.forEach(q=>{
+
+    const value =
+      Math.min(
+        q.target,
+        questValue(q)
+      );
+
+    const percent =
+      Math.min(
+        100,
+        value/q.target*100
+      );
+
+    const completed =
+      !!state.quests[q.id];
+
+    const row =
+      document.createElement(
+        "div"
+      );
+
+    row.className = "quest";
+
+    row.innerHTML = `
+      <div class="questInfo">
+        <b>
+          ${completed?"✅":"🎯"}
+          ${q.name}
+        </b>
+
+        <span>
+          ${q.desc}
+          • ${value}/${q.target}
+        </span>
+
+        <div class="qbar">
+          <i style="
+            width:${percent}%
+          "></i>
+        </div>
+      </div>
+
+      <div class="reward">
+        +${q.reward}
+      </div>
+    `;
+
+    container.appendChild(row);
+
+  });
+}
+
+function renderAchievements(){
+
+  const container =
+    document.getElementById(
+      "achievementList"
+    );
+
+  container.innerHTML = "";
+
+  let count = 0;
+
+  achievements.forEach(a=>{
+
+    const done =
+      !!state.achievements[a.id];
+
+    if(done){
+      count++;
+    }
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+    card.className = "card";
+
+    card.style.opacity =
+      done ? "1" : ".45";
+
+    card.innerHTML = `
+      <h3>
+        ${done?"🏆":"🔒"}
+        ${a.name}
+      </h3>
+
+      <p>
+        ${a.desc}
+      </p>
+
+      <div style="
+        color:#777;
+        font-size:11px
+      ">
+        ${done?"DÉBLOQUÉ":"VERROUILLÉ"}
+        • +${a.reward} XP
+      </div>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+  document.getElementById(
+    "achCount"
+  ).textContent =
+    count+" / "+achievements.length;
+}
+
+function render(){
+
+  document.getElementById(
+    "coins"
+  ).textContent =
+    number(state.total);
+
+  document.getElementById(
+    "level"
+  ).textContent =
+    state.level;
+
+  document.getElementById(
+    "streak"
+  ).textContent =
+    state.streak;
+
+  document.getElementById(
+    "xp"
+  ).textContent =
+    Math.floor(state.xp);
+
+  document.getElementById(
+    "next"
+  ).textContent =
+    neededXP();
+
+  document.getElementById(
+    "total"
+  ).textContent =
+    number(state.total);
+
+  document.getElementById(
+    "clicks"
+  ).textContent =
+    number(state.clicks);
+
+  document.getElementById(
+    "combo"
+  ).textContent =
+    state.combo;
+
+  document.getElementById(
+    "best"
+  ).textContent =
+    state.best;
+
+  document.getElementById(
+    "gain"
+  ).textContent =
+    gain();
+
+  document.getElementById(
+    "fill"
+  ).style.width =
+    Math.min(
+      100,
+      state.xp/
+      neededXP()*
+      100
+    )+"%";
+
+  document.getElementById(
+    "powerInfo"
+  ).textContent =
+    state.power+
+    " XP par boost";
+
+  document.getElementById(
+    "autoInfo"
+  ).textContent =
+    state.auto+
+    " XP/s";
+
+  document.getElementById(
+    "comboInfo"
+  ).textContent =
+    "x"+
+    state.multi.toFixed(1);
+
+  document.getElementById(
+    "sLevel"
+  ).textContent =
+    state.level;
+
+  document.getElementById(
+    "sTotal"
+  ).textContent =
+    number(state.total);
+
+  document.getElementById(
+    "sPower"
+  ).textContent =
+    gain();
+
+  document.getElementById(
+    "sAuto"
+  ).textContent =
+    state.auto+"/s";
+
+  document.getElementById(
+    "sMulti"
+  ).textContent =
+    "x"+
+    state.multi.toFixed(1);
+
+  document.getElementById(
+    "sBest"
+  ).textContent =
+    state.best;
+
+  renderUpgrades();
+  renderQuests();
+  renderAchievements();
+
+  save();
+}
+
+function tab(id,button){
+
+  document
+    .querySelectorAll(".view")
+    .forEach(v=>{
+      v.classList.remove(
+        "active"
+      );
+    });
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(v=>{
+      v.classList.remove(
+        "active"
+      );
+    });
+
+  document
+    .getElementById(id)
+    .classList.add(
+      "active"
+    );
+
+  button.classList.add(
+    "active"
+  );
+}
+
+function addLog(text){
+
+  const log =
+    document.getElementById(
+      "log"
+    );
+
+  const row =
+    document.createElement(
+      "div"
+    );
+
+  row.textContent =
+    new Date()
+    .toLocaleTimeString()+
+    "  "+
+    text;
+
+  log.prepend(row);
+
+  while(
+    log.children.length > 50
+  ){
+    log.lastChild.remove();
+  }
+}
+
+let toastTimer;
+
+function toast(text){
+
+  const box =
+    document.getElementById(
+      "toast"
+    );
+
+  box.textContent =
+    text;
+
+  box.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toastTimer =
+    setTimeout(()=>{
+      box.classList.remove(
+        "show"
+      );
+    },1800);
 }
 
 setInterval(()=>{
 
-boosts += Math.floor(Math.random()*4)
+  if(state.auto>0){
 
-document.getElementById("boosts").textContent =
-boosts.toLocaleString("fr-FR")
+    let amount =
+      state.auto;
 
-},2000)
-</script>
+    if(state.auto2){
+      amount +=
+        state.auto2*5;
+    }
 
-</body>
-</html>
+    if(state.quantum){
+      amount *=
+        1+state.quantum*.02;
+    }
+
+    state.total +=
+      Math.floor(amount);
+
+    state.xp +=
+      Math.floor(amount);
+
+    while(
+      state.xp >= neededXP()
+    ){
+
+      state.xp -=
+        neededXP();
+
+      state.level++;
+
+      addLog(
+        "🚀 Auto level "+state.level
+      );
+
+    }
+
+    checkAchievements();
+    checkQuests();
+
+    save();
+    render();
+
+  }
+
+},1000);
+
+setInterval(()=>{
+
+  if(
+    Date.now()-
+    state.lastClick >
+    1700
+  ){
+
+    if(state.combo!==0){
+
+      state.combo=0;
+
+      render();
+
+    }
+
+  }
+
+},300);
+
+document
+  .getElementById(
+    "boostButton"
+  )
+  .addEventListener(
+    "click",
+    boost
+  );
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(
+      event.code==="Space" &&
+      !event.repeat
+    ){
+
+      event.preventDefault();
+
+      boost();
+
+    }
+
+  }
+);
+
+addLog(
+  "🚀 BOOSTER démarré"
+);
+
+addLog(
+  "⚡ Clique sur BOOST pour commencer"
+);
+
+render();
