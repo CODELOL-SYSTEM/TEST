@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BOOSTER</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif
+}
+
+body{
+background:#050505;
+color:white;
+overflow-x:hidden
+}
+
+body:before{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+background:#6c2cff;
+filter:blur(180px);
+opacity:.25;
+top:-180px;
+left:-150px;
+z-index:-1
+}
+
+body:after{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+background:#00e5ff;
+filter:blur(180px);
+opacity:.12;
+bottom:-200px;
+right:-150px;
+z-index:-1
+}
+
+nav{
+height:75px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 7%;
+border-bottom:1px solid #191919;
+background:rgba(5,5,5,.75);
+backdrop-filter:blur(20px);
+position:sticky;
+top:0;
+z-index:100
+}
+
+.logo{
+font-size:25px;
+font-weight:900;
+letter-spacing:2px
+}
+
+.logo span{
+color:#7b3cff
+}
+
+.navlinks{
+display:flex;
+gap:30px
+}
+
+.navlinks a{
+color:#aaa;
+text-decoration:none;
+font-size:14px;
+transition:.2s
+}
+
+.navlinks a:hover{
+color:white
+}
+
+.hero{
+min-height:calc(100vh - 75px);
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:80px 20px;
+position:relative
+}
+
+.hero-content{
+max-width:900px
+}
+
+.badge{
+display:inline-block;
+padding:9px 16px;
+border:1px solid #292929;
+background:#111;
+border-radius:30px;
+color:#b99cff;
+font-size:13px;
+margin-bottom:25px;
+box-shadow:0 0 30px rgba(123,60,255,.12)
+}
+
+h1{
+font-size:clamp(55px,9vw,110px);
+line-height:.9;
+font-weight:1000;
+letter-spacing:-6px
+}
+
+.gradient{
+background:linear-gradient(90deg,#fff,#9c70ff,#00e5ff);
+-webkit-background-clip:text;
+color:transparent
+}
+
+.hero p{
+color:#999;
+font-size:18px;
+max-width:620px;
+margin:30px auto;
+line-height:1.6
+}
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:14px;
+flex-wrap:wrap
+}
+
+.btn{
+padding:15px 25px;
+border-radius:12px;
+border:1px solid #292929;
+text-decoration:none;
+font-weight:bold;
+font-size:14px;
+transition:.25s;
+cursor:pointer
+}
+
+.primary{
+background:white;
+color:black
+}
+
+.primary:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 35px rgba(255,255,255,.15)
+}
+
+.secondary{
+background:#101010;
+color:white
+}
+
+.secondary:hover{
+background:#181818;
+transform:translateY(-3px)
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+max-width:850px;
+margin:70px auto 0;
+border:1px solid #1c1c1c;
+background:rgba(12,12,12,.75);
+border-radius:20px;
+overflow:hidden
+}
+
+.stat{
+padding:25px;
+border-right:1px solid #1c1c1c
+}
+
+.stat:last-child{
+border:0
+}
+
+.stat h2{
+font-size:28px
+}
+
+.stat p{
+font-size:12px;
+color:#777;
+margin-top:7px
+}
+
+section{
+padding:100px 7%
+}
+
+.section-title{
+text-align:center;
+font-size:45px;
+font-weight:900;
+letter-spacing:-2px
+}
+
+.section-sub{
+text-align:center;
+color:#777;
+margin:15px auto 50px;
+max-width:550px
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+max-width:1100px;
+margin:auto
+}
+
+.card{
+background:linear-gradient(145deg,#111,#090909);
+border:1px solid #202020;
+border-radius:22px;
+padding:30px;
+transition:.3s;
+position:relative;
+overflow:hidden
+}
+
+.card:hover{
+transform:translateY(-8px);
+border-color:#5130a8;
+box-shadow:0 20px 50px rgba(0,0,0,.4)
+}
+
+.card:before{
+content:"";
+position:absolute;
+width:100px;
+height:100px;
+background:#713cff;
+filter:blur(70px);
+opacity:.12;
+top:-30px;
+right:-30px
+}
+
+.icon{
+width:50px;
+height:50px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#17121f;
+color:#9c70ff;
+font-size:23px;
+margin-bottom:25px
+}
+
+.card h3{
+font-size:21px;
+margin-bottom:12px
+}
+
+.card p{
+color:#777;
+font-size:14px;
+line-height:1.6
+}
+
+.dashboard{
+max-width:1100px;
+margin:auto;
+background:#0b0b0b;
+border:1px solid #202020;
+border-radius:25px;
+padding:25px;
+box-shadow:0 30px 100px rgba(0,0,0,.5)
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px
+}
+
+.live{
+color:#52ff9a;
+font-size:12px;
+background:#0c2015;
+padding:8px 12px;
+border-radius:20px
+}
+
+.chart{
+height:260px;
+border:1px solid #181818;
+border-radius:18px;
+position:relative;
+overflow:hidden;
+background:
+linear-gradient(#151515 1px,transparent 1px),
+linear-gradient(90deg,#151515 1px,transparent 1px);
+background-size:50px 50px
+}
+
+.line{
+position:absolute;
+left:0;
+right:0;
+bottom:40px;
+height:150px;
+background:linear-gradient(135deg,transparent 0 10%,#713cff 10% 11%,transparent 11% 18%,#713cff 18% 19%,transparent 19% 28%,#713cff 28% 29%,transparent 29% 39%,#713cff 39% 40%,transparent 40% 48%,#713cff 48% 49%,transparent 49% 60%,#713cff 60% 61%,transparent 61% 70%,#713cff 70% 71%,transparent 71% 79%,#713cff 79% 80%,transparent 80% 88%,#713cff 88% 89%,transparent 89%);
+opacity:.8;
+filter:drop-shadow(0 0 8px #713cff)
+}
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:15px
+}
+
+.mini{
+background:#101010;
+border:1px solid #1d1d1d;
+padding:20px;
+border-radius:16px
+}
+
+.mini small{
+color:#666
+}
+
+.mini strong{
+display:block;
+font-size:25px;
+margin-top:8px
+}
+
+.cta{
+text-align:center;
+max-width:850px;
+margin:auto;
+padding:70px 30px;
+border:1px solid #222;
+border-radius:30px;
+background:radial-gradient(circle at center,#171020,#090909)
+}
+
+.cta h2{
+font-size:50px;
+letter-spacing:-3px
+}
+
+.cta p{
+color:#777;
+margin:15px auto 30px;
+max-width:500px
+}
+
+footer{
+border-top:1px solid #181818;
+padding:30px 7%;
+display:flex;
+justify-content:space-between;
+color:#555;
+font-size:12px
+}
+
+@media(max-width:800px){
+.navlinks{
+display:none
+}
+
+.stats{
+grid-template-columns:1fr
+}
+
+.stat{
+border-right:0;
+border-bottom:1px solid #1c1c1c
+}
+
+.cards{
+grid-template-columns:1fr
+}
+
+.dashboard-grid{
+grid-template-columns:1fr
+}
+
+.cta h2{
+font-size:38px
+}
+
+h1{
+letter-spacing:-4px
+}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">BOOST<span>ER</span></div>
+
+<div class="navlinks">
+<a href="#features">Features</a>
+<a href="#dashboard">Dashboard</a>
+<a href="#start">Start</a>
+</div>
+
+<a href="#start" class="btn primary">Commencer</a>
+</nav>
+
+<main>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="badge">⚡ BOOSTER • NEXT GENERATION</div>
+
+<h1>
+BOOST YOUR<br>
+<span class="gradient">GAME.</span>
+</h1>
+
+<p>
+Une plateforme moderne pour suivre tes performances,
+visualiser ta progression et transformer tes statistiques
+en vrais résultats.
+</p>
+
+<div class="buttons">
+<a href="#dashboard" class="btn primary">Voir le dashboard</a>
+<a href="#features" class="btn secondary">Découvrir</a>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2>98.7%</h2>
+<p>PERFORMANCE</p>
+</div>
+
+<div class="stat">
+<h2>24/7</h2>
+<p>MONITORING</p>
+</div>
+
+<div class="stat">
+<h2>+247K</h2>
+<p>BOOSTS</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="features">
+
+<div class="section-title">Tout pour booster</div>
+
+<div class="section-sub">
+Un système simple rapide et propre pour garder toutes tes performances sous contrôle.
+</div>
+
+<div class="cards">
+
+<div class="card">
+<div class="icon">⚡</div>
+<h3>Boost instantané</h3>
+<p>
+Active ton boost en quelques secondes et suis directement son évolution depuis ton espace.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">📈</div>
+<h3>Analytics</h3>
+<p>
+Visualise tes statistiques avec un dashboard moderne et des données faciles à comprendre.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🚀</div>
+<h3>Ultra rapide</h3>
+<p>
+Une interface légère conçue pour charger rapidement même sur mobile.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="dashboard">
+
+<div class="section-title">Dashboard</div>
+
+<div class="section-sub">
+Ton activité en temps réel dans une interface clean.
+</div>
+
+<div class="dashboard">
+
+<div class="topbar">
+<strong>Performance</strong>
+<div class="live">● LIVE</div>
+</div>
+
+<div class="chart">
+<div class="line"></div>
+</div>
+
+<div class="dashboard-grid">
+
+<div class="mini">
+<small>BOOSTS</small>
+<strong id="boosts">12,482</strong>
+</div>
+
+<div class="mini">
+<small>GROWTH</small>
+<strong>+38.4%</strong>
+</div>
+
+<div class="mini">
+<small>SCORE</small>
+<strong id="score">94.8</strong>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="start">
+
+<div class="cta">
+
+<h2>READY TO BOOST?</h2>
+
+<p>
+Passe au niveau supérieur avec BOOSTER.
+Simple. Rapide. Puissant.
+</p>
+
+<div class="buttons">
+<button class="btn primary" onclick="startBoost()">ACTIVER LE BOOST</button>
+<a href="#features" class="btn secondary">EN SAVOIR PLUS</a>
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+<div>© 2026 BOOSTER</div>
+<div>Built for performance</div>
+</footer>
+
+<script>
+let boosts=12482
+let score=94.8
+
+function startBoost(){
+
+boosts += Math.floor(Math.random()*100)+50
+score = Math.min(100,score + Math.random()*0.5)
+
+document.getElementById("boosts").textContent =
+boosts.toLocaleString("fr-FR")
+
+document.getElementById("score").textContent =
+score.toFixed(1)
+
+const button=document.querySelector("#start button")
+
+button.textContent="BOOST ACTIVÉ ✓"
+
+setTimeout(()=>{
+button.textContent="ACTIVER LE BOOST"
+},1800)
+}
+
+setInterval(()=>{
+
+boosts += Math.floor(Math.random()*4)
+
+document.getElementById("boosts").textContent =
+boosts.toLocaleString("fr-FR")
+
+},2000)
+</script>
+
+</body>
+</html>
