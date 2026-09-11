@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World English Explorer 🌍</title>
+<title>World English Explorer</title>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 
 <style>
 *{
@@ -12,25 +15,33 @@
     padding:0;
 }
 
-html{
-    scroll-behavior:smooth;
+:root{
+    --bg:#030712;
+    --panel:#071426;
+    --panel2:#0a1b31;
+    --border:#18385d;
+    --text:#f5f8ff;
+    --muted:#8da1b9;
+    --blue:#1683ff;
+    --blue2:#52b4ff;
+    --red:#ff3154;
+    --red2:#ff637d;
+    --green:#32e58b;
+    --yellow:#ffd04d;
 }
 
 body{
+    min-height:100vh;
+    color:var(--text);
     font-family:Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(circle at 20% 10%,#123b70 0%,transparent 30%),
-        radial-gradient(circle at 80% 30%,#102d58 0%,transparent 30%),
-        #050b16;
-    color:white;
-    min-height:100vh;
-}
-
-button,input{
-    font:inherit;
+        radial-gradient(circle at 15% 0%,rgba(22,131,255,.16),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(255,49,84,.10),transparent 25%),
+        var(--bg);
 }
 
 button{
+    font-family:inherit;
     cursor:pointer;
 }
 
@@ -38,41 +49,44 @@ header{
     position:sticky;
     top:0;
     z-index:1000;
-    background:rgba(4,10,22,.9);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid rgba(80,160,255,.2);
+    background:rgba(3,7,18,.88);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid #132b48;
 }
 
 .navbar{
     max-width:1250px;
-    margin:auto;
     min-height:70px;
+    margin:auto;
+    padding:12px 20px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:12px 20px;
+    gap:20px;
 }
 
 .logo{
     font-size:21px;
-    font-weight:900;
-    color:#62b0ff;
+    font-weight:1000;
+    letter-spacing:1px;
+    white-space:nowrap;
 }
 
-.logo span{
-    color:white;
+.logo b{
+    color:var(--blue2);
 }
 
 .nav{
     display:flex;
-    gap:8px;
     flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
 }
 
 .nav button{
-    border:0;
+    color:#91a4bb;
     background:transparent;
-    color:#aab8ca;
+    border:0;
     padding:10px 14px;
     border-radius:10px;
     transition:.2s;
@@ -80,14 +94,14 @@ header{
 
 .nav button:hover,
 .nav button.active{
-    background:#12315b;
     color:white;
+    background:#0d2745;
 }
 
 main{
     max-width:1250px;
     margin:auto;
-    padding:25px 18px 80px;
+    padding:20px;
 }
 
 .section{
@@ -98,282 +112,372 @@ main{
     display:block;
 }
 
+/* HOME */
+
 .hero{
-    min-height:570px;
+    min-height:650px;
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
     text-align:center;
-    flex-direction:column;
-    padding:60px 20px;
 }
 
-.globe{
+.hero-globe{
     font-size:90px;
-    filter:drop-shadow(0 0 30px #2d8cff);
     animation:float 3s ease-in-out infinite;
+    filter:drop-shadow(0 0 30px #1683ff);
 }
 
 @keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-15px)}
+    50%{
+        transform:translateY(-14px);
+    }
 }
 
 .hero h1{
+    margin:20px 0 12px;
     font-size:clamp(45px,8vw,90px);
-    margin:15px 0;
-    background:linear-gradient(90deg,#55aaff,#ffffff,#55aaff);
-    background-size:200%;
+    line-height:1;
+    font-weight:1000;
+    background:linear-gradient(90deg,#fff,#55b5ff,#fff,#ff506c,#fff);
+    background-size:250%;
     -webkit-background-clip:text;
     color:transparent;
-    animation:shine 4s linear infinite;
+    animation:shine 5s linear infinite;
 }
 
 @keyframes shine{
-    to{background-position:200%}
+    to{
+        background-position:250%;
+    }
 }
 
 .hero p{
-    color:#aabbd0;
     max-width:700px;
-    line-height:1.7;
+    color:var(--muted);
     font-size:18px;
+    line-height:1.7;
 }
 
 .primary{
-    margin-top:25px;
-    padding:16px 28px;
     border:0;
-    border-radius:14px;
+    border-radius:13px;
+    padding:15px 24px;
     color:white;
     font-weight:900;
-    background:linear-gradient(135deg,#1677ff,#45b5ff);
-    box-shadow:0 10px 30px rgba(20,120,255,.25);
+    background:linear-gradient(135deg,#0874ff,#46baff);
+    box-shadow:0 10px 30px rgba(22,131,255,.25);
     transition:.2s;
 }
 
 .primary:hover{
-    transform:translateY(-3px) scale(1.02);
+    transform:translateY(-3px);
 }
 
 .secondary{
-    padding:13px 20px;
-    border:1px solid #28527e;
-    border-radius:12px;
+    border:1px solid #24486e;
+    border-radius:13px;
+    padding:14px 20px;
     color:white;
-    background:#0c1a2e;
-    transition:.2s;
-}
-
-.secondary:hover{
-    background:#132a47;
+    background:#0a192c;
 }
 
 .home-stats{
     display:flex;
-    gap:15px;
-    margin-top:30px;
-    flex-wrap:wrap;
     justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:30px;
 }
 
-.mini-stat{
-    background:rgba(13,31,54,.8);
-    border:1px solid #1d4269;
+.home-stat{
+    min-width:150px;
+    padding:15px 20px;
+    background:#071528;
+    border:1px solid #18385d;
     border-radius:15px;
-    padding:15px 25px;
 }
 
-.mini-stat strong{
+.home-stat strong{
     display:block;
     font-size:24px;
-    color:#5eb1ff;
+    color:var(--blue2);
 }
 
-.mini-stat span{
-    color:#8ea3bb;
-    font-size:13px;
+.home-stat span{
+    color:var(--muted);
+    font-size:12px;
 }
+
+/* TITLES */
 
 .section-title{
-    margin:30px 0;
+    margin:35px 0 20px;
 }
 
 .section-title h2{
-    font-size:38px;
+    font-size:40px;
     margin-bottom:8px;
 }
 
 .section-title p{
-    color:#8fa4bb;
+    color:var(--muted);
 }
 
-.map-box{
-    background:#071426;
-    border:1px solid #1b3c62;
-    border-radius:22px;
+/* MAP */
+
+.map-card{
     padding:20px;
-    overflow:hidden;
+    border-radius:22px;
+    border:1px solid #1b4168;
+    background:
+        radial-gradient(circle at center,rgba(15,69,120,.15),transparent 65%),
+        #061223;
+    box-shadow:0 20px 70px rgba(0,0,0,.25);
 }
 
-.map-box img{
+#map{
     width:100%;
-    display:block;
-    border-radius:15px;
-    background:#dceeff;
+    height:550px;
+    overflow:hidden;
+    border-radius:16px;
+    background:
+        radial-gradient(circle,#0c2947,#04101f);
 }
 
-.map-note{
-    margin-top:15px;
-    color:#9eb0c4;
+#worldMap{
+    width:100%;
+    height:100%;
+}
+
+.country-path{
+    stroke:#08111e;
+    stroke-width:.7;
+    transition:.15s;
+}
+
+.country-path:hover{
+    stroke:white;
+    stroke-width:1.5;
+    filter:brightness(1.35);
+}
+
+.map-tooltip{
+    position:fixed;
+    display:none;
+    pointer-events:none;
+    z-index:5000;
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid #31577d;
+    background:#071426;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+    font-size:13px;
+}
+
+.legend{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.legend-item{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:11px 16px;
+    border-radius:12px;
+    background:#09192c;
+    border:1px solid #1b3b60;
+}
+
+.legend-color{
+    width:18px;
+    height:18px;
+    border-radius:5px;
+}
+
+.legend-red{
+    background:var(--red);
+}
+
+.legend-blue{
+    background:var(--blue);
+}
+
+.legend-gray{
+    background:#1b334c;
+}
+
+.legend-text{
+    color:#c4d0de;
+    font-size:14px;
+}
+
+.map-info{
+    margin-top:18px;
+    text-align:center;
+    color:var(--muted);
     line-height:1.6;
 }
 
-.region-grid{
-    margin-top:25px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:15px;
-}
-
-.region{
-    padding:20px;
-    background:#09192d;
-    border:1px solid #193b61;
-    border-radius:16px;
-}
-
-.region b{
-    display:block;
-    margin-bottom:8px;
-}
-
-.region span{
-    color:#8ea3b9;
-    font-size:14px;
-}
+/* COUNTRIES */
 
 .search{
     width:100%;
     padding:16px;
     border-radius:13px;
-    border:1px solid #244a73;
     outline:none;
     color:white;
-    background:#08182b;
-    margin-bottom:22px;
+    background:#071629;
+    border:1px solid #1d4166;
+    margin-bottom:20px;
 }
 
 .search:focus{
-    border-color:#4da5ff;
+    border-color:var(--blue);
 }
 
 .country-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
     gap:15px;
 }
 
 .country{
-    background:linear-gradient(145deg,#0a1b31,#071221);
-    border:1px solid #193d64;
-    border-radius:18px;
     padding:20px;
+    border-radius:18px;
+    border:1px solid #193b61;
+    background:linear-gradient(145deg,#091b30,#061120);
     transition:.2s;
 }
 
 .country:hover{
     transform:translateY(-4px);
-    border-color:#4b9ff0;
+    border-color:#479fff;
+}
+
+.country.primary-country{
+    border-left:4px solid var(--red);
+}
+
+.country.secondary-country{
+    border-left:4px solid var(--blue);
 }
 
 .flag{
-    font-size:45px;
+    font-size:42px;
 }
 
 .country h3{
-    margin:8px 0;
+    margin:9px 0;
 }
 
 .country p{
-    color:#8fa4bb;
+    color:var(--muted);
     line-height:1.7;
     font-size:14px;
 }
 
-.country .tag{
+.country-tag{
     display:inline-block;
-    margin-top:10px;
-    background:#102d4d;
-    color:#68b4ff;
+    margin-top:12px;
     padding:6px 9px;
     border-radius:8px;
-    font-size:12px;
+    font-size:11px;
+    font-weight:900;
 }
+
+.red-tag{
+    background:rgba(255,49,84,.12);
+    color:#ff7188;
+}
+
+.blue-tag{
+    background:rgba(22,131,255,.12);
+    color:#63b8ff;
+}
+
+/* QUIZ START */
 
 .quiz-start{
     text-align:center;
-    padding:40px 10px;
+    max-width:950px;
+    margin:auto;
+}
+
+.quiz-logo{
+    font-size:70px;
+    margin-top:40px;
 }
 
 .mode-grid{
-    margin:30px auto;
-    max-width:850px;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
     gap:15px;
+    margin:30px 0;
 }
 
 .mode{
     text-align:left;
-    padding:22px;
-    border:1px solid #21466f;
-    border-radius:18px;
-    background:#091a2e;
     color:white;
+    background:#071629;
+    border:1px solid #1b4168;
+    border-radius:18px;
+    padding:22px;
     transition:.2s;
 }
 
 .mode:hover{
-    transform:translateY(-4px);
-    border-color:#52aaff;
+    transform:translateY(-5px);
+    border-color:var(--blue2);
+    box-shadow:0 15px 35px rgba(22,131,255,.12);
 }
 
 .mode h3{
-    margin-bottom:8px;
+    margin-bottom:9px;
 }
 
 .mode p{
-    color:#91a5bb;
-    font-size:14px;
-    line-height:1.5;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
 }
+
+.best-box{
+    color:#ffd052;
+    font-weight:900;
+}
+
+/* QUIZ */
 
 .quiz-game{
     max-width:900px;
-    margin:auto;
+    margin:25px auto;
     display:none;
 }
 
-.quiz-top{
+.quiz-stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:10px;
-    margin-bottom:15px;
 }
 
 .stat{
-    background:#091a2e;
-    border:1px solid #1b4168;
-    border-radius:14px;
     padding:14px;
     text-align:center;
+    border-radius:14px;
+    border:1px solid #193d63;
+    background:#071629;
 }
 
 .stat small{
     display:block;
-    color:#8198b0;
-    font-size:11px;
+    color:#8297ae;
+    font-size:10px;
     margin-bottom:5px;
 }
 
@@ -382,42 +486,40 @@ main{
 }
 
 #comboStat{
-    color:#ffcb55;
+    color:#ffd052;
 }
 
 #multiplierStat{
-    color:#66d4ff;
+    color:#58c0ff;
 }
 
 .progress-info{
     display:flex;
     justify-content:space-between;
-    color:#9cafc4;
-    margin:12px 2px 7px;
-    font-size:14px;
+    color:#91a5bb;
+    margin:18px 2px 7px;
+    font-size:13px;
 }
 
 .progress{
-    width:100%;
-    height:9px;
-    border-radius:20px;
+    height:8px;
     overflow:hidden;
-    background:#0c1c30;
-    margin-bottom:12px;
+    border-radius:20px;
+    background:#0a1a2d;
 }
 
 .progress-fill{
-    height:100%;
     width:0%;
-    background:linear-gradient(90deg,#247fff,#5bc7ff);
+    height:100%;
+    background:linear-gradient(90deg,#1683ff,#54c1ff);
     transition:.3s;
 }
 
-.timer-wrap{
-    margin-bottom:20px;
+.timer{
+    margin:15px 0 20px;
 }
 
-.timer-label{
+.timer-top{
     display:flex;
     justify-content:space-between;
     margin-bottom:7px;
@@ -425,42 +527,55 @@ main{
 }
 
 #timerText{
-    color:#68c0ff;
+    color:#59b9ff;
 }
 
 .timer-bar{
-    height:13px;
-    background:#0b192b;
+    height:12px;
     border-radius:20px;
     overflow:hidden;
+    background:#0a192b;
 }
 
 #timerFill{
-    height:100%;
     width:100%;
-    background:#42a8ff;
-    transition:width .1s linear,background .2s;
+    height:100%;
+    background:var(--blue);
+    transition:width .1s linear;
 }
 
 .question-card{
-    background:
-        radial-gradient(circle at top right,rgba(45,133,255,.1),transparent 35%),
-        #08182b;
-    border:1px solid #234c75;
+    padding:32px;
     border-radius:22px;
-    padding:35px;
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    border:1px solid #214b75;
+    background:
+        radial-gradient(circle at top right,rgba(22,131,255,.1),transparent 35%),
+        #071629;
+    box-shadow:0 20px 70px rgba(0,0,0,.3);
 }
 
-.difficulty{
+.level{
     display:inline-block;
     padding:7px 11px;
     border-radius:8px;
-    background:#123254;
-    color:#72bdff;
+    font-size:11px;
     font-weight:900;
-    font-size:12px;
     margin-bottom:18px;
+}
+
+.easy{
+    color:#4ee69b;
+    background:rgba(50,229,139,.1);
+}
+
+.medium{
+    color:#ffd052;
+    background:rgba(255,208,82,.1);
+}
+
+.hard{
+    color:#ff637c;
+    background:rgba(255,49,84,.1);
 }
 
 #questionText{
@@ -477,29 +592,29 @@ main{
 
 .answer{
     min-height:70px;
-    border:1px solid #234c75;
-    border-radius:14px;
-    color:white;
-    background:#0b1e34;
     padding:15px;
     text-align:left;
+    color:white;
+    border:1px solid #21476c;
+    border-radius:14px;
+    background:#0a1c31;
     transition:.15s;
 }
 
 .answer:hover:not(:disabled){
-    border-color:#59b0ff;
-    background:#102b49;
     transform:translateY(-2px);
+    border-color:#5bb8ff;
+    background:#102a46;
 }
 
 .answer.correct{
-    background:#123f2c;
-    border-color:#39d88a;
+    border-color:var(--green);
+    background:#0c3928;
 }
 
 .answer.wrong{
-    background:#48202a;
-    border-color:#ff5f73;
+    border-color:var(--red);
+    background:#401722;
 }
 
 .answer:disabled{
@@ -508,43 +623,23 @@ main{
 
 .feedback{
     min-height:35px;
-    margin-top:20px;
+    margin-top:18px;
+    font-size:16px;
     font-weight:900;
-    font-size:17px;
 }
 
-.next-row{
-    display:flex;
-    justify-content:flex-end;
-    margin-top:10px;
-}
-
-#nextBtn{
+.next{
     display:none;
+    margin-top:8px;
 }
 
-.combo-message{
-    position:fixed;
-    right:20px;
-    top:90px;
-    background:#0c2139;
-    border:1px solid #4eabff;
-    border-radius:14px;
-    padding:12px 18px;
-    font-weight:900;
-    transform:translateX(150%);
-    transition:.3s;
-    z-index:2000;
-}
-
-.combo-message.show{
-    transform:translateX(0);
-}
+/* VICTORY */
 
 .victory{
     display:none;
+    max-width:800px;
+    margin:70px auto;
     text-align:center;
-    padding:50px 15px;
 }
 
 .victory-icon{
@@ -552,58 +647,72 @@ main{
 }
 
 .victory h2{
-    font-size:55px;
     margin:15px 0;
+    font-size:50px;
 }
 
 .final-score{
-    font-size:50px;
-    font-weight:900;
-    color:#62baff;
+    font-size:55px;
+    font-weight:1000;
+    color:#59baff;
 }
 
 .result-grid{
-    max-width:700px;
-    margin:30px auto;
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:12px;
+    margin:30px 0;
 }
 
 .result{
-    background:#091a2e;
-    border:1px solid #21476f;
-    border-radius:15px;
     padding:18px;
+    border:1px solid #1d4166;
+    border-radius:15px;
+    background:#071629;
 }
 
 .result strong{
     display:block;
-    font-size:24px;
+    font-size:25px;
 }
 
 .result span{
-    color:#8298ae;
-    font-size:12px;
+    color:#8297ad;
+    font-size:11px;
 }
 
-.record{
-    color:#ffd35c;
-    font-weight:900;
+.new-record{
+    color:#ffd052;
+    font-weight:1000;
     margin:15px;
 }
 
+.combo-popup{
+    position:fixed;
+    right:20px;
+    top:90px;
+    z-index:3000;
+    padding:13px 18px;
+    border-radius:13px;
+    color:white;
+    font-weight:1000;
+    background:#0b2039;
+    border:1px solid #4daeff;
+    transform:translateX(150%);
+    transition:.3s;
+}
+
+.combo-popup.show{
+    transform:translateX(0);
+}
+
 @media(max-width:700px){
+
     .navbar{
         flex-direction:column;
-        gap:10px;
     }
 
-    .nav{
-        justify-content:center;
-    }
-
-    .quiz-top{
+    .quiz-stats{
         grid-template-columns:1fr 1fr;
     }
 
@@ -615,13 +724,18 @@ main{
         padding:22px;
     }
 
+    #map{
+        height:350px;
+    }
+
     .result-grid{
         grid-template-columns:1fr;
     }
 
-    .hero{
-        min-height:500px;
+    .hero h1{
+        font-size:48px;
     }
+
 }
 </style>
 </head>
@@ -630,51 +744,62 @@ main{
 
 <header>
     <div class="navbar">
-        <div class="logo">🌍 WORLD <span>ENGLISH</span></div>
+
+        <div class="logo">
+            🌍 <b>WORLD</b> ENGLISH
+        </div>
 
         <nav class="nav">
-            <button class="active" onclick="showSection('home',this)">Accueil</button>
-            <button onclick="showSection('map',this)">🗺️ Carte</button>
-            <button onclick="showSection('countries',this)">🌎 Pays</button>
-            <button onclick="showSection('quiz',this)">🎯 Quiz</button>
+            <button class="active" data-section="home">Accueil</button>
+            <button data-section="mapSection">🗺️ Carte</button>
+            <button data-section="countries">🌎 Pays</button>
+            <button data-section="quiz">🎯 Quiz</button>
         </nav>
+
     </div>
 </header>
 
+
 <main>
+
+<!-- ACCUEIL -->
 
 <section id="home" class="section active">
 
     <div class="hero">
 
-        <div class="globe">🌍</div>
+        <div class="hero-globe">🌍</div>
 
         <h1>WORLD ENGLISH</h1>
 
         <p>
-            Explore les pays où l'anglais est parlé, découvre leurs capitales
-            et teste tes connaissances avec des quiz de plus en plus difficiles.
+            Découvre les pays où l'anglais est parlé dans le monde,
+            apprends leurs capitales et teste tes connaissances.
         </p>
 
-        <button class="primary" onclick="showSection('quiz')">
-            🚀 COMMENCER LE QUIZ
+        <br>
+
+        <button class="primary" id="homeQuiz">
+            🚀 JOUER AU QUIZ
         </button>
 
         <div class="home-stats">
-            <div class="mini-stat">
+
+            <div class="home-stat">
                 <strong id="homeBest">0</strong>
                 <span>Meilleur score</span>
             </div>
 
-            <div class="mini-stat">
-                <strong>45</strong>
-                <span>Questions</span>
+            <div class="home-stat">
+                <strong>10</strong>
+                <span>Questions max</span>
             </div>
 
-            <div class="mini-stat">
-                <strong>3</strong>
-                <span>Niveaux</span>
+            <div class="home-stat">
+                <strong>2</strong>
+                <span>Catégories de langue</span>
             </div>
+
         </div>
 
     </div>
@@ -682,133 +807,155 @@ main{
 </section>
 
 
-<section id="map" class="section">
+<!-- CARTE -->
+
+<section id="mapSection" class="section">
 
     <div class="section-title">
-        <h2>🗺️ Carte du monde</h2>
-        <p>Repère les différentes régions du monde anglophone.</p>
-    </div>
 
-    <div class="map-box">
+        <h2>🗺️ Carte du monde anglophone</h2>
 
-        <img
-            src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
-            alt="Carte du monde"
-        >
-
-        <div class="map-note">
-            🌍 Cette carte permet de visualiser les continents et les régions
-            où l'anglais est très utilisé.
-        </div>
+        <p>
+            Les pays sont colorés selon la place de l'anglais dans leur usage.
+        </p>
 
     </div>
 
-    <div class="region-grid">
+    <div class="map-card">
 
-        <div class="region">
-            <b>🇪🇺 Europe</b>
-            <span>Royaume-Uni, Irlande, Malte</span>
+        <div id="map">
+            <svg id="worldMap"></svg>
         </div>
 
-        <div class="region">
-            <b>🌎 Amérique du Nord</b>
-            <span>États-Unis, Canada</span>
+        <div class="legend">
+
+            <div class="legend-item">
+                <div class="legend-color legend-red"></div>
+                <div class="legend-text">
+                    🔴 Anglais comme langue principale
+                </div>
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-color legend-blue"></div>
+                <div class="legend-text">
+                    🔵 Anglais comme seconde langue / langue officielle
+                </div>
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-color legend-gray"></div>
+                <div class="legend-text">
+                    ⚫ Autres pays
+                </div>
+            </div>
+
         </div>
 
-        <div class="region">
-            <b>🌎 Caraïbes</b>
-            <span>Jamaïque, Bahamas, Barbade</span>
-        </div>
-
-        <div class="region">
-            <b>🌍 Afrique</b>
-            <span>Ghana, Kenya, Nigeria, Afrique du Sud...</span>
-        </div>
-
-        <div class="region">
-            <b>🌏 Asie</b>
-            <span>Inde, Pakistan, Singapour, Philippines...</span>
-        </div>
-
-        <div class="region">
-            <b>🌊 Océanie</b>
-            <span>Australie, Nouvelle-Zélande, Fidji</span>
+        <div class="map-info">
+            🔴 Rouge = pays où l'anglais est une langue principale.<br>
+            🔵 Bleu = pays où l'anglais est principalement utilisé comme seconde langue
+            ou langue officielle en plus d'autres langues.
         </div>
 
     </div>
 
 </section>
 
+
+<!-- PAYS -->
 
 <section id="countries" class="section">
 
     <div class="section-title">
-        <h2>🌎 Pays anglophones</h2>
-        <p>Recherche un pays pour retrouver sa capitale et sa région.</p>
+
+        <h2>🌎 Les pays</h2>
+
+        <p>
+            Retrouve leur capitale, continent et utilisation de l'anglais.
+        </p>
+
     </div>
 
     <input
-        class="search"
         id="countrySearch"
+        class="search"
         placeholder="🔎 Rechercher un pays..."
-        oninput="filterCountries()"
     >
 
-    <div class="country-grid" id="countryGrid"></div>
+    <div id="countryGrid" class="country-grid"></div>
 
 </section>
 
+
+<!-- QUIZ -->
 
 <section id="quiz" class="section">
 
     <div id="quizStart" class="quiz-start">
 
+        <div class="quiz-logo">🎯</div>
+
         <div class="section-title">
-            <h2>🎯 WORLD QUIZ</h2>
+
+            <h2>WORLD QUIZ</h2>
+
             <p>
-                Réponds vite, construis ton combo et augmente ton multiplicateur.
-                La difficulté augmente progressivement.
+                Chaque partie contient seulement 10 questions maximum.
+                La difficulté augmente pendant la partie.
             </p>
+
         </div>
 
         <div class="mode-grid">
 
-            <button class="mode" onclick="startQuiz('full')">
-                <h3>🔥 Quiz complet</h3>
+            <button class="mode" data-mode="classic">
+                <h3>🔥 Classique</h3>
                 <p>
-                    45 questions<br>
-                    Facile → Moyen → Difficile
+                    10 questions<br>
+                    Capitales + pays
                 </p>
             </button>
 
-            <button class="mode" onclick="startQuiz('sprint')">
-                <h3>⚡ Sprint</h3>
+            <button class="mode" data-mode="capitals">
+                <h3>🏛️ Capitales</h3>
                 <p>
-                    15 questions<br>
-                    5 faciles, 5 moyennes, 5 difficiles
+                    10 questions<br>
+                    Trouve la bonne capitale
                 </p>
             </button>
 
-            <button class="mode" onclick="startQuiz('easy')">
-                <h3>📚 Révision</h3>
+            <button class="mode" data-mode="countries">
+                <h3>🌍 Pays</h3>
                 <p>
-                    15 questions faciles<br>
-                    Parfait pour apprendre
+                    10 questions<br>
+                    Identifie les pays
+                </p>
+            </button>
+
+            <button class="mode" data-mode="challenge">
+                <h3>💀 Challenge</h3>
+                <p>
+                    10 questions<br>
+                    Plus difficile
                 </p>
             </button>
 
         </div>
 
-        <div class="record">
-            🏆 Meilleur score : <span id="startBest">0</span>
+        <div class="best-box">
+            🏆 MEILLEUR SCORE :
+            <span id="startBest">0</span>
         </div>
 
     </div>
 
 
+    <!-- JEU -->
+
     <div id="quizGame" class="quiz-game">
 
-        <div class="quiz-top">
+        <div class="quiz-stats">
 
             <div class="stat">
                 <small>SCORE</small>
@@ -834,20 +981,32 @@ main{
 
 
         <div class="progress-info">
-            <span id="questionNumber">Question 1/45</span>
-            <span id="difficultyText">FACILE</span>
+
+            <span id="questionNumber">
+                Question 1/10
+            </span>
+
+            <span id="difficultyText">
+                FACILE
+            </span>
+
         </div>
 
         <div class="progress">
-            <div class="progress-fill" id="progressFill"></div>
+            <div id="progressFill" class="progress-fill"></div>
         </div>
 
 
-        <div class="timer-wrap">
+        <div class="timer">
 
-            <div class="timer-label">
+            <div class="timer-top">
+
                 <span>⏱️ TEMPS</span>
-                <span id="timerText">18s</span>
+
+                <span id="timerText">
+                    15s
+                </span>
+
             </div>
 
             <div class="timer-bar">
@@ -859,7 +1018,7 @@ main{
 
         <div class="question-card">
 
-            <div class="difficulty" id="difficultyBadge">
+            <div id="levelBadge" class="level easy">
                 🟢 FACILE
             </div>
 
@@ -867,39 +1026,44 @@ main{
                 Question
             </h2>
 
-            <div class="answers" id="answers"></div>
+            <div id="answers" class="answers"></div>
 
-            <div class="feedback" id="feedback"></div>
+            <div id="feedback" class="feedback"></div>
 
-            <div class="next-row">
-                <button
-                    class="primary"
-                    id="nextBtn"
-                    onclick="nextQuestion()"
-                >
-                    Question suivante →
-                </button>
-            </div>
+            <button
+                id="nextBtn"
+                class="primary next"
+            >
+                Question suivante →
+            </button>
 
         </div>
 
     </div>
 
 
+    <!-- VICTOIRE -->
+
     <div id="victory" class="victory">
 
-        <div class="victory-icon" id="victoryIcon">🏆</div>
+        <div id="victoryIcon" class="victory-icon">
+            🏆
+        </div>
 
-        <h2 id="victoryTitle">Victoire !</h2>
+        <h2 id="victoryTitle">
+            VICTOIRE !
+        </h2>
 
-        <div class="final-score" id="finalScore">0</div>
+        <div id="finalScore" class="final-score">
+            0
+        </div>
 
         <p id="victoryMessage"></p>
 
         <div class="result-grid">
 
             <div class="result">
-                <strong id="finalCorrect">0</strong>
+                <strong id="finalCorrect">0/10</strong>
                 <span>BONNES RÉPONSES</span>
             </div>
 
@@ -915,18 +1079,14 @@ main{
 
         </div>
 
-        <div class="record" id="newRecord"></div>
+        <div id="newRecord" class="new-record"></div>
 
-        <button class="primary" onclick="restartQuiz()">
+        <button id="replayBtn" class="primary">
             🔄 REJOUER
         </button>
 
-        <button
-            class="secondary"
-            onclick="showSection('home')"
-            style="margin-left:10px"
-        >
-            🏠 Accueil
+        <button id="homeBtn" class="secondary">
+            🏠 ACCUEIL
         </button>
 
     </div>
@@ -936,800 +1096,1036 @@ main{
 </main>
 
 
-<div class="combo-message" id="comboMessage">
+<div id="mapTooltip" class="map-tooltip"></div>
+
+<div id="comboPopup" class="combo-popup">
     🔥 COMBO !
 </div>
 
 
 <script>
 
+/* =====================================================
+   DONNÉES DES PAYS
+===================================================== */
+
 const countries = [
 
-{
-flag:"🇬🇧",
-name:"Royaume-Uni",
-capital:"Londres",
-continent:"Europe",
-english:"Langue principale"
-},
+    {
+        id:"826",
+        flag:"🇬🇧",
+        name:"Royaume-Uni",
+        capital:"Londres",
+        continent:"Europe",
+        type:"primary"
+    },
 
-{
-flag:"🏴",
-name:"Angleterre",
-capital:"Londres",
-continent:"Europe",
-english:"Langue principale"
-},
+    {
+        id:"840",
+        flag:"🇺🇸",
+        name:"États-Unis",
+        capital:"Washington D.C.",
+        continent:"Amérique du Nord",
+        type:"primary"
+    },
 
-{
-flag:"🇺🇸",
-name:"États-Unis",
-capital:"Washington D.C.",
-continent:"Amérique du Nord",
-english:"Langue principale"
-},
+    {
+        id:"036",
+        flag:"🇦🇺",
+        name:"Australie",
+        capital:"Canberra",
+        continent:"Océanie",
+        type:"primary"
+    },
 
-{
-flag:"🇨🇦",
-name:"Canada",
-capital:"Ottawa",
-continent:"Amérique du Nord",
-english:"Anglais et français officiels"
-},
+    {
+        id:"554",
+        flag:"🇳🇿",
+        name:"Nouvelle-Zélande",
+        capital:"Wellington",
+        continent:"Océanie",
+        type:"primary"
+    },
 
-{
-flag:"🇦🇺",
-name:"Australie",
-capital:"Canberra",
-continent:"Océanie",
-english:"Langue principale"
-},
+    {
+        id:"372",
+        flag:"🇮🇪",
+        name:"Irlande",
+        capital:"Dublin",
+        continent:"Europe",
+        type:"primary"
+    },
 
-{
-flag:"🇳🇿",
-name:"Nouvelle-Zélande",
-capital:"Wellington",
-continent:"Océanie",
-english:"Anglais largement utilisé"
-},
+    {
+        id:"124",
+        flag:"🇨🇦",
+        name:"Canada",
+        capital:"Ottawa",
+        continent:"Amérique du Nord",
+        type:"secondary"
+    },
 
-{
-flag:"🇮🇪",
-name:"Irlande",
-capital:"Dublin",
-continent:"Europe",
-english:"Langue officielle"
-},
+    {
+        id:"710",
+        flag:"🇿🇦",
+        name:"Afrique du Sud",
+        capital:"Pretoria",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇿🇦",
-name:"Afrique du Sud",
-capital:"Pretoria",
-continent:"Afrique",
-english:"Une des langues officielles"
-},
+    {
+        id:"356",
+        flag:"🇮🇳",
+        name:"Inde",
+        capital:"New Delhi",
+        continent:"Asie",
+        type:"secondary"
+    },
 
-{
-flag:"🇮🇳",
-name:"Inde",
-capital:"New Delhi",
-continent:"Asie",
-english:"Très utilisé dans l'administration et l'éducation"
-},
+    {
+        id:"702",
+        flag:"🇸🇬",
+        name:"Singapour",
+        capital:"Singapour",
+        continent:"Asie",
+        type:"secondary"
+    },
 
-{
-flag:"🇸🇬",
-name:"Singapour",
-capital:"Singapour",
-continent:"Asie",
-english:"Langue officielle"
-},
+    {
+        id:"608",
+        flag:"🇵🇭",
+        name:"Philippines",
+        capital:"Manille",
+        continent:"Asie",
+        type:"secondary"
+    },
 
-{
-flag:"🇵🇭",
-name:"Philippines",
-capital:"Manille",
-continent:"Asie",
-english:"Langue officielle"
-},
+    {
+        id:"566",
+        flag:"🇳🇬",
+        name:"Nigeria",
+        capital:"Abuja",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇳🇬",
-name:"Nigeria",
-capital:"Abuja",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"404",
+        flag:"🇰🇪",
+        name:"Kenya",
+        capital:"Nairobi",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇰🇪",
-name:"Kenya",
-capital:"Nairobi",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"288",
+        flag:"🇬🇭",
+        name:"Ghana",
+        capital:"Accra",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇬🇭",
-name:"Ghana",
-capital:"Accra",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"388",
+        flag:"🇯🇲",
+        name:"Jamaïque",
+        capital:"Kingston",
+        continent:"Caraïbes",
+        type:"primary"
+    },
 
-{
-flag:"🇯🇲",
-name:"Jamaïque",
-capital:"Kingston",
-continent:"Caraïbes",
-english:"Langue officielle"
-},
+    {
+        id:"044",
+        flag:"🇧🇸",
+        name:"Bahamas",
+        capital:"Nassau",
+        continent:"Caraïbes",
+        type:"primary"
+    },
 
-{
-flag:"🇧🇸",
-name:"Bahamas",
-capital:"Nassau",
-continent:"Caraïbes",
-english:"Langue officielle"
-},
+    {
+        id:"052",
+        flag:"🇧🇧",
+        name:"Barbade",
+        capital:"Bridgetown",
+        continent:"Caraïbes",
+        type:"primary"
+    },
 
-{
-flag:"🇧🇧",
-name:"Barbade",
-capital:"Bridgetown",
-continent:"Caraïbes",
-english:"Langue officielle"
-},
+    {
+        id:"084",
+        flag:"🇧🇿",
+        name:"Belize",
+        capital:"Belmopan",
+        continent:"Amérique centrale",
+        type:"secondary"
+    },
 
-{
-flag:"🇧🇿",
-name:"Belize",
-capital:"Belmopan",
-continent:"Amérique centrale",
-english:"Langue officielle"
-},
+    {
+        id:"470",
+        flag:"🇲🇹",
+        name:"Malte",
+        capital:"La Valette",
+        continent:"Europe",
+        type:"secondary"
+    },
 
-{
-flag:"🇲🇹",
-name:"Malte",
-capital:"La Valette",
-continent:"Europe",
-english:"Langue officielle"
-},
+    {
+        id:"800",
+        flag:"🇺🇬",
+        name:"Ouganda",
+        capital:"Kampala",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇺🇬",
-name:"Ouganda",
-capital:"Kampala",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"716",
+        flag:"🇿🇼",
+        name:"Zimbabwe",
+        capital:"Harare",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇿🇼",
-name:"Zimbabwe",
-capital:"Harare",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"894",
+        flag:"🇿🇲",
+        name:"Zambie",
+        capital:"Lusaka",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇿🇲",
-name:"Zambie",
-capital:"Lusaka",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"072",
+        flag:"🇧🇼",
+        name:"Botswana",
+        capital:"Gaborone",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇧🇼",
-name:"Botswana",
-capital:"Gaborone",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"516",
+        flag:"🇳🇦",
+        name:"Namibie",
+        capital:"Windhoek",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇳🇦",
-name:"Namibie",
-capital:"Windhoek",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"646",
+        flag:"🇷🇼",
+        name:"Rwanda",
+        capital:"Kigali",
+        continent:"Afrique",
+        type:"secondary"
+    },
 
-{
-flag:"🇷🇼",
-name:"Rwanda",
-capital:"Kigali",
-continent:"Afrique",
-english:"Langue officielle"
-},
+    {
+        id:"586",
+        flag:"🇵🇰",
+        name:"Pakistan",
+        capital:"Islamabad",
+        continent:"Asie",
+        type:"secondary"
+    },
 
-{
-flag:"🇵🇰",
-name:"Pakistan",
-capital:"Islamabad",
-continent:"Asie",
-english:"Langue officielle et largement utilisée"
-},
+    {
+        id:"458",
+        flag:"🇲🇾",
+        name:"Malaisie",
+        capital:"Kuala Lumpur",
+        continent:"Asie",
+        type:"secondary"
+    },
 
-{
-flag:"🇲🇾",
-name:"Malaisie",
-capital:"Kuala Lumpur",
-continent:"Asie",
-english:"Largement utilisé"
-},
-
-{
-flag:"🇫🇯",
-name:"Fidji",
-capital:"Suva",
-continent:"Océanie",
-english:"Langue officielle"
-}
+    {
+        id:"242",
+        flag:"🇫🇯",
+        name:"Fidji",
+        capital:"Suva",
+        continent:"Océanie",
+        type:"secondary"
+    }
 
 ];
 
 
-const questions = [
+/* =====================================================
+   QUESTIONS
+   MAX 10 PAR PARTIE
+===================================================== */
 
-/* =========================
-   FACILE
-========================= */
+const questionPools = {
+
+classic:[
 
 {
-level:1,
 q:"Quelle est la capitale de l'Angleterre ?",
 a:"Londres",
-options:["Londres","Manchester","Liverpool","Birmingham"]
+options:["Londres","Manchester","Liverpool","Birmingham"],
+level:1
 },
 
 {
-level:1,
 q:"Quelle est la capitale des États-Unis ?",
 a:"Washington D.C.",
-options:["New York","Washington D.C.","Los Angeles","Chicago"]
+options:["New York","Washington D.C.","Chicago","Boston"],
+level:1
 },
 
 {
-level:1,
 q:"Quelle est la capitale du Canada ?",
 a:"Ottawa",
-options:["Toronto","Ottawa","Vancouver","Montréal"]
+options:["Toronto","Ottawa","Vancouver","Montréal"],
+level:1
 },
 
 {
-level:1,
 q:"Quelle est la capitale de l'Australie ?",
 a:"Canberra",
-options:["Sydney","Melbourne","Canberra","Perth"]
+options:["Sydney","Canberra","Melbourne","Perth"],
+level:1
 },
 
 {
-level:1,
-q:"Quelle est la capitale de la Nouvelle-Zélande ?",
-a:"Wellington",
-options:["Auckland","Wellington","Christchurch","Hamilton"]
-},
-
-{
-level:1,
 q:"Quelle est la capitale de l'Irlande ?",
 a:"Dublin",
-options:["Dublin","Cork","Galway","Limerick"]
+options:["Dublin","Cork","Galway","Limerick"],
+level:2
 },
 
 {
-level:1,
+q:"Quelle est la capitale de la Nouvelle-Zélande ?",
+a:"Wellington",
+options:["Auckland","Wellington","Hamilton","Christchurch"],
+level:2
+},
+
+{
 q:"Quelle est la capitale du Ghana ?",
 a:"Accra",
-options:["Accra","Kumasi","Lagos","Abuja"]
+options:["Accra","Kumasi","Lagos","Abuja"],
+level:2
 },
 
 {
-level:1,
-q:"Quelle est la capitale du Kenya ?",
-a:"Nairobi",
-options:["Mombasa","Nairobi","Kisumu","Eldoret"]
-},
-
-{
-level:1,
 q:"Quelle est la capitale du Nigeria ?",
 a:"Abuja",
-options:["Lagos","Abuja","Kano","Ibadan"]
+options:["Lagos","Abuja","Kano","Ibadan"],
+level:3
 },
 
 {
-level:1,
-q:"Quelle est la capitale de la Jamaïque ?",
-a:"Kingston",
-options:["Kingston","Montego Bay","Nassau","Bridgetown"]
-},
-
-{
-level:1,
-q:"Quelle est la capitale des Bahamas ?",
-a:"Nassau",
-options:["Nassau","Kingston","Freeport","Bridgetown"]
-},
-
-{
-level:1,
-q:"Quelle est la capitale de la Barbade ?",
-a:"Bridgetown",
-options:["Bridgetown","Nassau","Kingston","Belmopan"]
-},
-
-{
-level:1,
-q:"Quelle est la capitale des Fidji ?",
-a:"Suva",
-options:["Suva","Nadi","Apia","Honiara"]
-},
-
-{
-level:1,
-q:"Sur quel continent se trouve l'Australie ?",
-a:"Océanie",
-options:["Asie","Europe","Océanie","Afrique"]
-},
-
-{
-level:1,
-q:"Sur quel continent se trouve le Ghana ?",
-a:"Afrique",
-options:["Afrique","Asie","Europe","Océanie"]
-},
-
-
-/* =========================
-   MOYEN
-========================= */
-
-{
-level:2,
-q:"Quelle est la capitale de l'Inde ?",
-a:"New Delhi",
-options:["Mumbai","New Delhi","Kolkata","Bangalore"]
-},
-
-{
-level:2,
-q:"Quelle est la capitale du Pakistan ?",
-a:"Islamabad",
-options:["Karachi","Lahore","Islamabad","Peshawar"]
-},
-
-{
-level:2,
-q:"Quelle est la capitale de l'Ouganda ?",
-a:"Kampala",
-options:["Kampala","Entebbe","Nairobi","Kigali"]
-},
-
-{
-level:2,
-q:"Quelle est la capitale de la Zambie ?",
-a:"Lusaka",
-options:["Lusaka","Harare","Kigali","Gaborone"]
-},
-
-{
-level:2,
-q:"Quelle est la capitale du Zimbabwe ?",
-a:"Harare",
-options:["Harare","Lusaka","Pretoria","Windhoek"]
-},
-
-{
-level:2,
-q:"Quelle est la capitale du Botswana ?",
-a:"Gaborone",
-options:["Gaborone","Maun","Lusaka","Kampala"]
-},
-
-{
-level:2,
 q:"Quelle est la capitale de la Namibie ?",
 a:"Windhoek",
-options:["Windhoek","Walvis Bay","Gaborone","Pretoria"]
+options:["Windhoek","Gaborone","Lusaka","Harare"],
+level:3
 },
 
 {
-level:2,
 q:"Quelle est la capitale du Rwanda ?",
 a:"Kigali",
-options:["Kigali","Kampala","Nairobi","Bujumbura"]
+options:["Kigali","Nairobi","Kampala","Bujumbura"],
+level:3
+}
+
+],
+
+capitals:[
+
+{
+q:"Londres est la capitale de quel pays ?",
+a:"Royaume-Uni",
+options:["Royaume-Uni","Canada","Australie","Irlande"],
+level:1
 },
 
 {
-level:2,
-q:"Quelle est la capitale du Belize ?",
-a:"Belmopan",
-options:["Belize City","Belmopan","Guatemala City","Nassau"]
+q:"Washington D.C. est la capitale de quel pays ?",
+a:"États-Unis",
+options:["États-Unis","Canada","Royaume-Uni","Australie"],
+level:1
 },
 
 {
-level:2,
-q:"Quelle est la capitale de l'Afrique du Sud ?",
-a:"Pretoria",
-options:["Cape Town","Johannesburg","Pretoria","Durban"]
+q:"Canberra est la capitale de quel pays ?",
+a:"Australie",
+options:["Australie","Nouvelle-Zélande","Canada","Irlande"],
+level:1
 },
 
 {
-level:2,
-q:"Quelle est la capitale de Singapour ?",
-a:"Singapour",
-options:["Singapore","Kuala Lumpur","Manille","Jakarta"]
+q:"Dublin est la capitale de quel pays ?",
+a:"Irlande",
+options:["Irlande","Royaume-Uni","Malte","Jamaïque"],
+level:1
 },
 
 {
-level:2,
-q:"Quelle est la capitale des Philippines ?",
-a:"Manille",
-options:["Cebu","Manille","Davao","Quezon City"]
+q:"Ottawa est la capitale de quel pays ?",
+a:"Canada",
+options:["Canada","États-Unis","Australie","Nouvelle-Zélande"],
+level:2
 },
 
 {
-level:2,
-q:"Quelle est la capitale de la Malaisie ?",
-a:"Kuala Lumpur",
-options:["Kuala Lumpur","Singapore","Jakarta","Penang"]
+q:"New Delhi est la capitale de quel pays ?",
+a:"Inde",
+options:["Inde","Pakistan","Malaisie","Singapour"],
+level:2
 },
 
 {
-level:2,
-q:"Quelle est la capitale de Malte ?",
-a:"La Valette",
-options:["La Valette","Mdina","Sliema","Victoria"]
+q:"Islamabad est la capitale de quel pays ?",
+a:"Pakistan",
+options:["Pakistan","Inde","Bangladesh","Malaisie"],
+level:2
 },
 
 {
-level:2,
+q:"Pretoria est l'une des capitales de quel pays ?",
+a:"Afrique du Sud",
+options:["Afrique du Sud","Kenya","Nigeria","Ghana"],
+level:3
+},
+
+{
+q:"Kuala Lumpur est la capitale de quel pays ?",
+a:"Malaisie",
+options:["Malaisie","Singapour","Indonésie","Philippines"],
+level:3
+},
+
+{
+q:"Bridgetown est la capitale de quel pays ?",
+a:"Barbade",
+options:["Barbade","Bahamas","Jamaïque","Belize"],
+level:3
+}
+
+],
+
+countries:[
+
+{
+q:"Quel pays a Londres comme capitale ?",
+a:"Royaume-Uni",
+options:["Royaume-Uni","Irlande","Canada","Australie"],
+level:1
+},
+
+{
+q:"Quel pays a Canberra comme capitale ?",
+a:"Australie",
+options:["Australie","Nouvelle-Zélande","Fidji","Canada"],
+level:1
+},
+
+{
+q:"Quel pays a Wellington comme capitale ?",
+a:"Nouvelle-Zélande",
+options:["Nouvelle-Zélande","Australie","Irlande","Fidji"],
+level:1
+},
+
+{
+q:"Quel pays a Kingston comme capitale ?",
+a:"Jamaïque",
+options:["Jamaïque","Bahamas","Barbade","Belize"],
+level:1
+},
+
+{
+q:"Quel pays a Nairobi comme capitale ?",
+a:"Kenya",
+options:["Kenya","Ghana","Nigeria","Ouganda"],
+level:2
+},
+
+{
+q:"Quel pays a Kampala comme capitale ?",
+a:"Ouganda",
+options:["Ouganda","Kenya","Rwanda","Ghana"],
+level:2
+},
+
+{
+q:"Quel pays a Lusaka comme capitale ?",
+a:"Zambie",
+options:["Zambie","Zimbabwe","Namibie","Botswana"],
+level:2
+},
+
+{
+q:"Quel pays a Harare comme capitale ?",
+a:"Zimbabwe",
+options:["Zimbabwe","Zambie","Botswana","Namibie"],
+level:3
+},
+
+{
+q:"Quel pays a Gaborone comme capitale ?",
+a:"Botswana",
+options:["Botswana","Namibie","Zambie","Rwanda"],
+level:3
+},
+
+{
+q:"Quel pays a Windhoek comme capitale ?",
+a:"Namibie",
+options:["Namibie","Botswana","Zimbabwe","Afrique du Sud"],
+level:3
+}
+
+],
+
+challenge:[
+
+{
 q:"Dans quel pays l'anglais et le français sont-ils langues officielles ?",
 a:"Canada",
-options:["Canada","Australie","Jamaïque","Ghana"]
-},
-
-
-/* =========================
-   DIFFICILE
-========================= */
-
-{
-level:3,
-q:"Quel pays possède l'anglais parmi ses langues officielles et a Pretoria comme capitale administrative ?",
-a:"Afrique du Sud",
-options:["Afrique du Sud","Kenya","Nigeria","Ghana"]
+options:["Canada","Australie","Jamaïque","Ghana"],
+level:1
 },
 
 {
-level:3,
-q:"Quel pays a pour capitale Accra ?",
-a:"Ghana",
-options:["Ghana","Nigeria","Kenya","Ouganda"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Abuja ?",
-a:"Nigeria",
-options:["Ghana","Nigeria","Kenya","Zambie"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Nairobi ?",
-a:"Kenya",
-options:["Kenya","Ouganda","Rwanda","Ghana"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Kigali ?",
-a:"Rwanda",
-options:["Rwanda","Burundi","Ouganda","Kenya"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Windhoek ?",
-a:"Namibie",
-options:["Namibie","Botswana","Zambie","Zimbabwe"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Gaborone ?",
-a:"Botswana",
-options:["Botswana","Namibie","Zimbabwe","Zambie"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Lusaka ?",
-a:"Zambie",
-options:["Zambie","Zimbabwe","Botswana","Rwanda"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Harare ?",
-a:"Zimbabwe",
-options:["Zimbabwe","Zambie","Namibie","Botswana"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Wellington ?",
-a:"Nouvelle-Zélande",
-options:["Nouvelle-Zélande","Australie","Fidji","Irlande"]
-},
-
-{
-level:3,
-q:"Quel pays a pour capitale Canberra ?",
-a:"Australie",
-options:["Australie","Nouvelle-Zélande","Canada","Royaume-Uni"]
-},
-
-{
-level:3,
-q:"Quel pays des Caraïbes a Kingston pour capitale ?",
-a:"Jamaïque",
-options:["Jamaïque","Bahamas","Barbade","Belize"]
-},
-
-{
-level:3,
-q:"Quel pays des Caraïbes a Nassau pour capitale ?",
-a:"Bahamas",
-options:["Bahamas","Jamaïque","Barbade","Fidji"]
-},
-
-{
-level:3,
 q:"Quel pays d'Océanie a Suva pour capitale ?",
 a:"Fidji",
-options:["Fidji","Australie","Nouvelle-Zélande","Samoa"]
+options:["Fidji","Australie","Nouvelle-Zélande","Samoa"],
+level:1
 },
 
 {
-level:3,
-q:"Dans quel pays l'anglais est-il très utilisé dans l'administration et l'éducation avec New Delhi comme capitale ?",
-a:"Inde",
-options:["Inde","Pakistan","Malaisie","Singapour"]
+q:"Quel pays des Caraïbes a Nassau pour capitale ?",
+a:"Bahamas",
+options:["Bahamas","Jamaïque","Barbade","Belize"],
+level:2
+},
+
+{
+q:"Quel pays a Belmopan comme capitale ?",
+a:"Belize",
+options:["Belize","Bahamas","Malte","Jamaïque"],
+level:2
+},
+
+{
+q:"Quel pays a Accra comme capitale ?",
+a:"Ghana",
+options:["Ghana","Nigeria","Kenya","Ouganda"],
+level:2
+},
+
+{
+q:"Quel pays a Abuja comme capitale ?",
+a:"Nigeria",
+options:["Nigeria","Ghana","Kenya","Zambie"],
+level:3
+},
+
+{
+q:"Quel pays a Kigali comme capitale ?",
+a:"Rwanda",
+options:["Rwanda","Ouganda","Kenya","Burundi"],
+level:3
+},
+
+{
+q:"Quel pays a Windhoek comme capitale ?",
+a:"Namibie",
+options:["Namibie","Botswana","Zimbabwe","Zambie"],
+level:3
+},
+
+{
+q:"Quel pays a Islamabad comme capitale ?",
+a:"Pakistan",
+options:["Pakistan","Inde","Malaisie","Philippines"],
+level:3
+},
+
+{
+q:"Quel pays a Pretoria comme capitale administrative ?",
+a:"Afrique du Sud",
+options:["Afrique du Sud","Nigeria","Ghana","Kenya"],
+level:3
 }
 
-];
+]
+
+};
 
 
-let quizQuestions = [];
-let currentQuestion = 0;
-let score = 0;
-let combo = 0;
-let maxCombo = 0;
-let correctAnswers = 0;
-let timeLeft = 0;
-let maxTime = 18;
-let timerInterval = null;
-let answered = false;
-let currentMode = "full";
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
-let bestScore = Number(localStorage.getItem("worldEnglishBest") || 0);
-let savedMaxCombo = Number(localStorage.getItem("worldEnglishMaxCombo") || 0);
+const navButtons =
+document.querySelectorAll(".nav button");
 
+navButtons.forEach(button=>{
 
-function shuffle(array){
+    button.addEventListener("click",()=>{
 
-    const copy = [...array];
+        showSection(button.dataset.section);
 
-    for(let i=copy.length-1;i>0;i--){
+    });
 
-        const j = Math.floor(Math.random()*(i+1));
-
-        [copy[i],copy[j]] = [copy[j],copy[i];
-
-    }
-
-    return copy;
-}
+});
 
 
-function showSection(id, button=null){
+function showSection(id){
+
+    document.querySelectorAll(".section")
+        .forEach(section=>{
+            section.classList.remove("active");
+        });
+
+    document.getElementById(id)
+        .classList.add("active");
+
+    navButtons.forEach(button=>{
+        button.classList.remove("active");
+
+        if(button.dataset.section === id){
+            button.classList.add("active");
+        }
+    });
 
     clearInterval(timerInterval);
-
-    document.querySelectorAll(".section").forEach(section=>{
-        section.classList.remove("active");
-    });
-
-    const target = document.getElementById(id);
-
-    if(target){
-        target.classList.add("active");
-    }
-
-    document.querySelectorAll(".nav button").forEach(btn=>{
-        btn.classList.remove("active");
-    });
-
-    if(button){
-        button.classList.add("active");
-    }
-
-    if(id === "home"){
-        updateHome();
-    }
-
-    if(id === "countries"){
-        renderCountries(countries);
-    }
-
-    if(id === "quiz"){
-        document.getElementById("quizStart").style.display="block";
-        document.getElementById("quizGame").style.display="none";
-        document.getElementById("victory").style.display="none";
-        updateBestDisplays();
-    }
 
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
+
+    if(id === "mapSection"){
+        setTimeout(drawMap,100);
+    }
+
 }
 
 
-function updateHome(){
+/* =====================================================
+   PAYS
+===================================================== */
 
-    document.getElementById("homeBest").textContent = bestScore;
-}
-
-
-function updateBestDisplays(){
-
-    document.getElementById("startBest").textContent = bestScore;
-    document.getElementById("bestStat").textContent = bestScore;
-    document.getElementById("homeBest").textContent = bestScore;
-}
+const countryGrid =
+document.getElementById("countryGrid");
 
 
 function renderCountries(list){
 
-    const grid = document.getElementById("countryGrid");
-
-    grid.innerHTML = "";
+    countryGrid.innerHTML="";
 
     list.forEach(country=>{
 
-        const card = document.createElement("div");
+        const div =
+        document.createElement("div");
 
-        card.className = "country";
+        div.className =
+            "country " +
+            (country.type === "primary"
+                ? "primary-country"
+                : "secondary-country");
 
-        card.innerHTML = `
-            <div class="flag">${country.flag}</div>
-            <h3>${country.name}</h3>
+        const label =
+            country.type === "primary"
+                ? "🔴 Anglais principal"
+                : "🔵 Anglais seconde langue / officiel";
+
+        const tagClass =
+            country.type === "primary"
+                ? "red-tag"
+                : "blue-tag";
+
+        div.innerHTML=`
+
+            <div class="flag">
+                ${country.flag}
+            </div>
+
+            <h3>
+                ${country.name}
+            </h3>
+
             <p>
-                🏛️ Capitale : <strong>${country.capital}</strong><br>
-                🌍 Continent : ${country.continent}
+                🏛️ Capitale :
+                <strong>${country.capital}</strong><br>
+
+                🌍 Continent :
+                ${country.continent}
             </p>
-            <span class="tag">${country.english}</span>
+
+            <span class="country-tag ${tagClass}">
+                ${label}
+            </span>
+
         `;
 
-        grid.appendChild(card);
+        countryGrid.appendChild(div);
 
     });
+
 }
 
 
-function filterCountries(){
+renderCountries(countries);
 
-    const value = document
-        .getElementById("countrySearch")
-        .value
+
+document
+.getElementById("countrySearch")
+.addEventListener("input",event=>{
+
+    const value =
+        event.target.value
         .toLowerCase()
         .trim();
 
-    const filtered = countries.filter(country =>
-        country.name.toLowerCase().includes(value) ||
-        country.capital.toLowerCase().includes(value) ||
-        country.continent.toLowerCase().includes(value)
-    );
+    const filtered =
+        countries.filter(country=>
+
+            country.name
+                .toLowerCase()
+                .includes(value)
+
+            ||
+
+            country.capital
+                .toLowerCase()
+                .includes(value)
+
+            ||
+
+            country.continent
+                .toLowerCase()
+                .includes(value)
+
+        );
 
     renderCountries(filtered);
-}
+
+});
 
 
-function startQuiz(mode){
+/* =====================================================
+   CARTE DU MONDE
+===================================================== */
 
-    currentMode = mode;
+let mapLoaded=false;
 
-    clearInterval(timerInterval);
 
-    score = 0;
-    combo = 0;
-    maxCombo = 0;
-    correctAnswers = 0;
-    currentQuestion = 0;
-    answered = false;
+const primaryIDs =
+new Set(
+    countries
+        .filter(c=>c.type==="primary")
+        .map(c=>c.id)
+);
 
-    const easy = shuffle(questions.filter(q=>q.level===1));
-    const medium = shuffle(questions.filter(q=>q.level===2));
-    const hard = shuffle(questions.filter(q=>q.level===3));
 
-    if(mode === "full"){
+const secondaryIDs =
+new Set(
+    countries
+        .filter(c=>c.type==="secondary")
+        .map(c=>c.id)
+);
 
-        quizQuestions = [
-            ...easy,
-            ...medium,
-            ...hard
-        ];
 
-    }
+function drawMap(){
 
-    else if(mode === "sprint"){
+    if(mapLoaded) return;
 
-        quizQuestions = [
-            ...easy.slice(0,5),
-            ...medium.slice(0,5),
-            ...hard.slice(0,5)
-        ];
+    const container =
+        document.getElementById("map");
 
-    }
+    const width =
+        container.clientWidth;
 
-    else if(mode === "easy"){
+    const height =
+        container.clientHeight;
 
-        quizQuestions = easy.slice(0,15);
+    if(width < 100) return;
 
-    }
+    const svg =
+        d3.select("#worldMap");
 
-    document.getElementById("quizStart").style.display="none";
-    document.getElementById("victory").style.display="none";
-    document.getElementById("quizGame").style.display="block";
+    svg.attr("viewBox",`0 0 ${width} ${height}`);
 
-    updateBestDisplays();
-    updateStats();
-    loadQuestion();
+    const projection =
+        d3.geoNaturalEarth1()
+        .fitSize(
+            [width,height],
+            {type:"Sphere"}
+        );
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
+    const path =
+        d3.geoPath()
+        .projection(projection);
+
+    svg.append("path")
+        .datum({type:"Sphere"})
+        .attr("fill","#061a30")
+        .attr("stroke","#28537c")
+        .attr("stroke-width","1")
+        .attr("d",path);
+
+    d3.json(
+        "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
+    )
+    .then(world=>{
+
+        const land =
+            topojson.feature(
+                world,
+                world.objects.countries
+            );
+
+        const tooltip =
+            document.getElementById("mapTooltip");
+
+        svg.selectAll(".country-path")
+            .data(land.features)
+            .enter()
+            .append("path")
+            .attr("class","country-path")
+            .attr("d",path)
+            .attr("fill",d=>{
+
+                const id =
+                    String(d.id).padStart(3,"0");
+
+                if(primaryIDs.has(id)){
+                    return "#ff3154";
+                }
+
+                if(secondaryIDs.has(id)){
+                    return "#1683ff";
+                }
+
+                return "#173049";
+
+            })
+            .on("mousemove",(event,d)=>{
+
+                const id =
+                    String(d.id).padStart(3,"0");
+
+                const country =
+                    countries.find(c=>c.id===id);
+
+                if(country){
+
+                    tooltip.style.display="block";
+
+                    tooltip.innerHTML=`
+                        <strong>
+                            ${country.flag} ${country.name}
+                        </strong><br>
+                        Capitale : ${country.capital}
+                    `;
+
+                    tooltip.style.left =
+                        (event.clientX+15)+"px";
+
+                    tooltip.style.top =
+                        (event.clientY+15)+"px";
+                }
+
+            })
+            .on("mouseleave",()=>{
+
+                tooltip.style.display="none";
+
+            });
+
+        mapLoaded=true;
+
+    })
+    .catch(()=>{
+
+        svg.append("text")
+            .attr("x",width/2)
+            .attr("y",height/2)
+            .attr("text-anchor","middle")
+            .attr("fill","#8da1b9")
+            .attr("font-size","18")
+            .text("Carte indisponible hors connexion");
+
     });
+
 }
 
 
-function getDifficultyData(level){
+/* =====================================================
+   QUIZ
+===================================================== */
 
-    if(level === 1){
+let quizQuestions=[];
+let currentQuestion=0;
+let score=0;
+let combo=0;
+let maxCombo=0;
+let correctAnswers=0;
+let answered=false;
+
+let timeLeft=15;
+let maxTime=15;
+let timerInterval=null;
+
+let currentMode="classic";
+
+
+let bestScore =
+Number(
+    localStorage.getItem("worldEnglishBest") || 0
+);
+
+
+function shuffle(array){
+
+    const arr=[...array];
+
+    for(let i=arr.length-1;i>0;i--){
+
+        const j =
+            Math.floor(Math.random()*(i+1));
+
+        const temp=arr[i];
+
+        arr[i]=arr[j];
+
+        arr[j]=temp;
+
+    }
+
+    return arr;
+
+}
+
+
+function getMultiplier(){
+
+    if(combo>=8) return 4;
+
+    if(combo>=6) return 3;
+
+    if(combo>=4) return 2;
+
+    if(combo>=2) return 1.5;
+
+    return 1;
+
+}
+
+
+function getLevelData(level){
+
+    if(level===1){
 
         return {
             name:"FACILE",
-            emoji:"🟢",
-            time:18,
-            base:100
+            icon:"🟢",
+            time:15,
+            base:100,
+            class:"easy"
         };
 
     }
 
-    if(level === 2){
+    if(level===2){
 
         return {
             name:"MOYEN",
-            emoji:"🟡",
-            time:14,
-            base:150
+            icon:"🟡",
+            time:12,
+            base:150,
+            class:"medium"
         };
 
     }
 
     return {
         name:"DIFFICILE",
-        emoji:"🔴",
-        time:10,
-        base:200
+        icon:"🔴",
+        time:9,
+        base:200,
+        class:"hard"
     };
+
+}
+
+
+/* BOUTONS DES MODES */
+
+document
+.querySelectorAll(".mode")
+.forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        startQuiz(button.dataset.mode);
+
+    });
+
+});
+
+
+document
+.getElementById("homeQuiz")
+.addEventListener("click",()=>{
+
+    showSection("quiz");
+
+});
+
+
+function startQuiz(mode){
+
+    currentMode=mode;
+
+    clearInterval(timerInterval);
+
+    score=0;
+    combo=0;
+    maxCombo=0;
+    correctAnswers=0;
+    currentQuestion=0;
+    answered=false;
+
+    quizQuestions =
+        shuffle(questionPools[mode]);
+
+    quizQuestions =
+        quizQuestions.slice(0,10);
+
+    document
+        .getElementById("quizStart")
+        .style.display="none";
+
+    document
+        .getElementById("victory")
+        .style.display="none";
+
+    document
+        .getElementById("quizGame")
+        .style.display="block";
+
+    updateQuizStats();
+
+    loadQuestion();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
 }
 
 
@@ -1737,121 +2133,146 @@ function loadQuestion(){
 
     clearInterval(timerInterval);
 
-    answered = false;
+    answered=false;
 
-    const question = quizQuestions[currentQuestion];
+    const question =
+        quizQuestions[currentQuestion];
 
-    const data = getDifficultyData(question.level);
+    const data =
+        getLevelData(question.level);
 
-    maxTime = data.time;
-    timeLeft = maxTime;
+    maxTime=data.time;
+    timeLeft=maxTime;
 
-    document.getElementById("questionNumber").textContent =
+    document
+        .getElementById("questionNumber")
+        .textContent=
         `Question ${currentQuestion+1}/${quizQuestions.length}`;
 
-    document.getElementById("difficultyText").textContent =
+    document
+        .getElementById("difficultyText")
+        .textContent=
         data.name;
 
-    document.getElementById("difficultyBadge").textContent =
-        `${data.emoji} ${data.name}`;
+    const badge =
+        document.getElementById("levelBadge");
 
-    document.getElementById("questionText").textContent =
+    badge.textContent=
+        `${data.icon} ${data.name}`;
+
+    badge.className=
+        `level ${data.class}`;
+
+    document
+        .getElementById("questionText")
+        .textContent=
         question.q;
 
-    document.getElementById("feedback").textContent = "";
+    document
+        .getElementById("feedback")
+        .innerHTML="";
 
-    document.getElementById("nextBtn").style.display = "none";
+    document
+        .getElementById("nextBtn")
+        .style.display="none";
 
-    const progress =
-        ((currentQuestion) / quizQuestions.length) * 100;
+    document
+        .getElementById("progressFill")
+        .style.width=
+        `${(currentQuestion/quizQuestions.length)*100}%`;
 
-    document.getElementById("progressFill").style.width =
-        `${progress}%`;
-
-    const answersContainer =
+    const answers =
         document.getElementById("answers");
 
-    answersContainer.innerHTML = "";
+    answers.innerHTML="";
 
-    const options = shuffle(question.options);
+    shuffle(question.options)
+        .forEach(option=>{
 
-    options.forEach(option=>{
+            const button =
+                document.createElement("button");
 
-        const button = document.createElement("button");
+            button.className="answer";
 
-        button.className = "answer";
-        button.textContent = option;
+            button.textContent=option;
 
-        button.addEventListener("click",()=>{
+            button.addEventListener(
+                "click",
+                ()=>answerQuestion(
+                    option,
+                    button
+                )
+            );
 
-            answerQuestion(option,button);
+            answers.appendChild(button);
 
         });
 
-        answersContainer.appendChild(button);
+    updateTimer();
 
-    });
+    timerInterval =
+        setInterval(()=>{
 
-    updateTimerVisual();
+            timeLeft-=0.1;
 
-    timerInterval = setInterval(()=>{
+            if(timeLeft<0){
+                timeLeft=0;
+            }
 
-        timeLeft -= .1;
+            updateTimer();
 
-        updateTimerVisual();
+            if(timeLeft<=0){
 
-        if(timeLeft <= 0){
+                clearInterval(timerInterval);
 
-            timeLeft = 0;
+                timeoutQuestion();
 
-            clearInterval(timerInterval);
+            }
 
-            timeOut();
-
-        }
-
-    },100);
+        },100);
 
 }
 
 
-function updateTimerVisual(){
+function updateTimer(){
 
-    const percent =
-        Math.max(0,(timeLeft/maxTime)*100);
+    const percentage =
+        (timeLeft/maxTime)*100;
+
+    document
+        .getElementById("timerFill")
+        .style.width=
+        percentage+"%";
+
+    document
+        .getElementById("timerText")
+        .textContent=
+        Math.ceil(timeLeft)+"s";
 
     const fill =
         document.getElementById("timerFill");
 
-    fill.style.width = `${percent}%`;
+    const text =
+        document.getElementById("timerText");
 
-    document.getElementById("timerText").textContent =
-        `${Math.ceil(timeLeft)}s`;
+    if(percentage<=30){
 
-    if(percent <= 30){
-
-        fill.style.background = "#ff5369";
-
-        document.getElementById("timerText").style.color =
-            "#ff6175";
+        fill.style.background="#ff3154";
+        text.style.color="#ff637d";
 
     }
 
-    else if(percent <= 60){
+    else if(percentage<=60){
 
-        fill.style.background = "#ffc44d";
-
-        document.getElementById("timerText").style.color =
-            "#ffd064";
+        fill.style.background="#ffd04d";
+        text.style.color="#ffd04d";
 
     }
 
     else{
 
-        fill.style.background = "#42a8ff";
-
-        document.getElementById("timerText").style.color =
-            "#68c0ff";
+        fill.style.background="#1683ff";
+        text.style.color="#59baff";
 
     }
 
@@ -1862,24 +2283,28 @@ function answerQuestion(selected,button){
 
     if(answered) return;
 
-    answered = true;
+    answered=true;
 
     clearInterval(timerInterval);
 
-    const question = quizQuestions[currentQuestion];
+    const question =
+        quizQuestions[currentQuestion];
 
     const buttons =
         document.querySelectorAll(".answer");
 
     buttons.forEach(btn=>{
-        btn.disabled = true;
 
-        if(btn.textContent === question.a){
+        btn.disabled=true;
+
+        if(btn.textContent===question.a){
             btn.classList.add("correct");
         }
+
     });
 
-    if(selected === question.a){
+
+    if(selected===question.a){
 
         button.classList.add("correct");
 
@@ -1887,29 +2312,35 @@ function answerQuestion(selected,button){
 
         combo++;
 
-        if(combo > maxCombo){
-            maxCombo = combo;
+        if(combo>maxCombo){
+            maxCombo=combo;
         }
 
-        const multiplier = getMultiplier(combo);
+        const multiplier =
+            getMultiplier();
 
-        const data = getDifficultyData(question.level);
+        const data =
+            getLevelData(question.level);
 
         const speedBonus =
-            Math.round((timeLeft/maxTime)*50);
+            Math.round(
+                (timeLeft/maxTime)*50
+            );
 
         const points =
-            Math.round(data.base * multiplier) + speedBonus;
+            Math.round(
+                data.base*multiplier
+            )+speedBonus;
 
-        score += points;
+        score+=points;
 
-        document.getElementById("feedback").innerHTML =
-            `✅ Correct ! +${points} points`;
+        document
+            .getElementById("feedback")
+            .innerHTML=
+            `✅ Correct ! <span style="color:#50e99b">+${points} points</span>`;
 
-        if(combo >= 2){
-
-            showCombo(combo,multiplier);
-
+        if(combo>=2){
+            showCombo();
         }
 
     }
@@ -1918,79 +2349,118 @@ function answerQuestion(selected,button){
 
         button.classList.add("wrong");
 
-        combo = 0;
+        combo=0;
 
-        document.getElementById("feedback").innerHTML =
+        document
+            .getElementById("feedback")
+            .innerHTML=
             `❌ Raté ! La bonne réponse était <strong>${question.a}</strong>`;
 
     }
 
-    updateStats();
+    updateQuizStats();
 
-    document.getElementById("nextBtn").style.display =
-        "inline-block";
+    document
+        .getElementById("nextBtn")
+        .style.display="inline-block";
 
 }
 
 
-function timeOut(){
+function timeoutQuestion(){
 
     if(answered) return;
 
-    answered = true;
+    answered=true;
 
-    combo = 0;
+    combo=0;
 
-    const question = quizQuestions[currentQuestion];
+    const question =
+        quizQuestions[currentQuestion];
 
-    const buttons =
-        document.querySelectorAll(".answer");
+    document
+        .querySelectorAll(".answer")
+        .forEach(button=>{
 
-    buttons.forEach(btn=>{
+            button.disabled=true;
 
-        btn.disabled = true;
+            if(button.textContent===question.a){
+                button.classList.add("correct");
+            }
 
-        if(btn.textContent === question.a){
-            btn.classList.add("correct");
-        }
+        });
 
-    });
-
-    document.getElementById("feedback").innerHTML =
+    document
+        .getElementById("feedback")
+        .innerHTML=
         `⏰ Temps écoulé ! La réponse était <strong>${question.a}</strong>`;
 
-    updateStats();
+    updateQuizStats();
 
-    document.getElementById("nextBtn").style.display =
-        "inline-block";
-
-}
-
-
-function getMultiplier(combo){
-
-    if(combo >= 10) return 4;
-
-    if(combo >= 7) return 3;
-
-    if(combo >= 5) return 2.5;
-
-    if(combo >= 3) return 2;
-
-    if(combo >= 2) return 1.5;
-
-    return 1;
+    document
+        .getElementById("nextBtn")
+        .style.display="inline-block";
 
 }
 
 
-function showCombo(combo,multiplier){
+document
+.getElementById("nextBtn")
+.addEventListener("click",()=>{
+
+    currentQuestion++;
+
+    if(currentQuestion>=quizQuestions.length){
+
+        finishQuiz();
+
+    }
+    else{
+
+        loadQuestion();
+
+    }
+
+});
+
+
+function updateQuizStats(){
+
+    document
+        .getElementById("scoreStat")
+        .textContent=score;
+
+    document
+        .getElementById("comboStat")
+        .textContent=combo;
+
+    document
+        .getElementById("multiplierStat")
+        .textContent=
+        "x"+getMultiplier();
+
+    document
+        .getElementById("bestStat")
+        .textContent=bestScore;
+
+    document
+        .getElementById("homeBest")
+        .textContent=bestScore;
+
+    document
+        .getElementById("startBest")
+        .textContent=bestScore;
+
+}
+
+
+function showCombo(){
 
     const popup =
-        document.getElementById("comboMessage");
+        document.getElementById("comboPopup");
 
-    popup.innerHTML =
-        `🔥 COMBO x${combo} • Multiplicateur x${multiplier}`;
+    popup.textContent=
+        `🔥 COMBO x${combo} • MULTIPLICATEUR x${getMultiplier()}`;
 
     popup.classList.add("show");
 
@@ -1998,46 +2468,8 @@ function showCombo(combo,multiplier){
 
         popup.classList.remove("show");
 
-    },1300);
+    },1200);
 
-}
-
-
-function updateStats(){
-
-    document.getElementById("scoreStat").textContent =
-        score;
-
-    document.getElementById("comboStat").textContent =
-        combo;
-
-    document.getElementById("multiplierStat").textContent =
-        `x${getMultiplier(combo)}`;
-
-    document.getElementById("bestStat").textContent =
-        bestScore;
-
-}
-
-
-function nextQuestion(){
-
-    currentQuestion++;
-
-    if(currentQuestion >= quizQuestions.length){
-
-        finishQuiz();
-
-        return;
-
-    }
-
-    loadQuestion();
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
 }
 
 
@@ -2045,144 +2477,189 @@ function finishQuiz(){
 
     clearInterval(timerInterval);
 
-    document.getElementById("quizGame").style.display =
-        "none";
+    document
+        .getElementById("quizGame")
+        .style.display="none";
 
-    document.getElementById("victory").style.display =
-        "block";
+    document
+        .getElementById("victory")
+        .style.display="block";
 
-    const total = quizQuestions.length;
+    const total =
+        quizQuestions.length;
 
     const accuracy =
-        Math.round((correctAnswers/total)*100);
+        Math.round(
+            correctAnswers/total*100
+        );
 
     let title;
     let icon;
     let message;
 
-    if(accuracy >= 90){
+    if(accuracy>=90){
 
-        icon = "🏆";
-        title = "MAÎTRE DU MONDE";
-        message =
-            "Incroyable ! Tu maîtrises vraiment les pays anglophones.";
-
-    }
-
-    else if(accuracy >= 75){
-
-        icon = "🔥";
-        title = "EXPERT";
-        message =
-            "Très solide ! Tes connaissances géographiques sont excellentes.";
+        icon="🏆";
+        title="MAÎTRE DU MONDE";
+        message="Tu connais vraiment bien les pays anglophones.";
 
     }
 
-    else if(accuracy >= 60){
+    else if(accuracy>=70){
 
-        icon = "🌍";
-        title = "TRÈS BON";
-        message =
-            "Bien joué ! Encore quelques révisions et tu peux viser le sommet.";
+        icon="🔥";
+        title="EXCELLENT";
+        message="Très bon résultat. Continue comme ça !";
 
     }
 
-    else if(accuracy >= 40){
+    else if(accuracy>=50){
 
-        icon = "📚";
-        title = "EN PROGRESSION";
-        message =
-            "Tu avances bien. Rejoue pour améliorer ton score.";
+        icon="🌍";
+        title="BIEN JOUÉ";
+        message="Tu progresses, encore quelques révisions !";
 
     }
 
     else{
 
-        icon = "🌱";
-        title = "CONTINUE !";
-        message =
-            "Chaque partie t'aide à apprendre de nouveaux pays et capitales.";
+        icon="📚";
+        title="À RÉVISER";
+        message="Rejoue une partie pour améliorer ton score !";
 
     }
 
-    document.getElementById("victoryIcon").textContent =
-        icon;
+    document
+        .getElementById("victoryIcon")
+        .textContent=icon;
 
-    document.getElementById("victoryTitle").textContent =
-        title;
+    document
+        .getElementById("victoryTitle")
+        .textContent=title;
 
-    document.getElementById("finalScore").textContent =
-        `${score} points`;
+    document
+        .getElementById("finalScore")
+        .textContent=
+        score+" points";
 
-    document.getElementById("victoryMessage").textContent =
+    document
+        .getElementById("victoryMessage")
+        .textContent=
         message;
 
-    document.getElementById("finalCorrect").textContent =
+    document
+        .getElementById("finalCorrect")
+        .textContent=
         `${correctAnswers}/${total}`;
 
-    document.getElementById("finalAccuracy").textContent =
-        `${accuracy}%`;
+    document
+        .getElementById("finalAccuracy")
+        .textContent=
+        accuracy+"%";
 
-    document.getElementById("finalCombo").textContent =
+    document
+        .getElementById("finalCombo")
+        .textContent=
         maxCombo;
 
-    const newRecord =
+    const record =
         document.getElementById("newRecord");
 
-    if(score > bestScore){
+    if(score>bestScore){
 
-        bestScore = score;
+        bestScore=score;
 
         localStorage.setItem(
             "worldEnglishBest",
             bestScore
         );
 
-        newRecord.textContent =
+        record.textContent=
             "🏆 NOUVEAU RECORD !";
 
     }
 
     else{
 
-        newRecord.textContent =
+        record.textContent=
             `🏆 Record à battre : ${bestScore}`;
 
     }
 
-    if(maxCombo > savedMaxCombo){
-
-        savedMaxCombo = maxCombo;
-
-        localStorage.setItem(
-            "worldEnglishMaxCombo",
-            savedMaxCombo
-        );
-
-    }
-
-    updateBestDisplays();
+    updateQuizStats();
 
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
+
 }
 
 
-function restartQuiz(){
+/* REJOUER */
 
-    document.getElementById("victory").style.display =
-        "none";
+document
+.getElementById("replayBtn")
+.addEventListener("click",()=>{
 
     startQuiz(currentMode);
 
-}
+});
 
 
-renderCountries(countries);
-updateHome();
-updateBestDisplays();
+/* ACCUEIL */
+
+document
+.getElementById("homeBtn")
+.addEventListener("click",()=>{
+
+    document
+        .getElementById("victory")
+        .style.display="none";
+
+    document
+        .getElementById("quizStart")
+        .style.display="block";
+
+    showSection("home");
+
+});
+
+
+/* =====================================================
+   INITIALISATION
+===================================================== */
+
+document
+.getElementById("homeBest")
+.textContent=bestScore;
+
+document
+.getElementById("startBest")
+.textContent=bestScore;
+
+document
+.getElementById("bestStat")
+.textContent=bestScore;
+
+
+/* Redessine la carte si la fenêtre change */
+
+window.addEventListener("resize",()=>{
+
+    if(mapLoaded){
+
+        mapLoaded=false;
+
+        d3.select("#worldMap")
+            .selectAll("*")
+            .remove();
+
+        drawMap();
+
+    }
+
+});
 
 </script>
 
