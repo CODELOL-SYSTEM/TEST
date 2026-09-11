@@ -1,137 +1,832 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>World English Explorer - Partie 1</title>
+<title>World English Explorer</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#07111f;color:#fff}header{padding:20px;background:#0d2035;border-bottom:1px solid #284966;position:sticky;top:0}nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}button{padding:11px 16px;border:1px solid #356184;border-radius:12px;background:#102a43;color:#fff;font-weight:bold;cursor:pointer}button:hover{background:#17476d}.active{background:#247fc1}.container{max-width:1200px;margin:auto;padding:30px 20px}.hero{padding:55px 30px;text-align:center;border:1px solid #28516f;border-radius:25px;background:linear-gradient(135deg,#0d2943,#111b35)}h1{font-size:clamp(40px,7vw,75px);margin:0 0 15px}h1 span{color:#42b5ff}.subtitle{color:#a9bfd2;font-size:19px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin-top:20px}.card{padding:20px;border:1px solid #274d69;border-radius:18px;background:#0b1d30}.country{cursor:pointer}.country:hover{border-color:#42b5ff;transform:translateY(-2px)}.flag{font-size:42px}.tag{display:inline-block;padding:6px 9px;border-radius:20px;background:#143d5c;color:#8fd4ff;font-size:12px;font-weight:bold}.map{height:480px;margin-top:20px;border-radius:22px;border:1px solid #28516f;background:radial-gradient(circle,#123b58,#06121f);position:relative;overflow:hidden}.continent{position:absolute;background:#175048;border:1px solid #3d8175;border-radius:45%}.na{left:7%;top:20%;width:27%;height:25%}.sa{left:29%;top:52%;width:13%;height:34%;transform:rotate(10deg)}.eu{left:45%;top:25%;width:13%;height:12%}.af{left:47%;top:39%;width:18%;height:43%;transform:rotate(7deg)}.as{left:58%;top:19%;width:29%;height:28%}.au{left:76%;top:66%;width:14%;height:13%}.pin{position:absolute;font-size:25px;cursor:pointer}.p1{left:49%;top:27%}.p2{left:18%;top:31%}.p3{left:66%;top:31%}.p4{left:81%;top:69%}.search{width:100%;padding:14px;background:#081726;border:1px solid #2b5572;color:#fff;border-radius:12px}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.modalbox{max-width:550px;width:100%;padding:30px;border-radius:22px;background:#0b2035;border:1px solid #39719a}.close{float:right}.info{display:grid;grid-template-columns:1fr 1fr;gap:10px}.info div{padding:14px;background:#081726;border-radius:12px}@media(max-width:600px){.info{grid-template-columns:1fr}}
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#06111d;
+color:white
+}
+
+header{
+background:#0b2035;
+padding:18px;
+position:sticky;
+top:0;
+z-index:20;
+border-bottom:1px solid #28506d
+}
+
+nav{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap
+}
+
+button{
+border:1px solid #39749b;
+background:#102d47;
+color:white;
+padding:12px 17px;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer
+}
+
+button:hover{
+background:#19547d
+}
+
+.active{
+background:#218bd0
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:25px
+}
+
+.hero{
+text-align:center;
+padding:50px 20px;
+background:linear-gradient(135deg,#0d2c48,#10203d);
+border:1px solid #326586;
+border-radius:25px
+}
+
+h1{
+font-size:clamp(42px,7vw,75px);
+margin:0
+}
+
+h1 span{
+color:#45b9ff
+}
+
+.subtitle{
+font-size:19px;
+color:#aac1d3
+}
+
+.section{
+margin-top:20px;
+padding:25px;
+background:#0b1e31;
+border:1px solid #2a526e;
+border-radius:20px
+}
+
+.map{
+height:570px;
+background:#071827;
+border:1px solid #315e7b;
+border-radius:20px;
+overflow:hidden;
+position:relative
+}
+
+.map img{
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:.9
+}
+
+.mapInfo{
+position:absolute;
+left:20px;
+top:20px;
+background:#071827e8;
+padding:15px;
+border-radius:15px;
+border:1px solid #39749b;
+max-width:280px
+}
+
+.countries{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px
+}
+
+.country{
+padding:20px;
+background:#102940;
+border:1px solid #2b5875;
+border-radius:18px;
+cursor:pointer
+}
+
+.country:hover{
+border-color:#48baff;
+transform:translateY(-3px)
+}
+
+.flag{
+font-size:45px
+}
+
+.quizBox{
+background:#102940;
+padding:25px;
+border-radius:18px;
+border:1px solid #2d5d7d
+}
+
+.question{
+font-size:25px;
+font-weight:bold;
+margin:20px 0
+}
+
+.answers{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+
+.answer{
+font-size:17px
+}
+
+.correct{
+background:#167548!important
+}
+
+.wrong{
+background:#8b2934!important
+}
+
+.score{
+font-size:25px;
+color:#49bcff;
+font-weight:bold
+}
+
+.progress{
+height:12px;
+background:#172e43;
+border-radius:20px;
+overflow:hidden
+}
+
+.progressBar{
+height:100%;
+width:0;
+background:#45b9ff
+}
+
+.result{
+text-align:center;
+padding:25px;
+background:#102940;
+border-radius:18px
+}
+
+.hidden{
+display:none
+}
+
+@media(max-width:650px){
+.answers{
+grid-template-columns:1fr
+}
+
+.map{
+height:400px
+}
+}
 </style>
 </head>
+
 <body>
-<header><nav><button class="active" onclick="go('carte')">🌍 Carte</button><button onclick="go('pays')">🏳️ Pays</button><button onclick="go('cours')">📚 Cours</button><button onclick="alert('Quiz dans la partie 2')">🧠 Quiz</button></nav></header>
+
+<header>
+<nav>
+<button class="active" onclick="show('accueil',this)">🏠 Accueil</button>
+<button onclick="show('carte',this)">🌍 Carte</button>
+<button onclick="show('pays',this)">🏳️ Pays</button>
+<button onclick="show('quiz',this)">🧠 Quiz</button>
+</nav>
+</header>
+
 <div class="container">
-<section class="hero"><h1>WORLD <span>ENGLISH</span></h1><p class="subtitle">Explore le monde anglophone : pays, langues, capitales et régions.</p><button onclick="go('carte')">🌍 Commencer l'exploration</button></section>
-<section id="carte" class="card" style="margin-top:20px"><h2>🌍 Carte du monde</h2><div class="map"><div class="continent na"></div><div class="continent sa"></div><div class="continent eu"></div><div class="continent af"></div><div class="continent as"></div><div class="continent au"></div><div class="pin p1" onclick="openCountry(0)">📍</div><div class="pin p2" onclick="openCountry(1)">📍</div><div class="pin p3" onclick="openCountry(10)">📍</div><div class="pin p4" onclick="openCountry(3)">📍</div></div></section>
-<section id="pays" class="card" style="margin-top:20px"><h2>🏳️ Pays anglophones</h2><input id="search" class="search" placeholder="🔎 Rechercher..." oninput="filter()"><div class="filters"><button onclick="setFilter('all')">Tous</button><button onclick="setFilter('1')">1re langue</button><button onclick="setFilter('2')">2e / officielle</button></div><div id="countries" class="grid"></div></section>
-<section id="cours" class="card" style="margin-top:20px"><h2>📚 À retenir</h2><p>Une langue peut être une langue principale, officielle ou une langue seconde très utilisée. Les catégories de ce site sont simplifiées pour faciliter le cours.</p></section>
+
+<section id="accueil">
+
+<div class="hero">
+
+<h1>WORLD <span>ENGLISH</span></h1>
+
+<p class="subtitle">
+Découvre les pays anglophones grâce à la carte et aux quiz
+</p>
+
+<button onclick="show('carte')">
+🌍 Explorer la carte
+</button>
+
+<button onclick="startQuiz()">
+🧠 Commencer le quiz
+</button>
+
 </div>
-<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div class="modalbox"><button class="close" onclick="closeModal()">✕</button><div id="details"></div></div></div>
+
+<div class="section">
+
+<h2>📚 Comment utiliser le site</h2>
+
+<p>1️⃣ Regarde la carte du monde</p>
+<p>2️⃣ Découvre les pays anglophones</p>
+<p>3️⃣ Lis les informations importantes</p>
+<p>4️⃣ Fais les quiz</p>
+<p>5️⃣ Gagne des points</p>
+
+</div>
+
+</section>
+
+
+<section id="carte" class="hidden">
+
+<div class="section">
+
+<h2>🌍 Carte du monde</h2>
+
+<p>
+Clique sur les pays dans la liste pour apprendre des informations importantes.
+</p>
+
+<div class="map">
+
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
+alt="Carte du monde">
+
+<div class="mapInfo">
+
+<b>🌎 Monde anglophone</b>
+
+<p>
+Les pays anglophones sont présents sur plusieurs continents.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="pays" class="hidden">
+
+<div class="section">
+
+<h2>🏳️ Pays anglophones</h2>
+
+<div id="countryList" class="countries"></div>
+
+</div>
+
+</section>
+
+
+<section id="quiz" class="hidden">
+
+<div class="section">
+
+<h2>🧠 Quiz d'anglais</h2>
+
+<div class="score">
+⭐ Score : <span id="score">0</span>
+</div>
+
+<div class="progress">
+<div id="progressBar" class="progressBar"></div>
+</div>
+
+<div class="quizBox">
+
+<p id="number"></p>
+
+<div id="question" class="question"></div>
+
+<div id="answers" class="answers"></div>
+
+<p id="feedback"></p>
+
+<button onclick="nextQuestion()">
+Question suivante →
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="countryModal" class="hidden">
+
+<div class="section">
+
+<button onclick="closeCountry()">✕ Fermer</button>
+
+<div id="countryDetails"></div>
+
+</div>
+
+</section>
+
+
+</div>
+
+
 <script>
+
 const countries=[
-["🇬🇧","Royaume-Uni","Londres","Europe","1re langue"],
-["🇺🇸","États-Unis","Washington D.C.","Amérique du Nord","1re langue"],
-["🇨🇦","Canada","Ottawa","Amérique du Nord","1re + officielle"],
-["🇦🇺","Australie","Canberra","Océanie","1re langue"],
-["🇳🇿","Nouvelle-Zélande","Wellington","Océanie","1re langue"],
-["🇮🇪","Irlande","Dublin","Europe","1re + officielle"],
-["🇿🇦","Afrique du Sud","Pretoria","Afrique","2e / officielle"],
-["🇮🇳","Inde","New Delhi","Asie","2e / officielle"],
-["🇸🇬","Singapour","Singapour","Asie","2e / officielle"],
-["🇵🇭","Philippines","Manille","Asie","2e / officielle"],
-["🇳🇬","Nigeria","Abuja","Afrique","2e / officielle"],
-["🇰🇪","Kenya","Nairobi","Afrique","2e / officielle"],
-["🇬🇭","Ghana","Accra","Afrique","2e / officielle"],
-["🇯🇲","Jamaïque","Kingston","Caraïbes","officielle / largement utilisée"],
-["🇧🇸","Bahamas","Nassau","Caraïbes","officielle"],
-["🇧🇧","Barbade","Bridgetown","Caraïbes","officielle"],
-["🇧🇿","Belize","Belmopan","Amérique centrale","officielle"],
-["🇲🇹","Malte","La Valette","Europe","officielle"],
-["🇺🇬","Ouganda","Kampala","Afrique","2e / officielle"],
-["🇿🇼","Zimbabwe","Harare","Afrique","2e / officielle"],
-["🇿🇲","Zambie","Lusaka","Afrique","2e / officielle"],
-["🇧🇼","Botswana","Gaborone","Afrique","2e / officielle"],
-["🇳🇦","Namibie","Windhoek","Afrique","2e / officielle"],
-["🇷🇼","Rwanda","Kigali","Afrique","2e / officielle"],
-["🇵🇰","Pakistan","Islamabad","Asie","2e / officielle"],
-["🇲🇾","Malaisie","Kuala Lumpur","Asie","2e"],
-["🇫🇯","Fidji","Suva","Océanie","officielle"]
+
+{
+flag:"🇬🇧",
+name:"Royaume-Uni",
+capital:"Londres",
+continent:"Europe",
+english:"Langue principale",
+fact:"L'anglais est la langue principale du Royaume-Uni."
+},
+
+{
+flag:"🇺🇸",
+name:"États-Unis",
+capital:"Washington D.C.",
+continent:"Amérique du Nord",
+english:"Langue principale",
+fact:"L'anglais est la langue la plus utilisée aux États-Unis."
+},
+
+{
+flag:"🇨🇦",
+name:"Canada",
+capital:"Ottawa",
+continent:"Amérique du Nord",
+english:"Langue officielle",
+fact:"Le Canada possède deux langues officielles : anglais et français."
+},
+
+{
+flag:"🇦🇺",
+name:"Australie",
+capital:"Canberra",
+continent:"Océanie",
+english:"Langue principale",
+fact:"L'anglais est la langue principale utilisée en Australie."
+},
+
+{
+flag:"🇳🇿",
+name:"Nouvelle-Zélande",
+capital:"Wellington",
+continent:"Océanie",
+english:"Langue principale",
+fact:"L'anglais est largement utilisé en Nouvelle-Zélande."
+},
+
+{
+flag:"🇮🇪",
+name:"Irlande",
+capital:"Dublin",
+continent:"Europe",
+english:"Langue officielle",
+fact:"L'anglais et l'irlandais sont les langues officielles."
+},
+
+{
+flag:"🇿🇦",
+name:"Afrique du Sud",
+capital:"Pretoria",
+continent:"Afrique",
+english:"Langue officielle",
+fact:"L'anglais fait partie des langues officielles du pays."
+},
+
+{
+flag:"🇮🇳",
+name:"Inde",
+capital:"New Delhi",
+continent:"Asie",
+english:"Langue officielle",
+fact:"L'anglais est largement utilisé dans l'administration et l'éducation."
+},
+
+{
+flag:"🇳🇬",
+name:"Nigeria",
+capital:"Abuja",
+continent:"Afrique",
+english:"Langue officielle",
+fact:"L'anglais est une langue officielle du Nigeria."
+},
+
+{
+flag:"🇰🇪",
+name:"Kenya",
+capital:"Nairobi",
+continent:"Afrique",
+english:"Langue officielle",
+fact:"L'anglais est une langue officielle du Kenya."
+},
+
+{
+flag:"🇬🇭",
+name:"Ghana",
+capital:"Accra",
+continent:"Afrique",
+english:"Langue officielle",
+fact:"L'anglais est la langue officielle du Ghana."
+},
+
+{
+flag:"🇯🇲",
+name:"Jamaïque",
+capital:"Kingston",
+continent:"Caraïbes",
+english:"Langue officielle",
+fact:"L'anglais est la langue officielle de la Jamaïque."
+},
+
+{
+flag:"🇧🇸",
+name:"Bahamas",
+capital:"Nassau",
+continent:"Caraïbes",
+english:"Langue officielle",
+fact:"L'anglais est la langue officielle des Bahamas."
+},
+
+{
+flag:"🇧🇧",
+name:"Barbade",
+capital:"Bridgetown",
+continent:"Caraïbes",
+english:"Langue officielle",
+fact:"L'anglais est la langue officielle de la Barbade."
+},
+
+{
+flag:"🇫🇯",
+name:"Fidji",
+capital:"Suva",
+continent:"Océanie",
+english:"Langue officielle",
+fact:"L'anglais est une langue officielle des Fidji."
+}
+
 ];
-let current="all";
-function render(){let q=document.getElementById("search").value.toLowerCase();let box=document.getElementById("countries");box.innerHTML="";countries.forEach((c,i)=>{let ok=c[1].toLowerCase().includes(q);if(current==="1")ok=ok&&c[4].includes("1re");if(current==="2")ok=ok&&!c[4].includes("1re");if(ok)box.innerHTML+=`<div class="card country" onclick="openCountry(${i})"><div class="flag">${c[0]}</div><h3>${c[1]}</h3><p>📍 ${c[2]}</p><span class="tag">${c[4]}</span></div>`})}
-function filter(){render()}function setFilter(x){current=x;render()}function openCountry(i){let c=countries[i];document.getElementById("details").innerHTML=`<div class="flag">${c[0]}</div><h2>${c[1]}</h2><div class="info"><div><small>Capitale</small><b>${c[2]}</b></div><div><small>Région</small><b>${c[3]}</b></div><div><small>Anglais</small><b>${c[4]}</b></div><div><small>À apprendre</small><b>Localiser le pays</b></div></div>`;document.getElementById("modal").classList.add("open")}function closeModal(){document.getElementById("modal").classList.remove("open")}function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}render();
+
+
+function show(id,button){
+
+document.querySelectorAll(
+"#accueil,#carte,#pays,#quiz,#countryModal"
+).forEach(x=>x.classList.add("hidden"));
+
+document.getElementById(id).classList.remove("hidden");
+
+if(button){
+
+document.querySelectorAll("nav button")
+.forEach(x=>x.classList.remove("active"));
+
+button.classList.add("active");
+
+}
+
+}
+
+
+function renderCountries(){
+
+const list=document.getElementById("countryList");
+
+list.innerHTML="";
+
+countries.forEach((c,i)=>{
+
+list.innerHTML+=`
+
+<div class="country" onclick="openCountry(${i})">
+
+<div class="flag">${c.flag}</div>
+
+<h2>${c.name}</h2>
+
+<p>📍 ${c.capital}</p>
+
+<p>🌎 ${c.continent}</p>
+
+<p>🗣️ ${c.english}</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function openCountry(i){
+
+const c=countries[i];
+
+document.getElementById("countryDetails").innerHTML=`
+
+<div class="flag">${c.flag}</div>
+
+<h1>${c.name}</h1>
+
+<h2>📍 Capitale</h2>
+<p>${c.capital}</p>
+
+<h2>🌎 Continent</h2>
+<p>${c.continent}</p>
+
+<h2>🗣️ Anglais</h2>
+<p>${c.english}</p>
+
+<h2>💡 À retenir</h2>
+<p>${c.fact}</p>
+
+`;
+
+document.getElementById("countryModal")
+.classList.remove("hidden");
+
+}
+
+
+function closeCountry(){
+
+document.getElementById("countryModal")
+.classList.add("hidden");
+
+}
+
+
+const questions=[
+
+[
+"Quelle est la capitale du Royaume-Uni ?",
+["Londres","Paris","Dublin","Rome"],
+0
+],
+
+[
+"Quelle est la capitale des États-Unis ?",
+["Washington D.C.","New York","Boston","Chicago"],
+0
+],
+
+[
+"Quelle est la capitale du Canada ?",
+["Toronto","Ottawa","Vancouver","Montréal"],
+1
+],
+
+[
+"Quel pays a pour capitale Canberra ?",
+["Australie","Nouvelle-Zélande","Canada","Irlande"],
+0
+],
+
+[
+"Quelle est la capitale de l'Irlande ?",
+["Dublin","Cork","Belfast","Galway"],
+0
+],
+
+[
+"Dans quel continent se trouve le Ghana ?",
+["Afrique","Europe","Asie","Océanie"],
+0
+],
+
+[
+"Quelle est la capitale du Kenya ?",
+["Nairobi","Accra","Abuja","Kigali"],
+0
+],
+
+[
+"Quelle est la capitale du Nigeria ?",
+["Lagos","Abuja","Nairobi","Accra"],
+1
+],
+
+[
+"Quelle est la capitale de l'Inde ?",
+["Mumbai","New Delhi","Chennai","Kolkata"],
+1
+],
+
+[
+"Quelle est la capitale de la Jamaïque ?",
+["Kingston","Nassau","Bridgetown","Suva"],
+0
+],
+
+[
+"Quel pays se trouve en Océanie ?",
+["Fidji","Ghana","Kenya","Irlande"],
+0
+],
+
+[
+"Quelle langue est officielle au Ghana ?",
+["English","French","Spanish","German"],
+0
+],
+
+[
+"Quelle est la capitale de la Nouvelle-Zélande ?",
+["Auckland","Wellington","Sydney","Suva"],
+1
+],
+
+[
+"Quel pays possède l'anglais et le français comme langues officielles ?",
+["Canada","Japon","Brésil","Italie"],
+0
+],
+
+[
+"Quelle est la capitale des Bahamas ?",
+["Nassau","Kingston","Bridgetown","Suva"],
+0
+],
+
+[
+"Quelle est la capitale de la Barbade ?",
+["Bridgetown","Nassau","Kingston","Georgetown"],
+0
+]
+
+];
+
+
+let currentQuestion=0;
+
+let score=0;
+
+let locked=false;
+
+
+function startQuiz(){
+
+show("quiz");
+
+currentQuestion=0;
+
+score=0;
+
+loadQuestion();
+
+}
+
+
+function loadQuestion(){
+
+locked=false;
+
+const q=questions[currentQuestion];
+
+document.getElementById("number").textContent=
+`Question ${currentQuestion+1} / ${questions.length}`;
+
+document.getElementById("question").textContent=q[0];
+
+document.getElementById("feedback").textContent="";
+
+document.getElementById("score").textContent=score;
+
+document.getElementById("progressBar").style.width=
+(currentQuestion/questions.length*100)+"%";
+
+const answers=document.getElementById("answers");
+
+answers.innerHTML="";
+
+q[1].forEach((answer,index)=>{
+
+const button=document.createElement("button");
+
+button.className="answer";
+
+button.textContent=answer;
+
+button.onclick=()=>checkAnswer(index,button);
+
+answers.appendChild(button);
+
+});
+
+}
+
+
+function checkAnswer(index,button){
+
+if(locked)return;
+
+locked=true;
+
+const q=questions[currentQuestion];
+
+if(index===q[2]){
+
+score+=10;
+
+button.classList.add("correct");
+
+document.getElementById("feedback").textContent=
+"✅ Bonne réponse +10 points";
+
+}else{
+
+button.classList.add("wrong");
+
+document.getElementById("feedback").textContent=
+"❌ Mauvaise réponse. La bonne réponse était : "
++q[1][q[2]];
+
+}
+
+document.getElementById("score").textContent=score;
+
+}
+
+
+function nextQuestion(){
+
+if(!locked)return;
+
+currentQuestion++;
+
+if(currentQuestion>=questions.length){
+
+document.getElementById("question").textContent=
+"🎉 Quiz terminé !";
+
+document.getElementById("answers").innerHTML=`
+
+<div class="result">
+
+<h2>Ton score</h2>
+
+<div class="score">
+⭐ ${score} / ${questions.length*10}
+</div>
+
+<p>
+Bravo ! Tu peux recommencer pour améliorer ton score.
+</p>
+
+<button onclick="startQuiz()">
+🔄 Recommencer
+</button>
+
+</div>
+
+`;
+
+document.getElementById("feedback").textContent="";
+
+document.getElementById("progressBar").style.width="100%";
+
+return;
+
+}
+
+loadQuestion();
+
+}
+
+
+renderCountries();
+
 </script>
+
 </body>
-</html><!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>World English - Partie 2 Quiz</title>
-<style>
-body{margin:0;font-family:Arial;background:#07111f;color:#fff}.wrap{max-width:1000px;margin:auto;padding:30px 18px}.top{padding:25px;border-radius:20px;background:#0d2943;border:1px solid #2c5979;text-align:center}h1{font-size:50px}span{color:#42b5ff}.quiz{margin-top:20px;padding:25px;border-radius:20px;background:#0b1d30;border:1px solid #28516f}.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}button{padding:15px;border-radius:12px;border:1px solid #356184;background:#102a43;color:#fff;font-weight:bold;cursor:pointer}button:hover{background:#1a527c}.score{font-size:22px;font-weight:bold}.good{background:#12653f!important}.bad{background:#7b2630!important}.progress{height:12px;background:#142b40;border-radius:20px;overflow:hidden}.bar{height:100%;width:0;background:#42b5ff;transition:.3s}@media(max-width:600px){.answers{grid-template-columns:1fr}h1{font-size:38px}}
-</style></head><body><div class="wrap">
-<div class="top"><h1>WORLD <span>ENGLISH</span></h1><p>🧠 Partie 2 : Quiz de découverte</p><div class="score">⭐ <b id="score">0</b> points</div><div class="progress"><div class="bar" id="bar"></div></div></div>
-<div class="quiz"><p id="number"></p><h2 id="question"></h2><div class="answers" id="answers"></div><p id="feedback"></p><button onclick="next()">Question suivante →</button></div>
-</div><script>
-const qs=[
-["Quelle est la capitale du Royaume-Uni ?",["Londres","Paris","Dublin","Rome"],0],
-["Quelle est la capitale des États-Unis ?",["New York","Washington D.C.","Boston","Chicago"],1],
-["Quel pays a pour capitale Canberra ?",["Australie","Canada","Irlande","Inde"],0],
-["Quelle est la capitale du Canada ?",["Toronto","Ottawa","Vancouver","Montréal"],1],
-["Quelle est la capitale de la Nouvelle-Zélande ?",["Auckland","Wellington","Sydney","Suva"],1],
-["Dans quel continent se trouve le Ghana ?",["Europe","Afrique","Asie","Océanie"],1],
-["Quelle langue est officielle au Nigeria ?",["English","Spanish","German","Italian"],0],
-["Quelle est la capitale du Kenya ?",["Nairobi","Accra","Abuja","Kigali"],0],
-["Quelle est la capitale de l'Inde ?",["Mumbai","New Delhi","Delhi City","Chennai"],1],
-["Quel pays est en Océanie ?",["Fidji","Ghana","Irlande","Pakistan"],0],
-["Quelle est la capitale de l'Irlande ?",["Dublin","Belfast","Cork","Galway"],0],
-["Quelle est la capitale de la Jamaïque ?",["Kingston","Nassau","Bridgetown","Havana"],0],
-["Quelle est la capitale des Bahamas ?",["Nassau","Kingston","Suva","Belmopan"],0],
-["Quelle est la capitale de la Barbade ?",["Bridgetown","Nassau","Kingston","Kampala"],0],
-["Quelle est la capitale du Pakistan ?",["Karachi","Islamabad","Lahore","Peshawar"],1],
-["Quel pays utilise largement l'anglais en plus du français ?",["Canada","Japon","Brésil","Italie"],0],
-["Quel pays a pour capitale Accra ?",["Ghana","Kenya","Nigeria","Ouganda"],0],
-["Quel pays a pour capitale Abuja ?",["Nigeria","Ghana","Kenya","Zambie"],0],
-["Quel pays a pour capitale Kampala ?",["Ouganda","Rwanda","Namibie","Botswana"],0],
-["Quelle est la capitale de la Zambie ?",["Lusaka","Harare","Gaborone","Windhoek"],0]
-];
-let i=0,score=0,locked=false;
-function load(){locked=false;let q=qs[i];number.textContent=`Question ${i+1} / ${qs.length}`;question.textContent=q[0];answers.innerHTML=q[1].map((a,n)=>`<button onclick="answer(${n},this)">${a}</button>`).join("");feedback.textContent="";bar.style.width=((i)/qs.length*100)+"%"}
-function answer(n,b){if(locked)return;locked=true;let q=qs[i];if(n===q[2]){score+=10;b.classList.add("good");feedback.textContent="✅ Bonne réponse ! +10 points"}else{b.classList.add("bad");feedback.textContent=`❌ Pas cette fois. La bonne réponse était : ${q[1][q[2]]}`}document.getElementById("score").textContent=score;localStorage.setItem("worldEnglishScore",score)}
-function next(){if(i<qs.length-1){i++;load()}else{question.textContent="🎉 Quiz terminé !";answers.innerHTML=`<h2>Score final : ${score} points</h2>`;feedback.textContent="Passe à la partie suivante pour le mode moyen et difficile.";bar.style.width="100%"}}
-load();
-</script></body></html><!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>World English - Partie 3</title>
-<style>
-body{margin:0;font-family:Arial;background:#070d19;color:#fff}.wrap{max-width:1100px;margin:auto;padding:25px}.hero,.card{padding:25px;border:1px solid #31546e;border-radius:20px;background:#0d1d2e;margin-bottom:18px}h1{font-size:55px}h1 span{color:#42b5ff}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.stat{padding:20px;background:#102941;border-radius:16px;text-align:center}.big{font-size:38px;font-weight:bold;color:#42b5ff}.bar{height:15px;background:#172d42;border-radius:20px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,#42b5ff,#785cff)}.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.badge{padding:20px;text-align:center;border-radius:15px;background:#102238;border:1px solid #294a65}.locked{opacity:.35}button{padding:13px 18px;background:#123451;border:1px solid #39729b;border-radius:12px;color:#fff;font-weight:bold;cursor:pointer}
-</style></head><body><div class="wrap"><div class="hero"><h1>🏆 <span>Points & XP</span></h1><p>Partie 3 : ton profil, ton XP, tes niveaux et tes badges.</p></div>
-<div class="card"><div class="stats"><div class="stat">⭐<div class="big" id="points">0</div>Points</div><div class="stat">⚡<div class="big" id="xp">0</div>XP</div><div class="stat">🎖️<div class="big" id="level">1</div>Niveau</div><div class="stat">🔥<div class="big" id="streak">0</div>Combo</div></div></div>
-<div class="card"><h2>Progression du niveau</h2><div class="bar"><div class="fill" id="fill"></div></div><p id="next"></p></div>
-<div class="card"><h2>🎖️ Badges</h2><div class="badges" id="badges"></div></div><div class="card"><button onclick="reset()">Réinitialiser la progression</button></div></div>
-<script>
-let points=Number(localStorage.getItem("worldEnglishScore")||0);let xp=points;let level=Math.floor(xp/100)+1;let streak=0;
-function update(){pointsEl.textContent=points;xpEl.textContent=xp;levelEl.textContent=level;let p=xp%100;fill.style.width=p+"%";next.textContent=`${100-p} XP avant le niveau ${level+1}`;const b=[["🌱","Premier pas",points>=10],["🧭","Explorateur",points>=50],["🌍","Globe-trotter",points>=100],["🧠","Connaisseur",points>=200],["🏆","Champion",points>=500],["👑","Maître du monde",points>=1000]];badges.innerHTML=b.map(x=>`<div class="badge ${x[2]?"":"locked"}"><div style="font-size:40px">${x[0]}</div><b>${x[1]}</b><p>${x[2]?"Débloqué":"Verrouillé"}</p></div>`).join("")}
-const pointsEl=document.getElementById("points"),xpEl=document.getElementById("xp"),levelEl=document.getElementById("level");update();
-function reset(){if(confirm("Réinitialiser ?")){localStorage.removeItem("worldEnglishScore");location.reload()}}
-</script></body></html><!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>World English - Partie 4</title>
-<style>
-body{margin:0;font-family:Arial;background:#060c16;color:#fff}.wrap{max-width:1000px;margin:auto;padding:25px}.hero,.game{padding:28px;background:#0d1e31;border:1px solid #315875;border-radius:22px;margin-bottom:18px}h1{font-size:50px}h1 span{color:#42b5ff}.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.mode{padding:22px;background:#102941;border:1px solid #2c5572;border-radius:17px;cursor:pointer}.mode:hover{border-color:#42b5ff}.question{font-size:25px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}button{padding:14px;border-radius:12px;background:#123653;color:#fff;border:1px solid #3c7096;font-weight:bold;cursor:pointer}.timer{font-size:35px;color:#42b5ff}@media(max-width:600px){.answers{grid-template-columns:1fr}}
-</style></head><body><div class="wrap"><div class="hero"><h1>🎮 <span>Modes de jeu</span></h1><p>Partie 4 : facile, moyen, difficile et défi chronométré.</p><div class="modes"><div class="mode" onclick="start('Facile')">🟢<h2>Facile</h2><p>Questions directes.</p></div><div class="mode" onclick="start('Moyen')">🟠<h2>Moyen</h2><p>Capitales et régions.</p></div><div class="mode" onclick="start('Difficile')">🔴<h2>Difficile</h2><p>Questions plus précises.</p></div><div class="mode" onclick="start('Défi')">⚡<h2>Défi</h2><p>Réponds vite !</p></div></div></div>
-<div class="game"><div class="timer" id="timer">--</div><div id="game"></div></div></div>
-<script>
-const easy=[["Capitale du Kenya ?",["Nairobi","Accra","Abuja"],0],["Capitale du Ghana ?",["Accra","Lusaka","Kigali"],0],["Capitale de l'Australie ?",["Canberra","Sydney","Melbourne"],0]];
-const medium=[["Quel pays a pour capitale Wellington ?",["Nouvelle-Zélande","Australie","Fidji"],0],["Dans quelle région se trouve le Pakistan ?",["Asie","Afrique","Europe"],0],["Quelle capitale correspond au Nigeria ?",["Abuja","Nairobi","Kampala"],0]];
-const hard=[["Quel pays anglophone se trouve en Afrique australe ?",["Botswana","Japon","Espagne"],0],["Quelle capitale appartient à la Zambie ?",["Lusaka","Harare","Windhoek"],0],["Quel pays a l'anglais parmi ses langues officielles ?",["Singapour","Chili","Portugal"],0]];
-let data=[],i=0,score=0,time=0,interval;
-function start(mode){clearInterval(interval);i=0;score=0;data=mode==="Facile"?easy:mode==="Moyen"?medium:hard;if(mode==="Défi"){data=[...easy,...medium,...hard];time=30;interval=setInterval(()=>{time--;timer.textContent="⏱️ "+time;if(time<=0){clearInterval(interval);game.innerHTML=`<h2>Temps écoulé ! Score : ${score}</h2>`}},1000)}else timer.textContent="";load()}
-function load(){if(i>=data.length){game.innerHTML=`<h2>🎉 Terminé ! Score : ${score}</h2>`;localStorage.setItem("worldEnglishScore",Math.max(Number(localStorage.getItem("worldEnglishScore")||0),score));return}let q=data[i];game.innerHTML=`<p>Question ${i+1}/${data.length}</p><div class="question">${q[0]}</div><div class="answers">${q[1].map((a,n)=>`<button onclick="answer(${n})">${a}</button>`).join("")}</div>`}
-function answer(n){if(n===data[i][2])score+=20;i++;load()}
-</script></body></html><!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>World English - Partie 6 Finale</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial;background:radial-gradient(circle at top,#173b5b,#050b13 60%);color:#fff}.wrap{max-width:1150px;margin:auto;padding:25px}.hero{padding:55px 30px;text-align:center;border:1px solid #39749a;border-radius:28px;background:#0b2035}h1{font-size:clamp(42px,7vw,78px);margin:0}h1 span{color:#42b5ff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;margin-top:20px}.card{padding:22px;background:#0b1d30;border:1px solid #2c5572;border-radius:20px}.icon{font-size:45px}button{padding:14px 18px;background:#123653;color:#fff;border:1px solid #3b7197;border-radius:12px;font-weight:bold;cursor:pointer}.start{background:linear-gradient(135deg,#42b5ff,#785cff);border:0;font-size:18px}.timeline{display:flex;gap:8px;flex-wrap:wrap}.part{padding:12px 16px;border-radius:12px;background:#102941;border:1px solid #2b5572}.done{border-color:#42b5ff}
-</style></head><body><div class="wrap">
-<section class="hero"><div class="icon">🌍</div><h1>WORLD <span>ENGLISH</span></h1><p>Le grand espace interactif sur les pays anglophones.</p><button class="start" onclick="start()">🚀 Commencer</button></section>
-<section class="card"><h2>🗺️ Les 6 parties</h2><div class="timeline"><div class="part done">1. Carte & pays</div><div class="part done">2. Quiz facile</div><div class="part done">3. Points & XP</div><div class="part done">4. Modes de jeu</div><div class="part done">5. Statistiques</div><div class="part done">6. Final</div></div></section>
-<section class="grid"><div class="card"><div class="icon">🌍</div><h2>Carte interactive</h2><p>Repère les pays anglophones et ouvre leurs fiches.</p></div><div class="card"><div class="icon">🧠</div><h2>Quiz</h2><p>Teste tes connaissances avec plusieurs niveaux.</p></div><div class="card"><div class="icon">⭐</div><h2>XP & points</h2><p>Chaque réussite peut faire progresser ton profil.</p></div><div class="card"><div class="icon">🏆</div><h2>Badges</h2><p>Débloque des récompenses en progressant.</p></div><div class="card"><div class="icon">📊</div><h2>Statistiques</h2><p>Observe ton score et tes objectifs.</p></div><div class="card"><div class="icon">🎮</div><h2>Défis</h2><p>Plusieurs modes pour varier les exercices.</p></div></section>
-<section class="card"><h2>📚 Résumé du cours</h2><p>Le monde anglophone est très vaste. L'anglais peut être une langue principale, une langue officielle ou une seconde langue largement utilisée selon les pays. Le site permet de comparer les régions, les capitales et la place de l'anglais.</p><button onclick="window.print()">🖨️ Imprimer la page</button></section>
-<footer style="text-align:center;padding:30px;color:#91a9bd">WORLD ENGLISH EXPLORER • Projet d'anglais</footer>
-</div><script>function start(){alert("Bienvenue dans World English ! Les parties 1 à 5 contiennent les différents modules.");}</script></body></html><!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>World English - Partie 6 Finale</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial;background:radial-gradient(circle at top,#173b5b,#050b13 60%);color:#fff}.wrap{max-width:1150px;margin:auto;padding:25px}.hero{padding:55px 30px;text-align:center;border:1px solid #39749a;border-radius:28px;background:#0b2035}h1{font-size:clamp(42px,7vw,78px);margin:0}h1 span{color:#42b5ff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;margin-top:20px}.card{padding:22px;background:#0b1d30;border:1px solid #2c5572;border-radius:20px}.icon{font-size:45px}button{padding:14px 18px;background:#123653;color:#fff;border:1px solid #3b7197;border-radius:12px;font-weight:bold;cursor:pointer}.start{background:linear-gradient(135deg,#42b5ff,#785cff);border:0;font-size:18px}.timeline{display:flex;gap:8px;flex-wrap:wrap}.part{padding:12px 16px;border-radius:12px;background:#102941;border:1px solid #2b5572}.done{border-color:#42b5ff}
-</style></head><body><div class="wrap">
-<section class="hero"><div class="icon">🌍</div><h1>WORLD <span>ENGLISH</span></h1><p>Le grand espace interactif sur les pays anglophones.</p><button class="start" onclick="start()">🚀 Commencer</button></section>
-<section class="card"><h2>🗺️ Les 6 parties</h2><div class="timeline"><div class="part done">1. Carte & pays</div><div class="part done">2. Quiz facile</div><div class="part done">3. Points & XP</div><div class="part done">4. Modes de jeu</div><div class="part done">5. Statistiques</div><div class="part done">6. Final</div></div></section>
-<section class="grid"><div class="card"><div class="icon">🌍</div><h2>Carte interactive</h2><p>Repère les pays anglophones et ouvre leurs fiches.</p></div><div class="card"><div class="icon">🧠</div><h2>Quiz</h2><p>Teste tes connaissances avec plusieurs niveaux.</p></div><div class="card"><div class="icon">⭐</div><h2>XP & points</h2><p>Chaque réussite peut faire progresser ton profil.</p></div><div class="card"><div class="icon">🏆</div><h2>Badges</h2><p>Débloque des récompenses en progressant.</p></div><div class="card"><div class="icon">📊</div><h2>Statistiques</h2><p>Observe ton score et tes objectifs.</p></div><div class="card"><div class="icon">🎮</div><h2>Défis</h2><p>Plusieurs modes pour varier les exercices.</p></div></section>
-<section class="card"><h2>📚 Résumé du cours</h2><p>Le monde anglophone est très vaste. L'anglais peut être une langue principale, une langue officielle ou une seconde langue largement utilisée selon les pays. Le site permet de comparer les régions, les capitales et la place de l'anglais.</p><button onclick="window.print()">🖨️ Imprimer la page</button></section>
-<footer style="text-align:center;padding:30px;color:#91a9bd">WORLD ENGLISH EXPLORER • Projet d'anglais</footer>
-</div><script>function start(){alert("Bienvenue dans World English ! Les parties 1 à 5 contiennent les différents modules.");}</script></body></html>
+</html>
+```
