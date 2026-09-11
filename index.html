@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>World English Explorer</title>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
@@ -15,50 +16,38 @@
     padding:0;
 }
 
-:root{
-    --bg:#030712;
-    --panel:#071426;
-    --panel2:#0a1b31;
-    --border:#18385d;
-    --text:#f5f8ff;
-    --muted:#8da1b9;
-    --blue:#1683ff;
-    --blue2:#52b4ff;
-    --red:#ff3154;
-    --red2:#ff637d;
-    --green:#32e58b;
-    --yellow:#ffd04d;
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    min-height:100vh;
-    color:var(--text);
     font-family:Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(circle at 15% 0%,rgba(22,131,255,.16),transparent 30%),
-        radial-gradient(circle at 90% 20%,rgba(255,49,84,.10),transparent 25%),
-        var(--bg);
+        radial-gradient(circle at 20% 10%,rgba(255,49,84,.12),transparent 30%),
+        radial-gradient(circle at 80% 20%,rgba(22,131,255,.12),transparent 30%),
+        #070a10;
+    color:white;
+    min-height:100vh;
 }
 
-button{
-    font-family:inherit;
-    cursor:pointer;
-}
+/* =========================
+   HEADER
+========================= */
 
 header{
     position:sticky;
     top:0;
     z-index:1000;
-    background:rgba(3,7,18,.88);
+    background:rgba(7,10,16,.9);
     backdrop-filter:blur(18px);
-    border-bottom:1px solid #132b48;
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .navbar{
-    max-width:1250px;
-    min-height:70px;
+    max-width:1500px;
     margin:auto;
-    padding:12px 20px;
+    min-height:75px;
+    padding:12px 25px;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -66,184 +55,207 @@ header{
 }
 
 .logo{
-    font-size:21px;
-    font-weight:1000;
-    letter-spacing:1px;
-    white-space:nowrap;
+    font-size:23px;
+    font-weight:900;
+    letter-spacing:-1px;
 }
 
-.logo b{
-    color:var(--blue2);
+.logo span{
+    color:#1683ff;
 }
 
 .nav{
     display:flex;
+    gap:8px;
     flex-wrap:wrap;
     justify-content:center;
-    gap:7px;
 }
 
 .nav button{
-    color:#91a4bb;
-    background:transparent;
     border:0;
-    padding:10px 14px;
-    border-radius:10px;
+    color:#aaa;
+    background:transparent;
+    padding:11px 16px;
+    border-radius:12px;
+    font-weight:800;
+    cursor:pointer;
     transition:.2s;
 }
 
 .nav button:hover,
 .nav button.active{
     color:white;
-    background:#0d2745;
+    background:#151b27;
 }
+
+.best{
+    background:linear-gradient(135deg,#ff3154,#1683ff);
+    padding:9px 14px;
+    border-radius:12px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+/* =========================
+   GENERAL
+========================= */
 
 main{
-    max-width:1250px;
+    max-width:1500px;
     margin:auto;
-    padding:20px;
+    padding:35px 20px 80px;
 }
 
-.section{
+section{
     display:none;
 }
 
-.section.active{
+section.active{
     display:block;
 }
-
-/* HOME */
 
 .hero{
     min-height:650px;
-    display:flex;
-    flex-direction:column;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
     align-items:center;
-    justify-content:center;
-    text-align:center;
-}
-
-.hero-globe{
-    font-size:90px;
-    animation:float 3s ease-in-out infinite;
-    filter:drop-shadow(0 0 30px #1683ff);
-}
-
-@keyframes float{
-    50%{
-        transform:translateY(-14px);
-    }
+    gap:50px;
 }
 
 .hero h1{
-    margin:20px 0 12px;
-    font-size:clamp(45px,8vw,90px);
-    line-height:1;
-    font-weight:1000;
-    background:linear-gradient(90deg,#fff,#55b5ff,#fff,#ff506c,#fff);
-    background-size:250%;
-    -webkit-background-clip:text;
-    color:transparent;
-    animation:shine 5s linear infinite;
+    font-size:clamp(50px,7vw,100px);
+    line-height:.9;
+    letter-spacing:-6px;
+    margin-bottom:25px;
 }
 
-@keyframes shine{
-    to{
-        background-position:250%;
-    }
+.hero h1 span{
+    color:#1683ff;
 }
 
 .hero p{
+    color:#aab1bd;
+    font-size:20px;
+    line-height:1.6;
     max-width:700px;
-    color:var(--muted);
-    font-size:18px;
-    line-height:1.7;
 }
 
-.primary{
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.btn{
     border:0;
-    border-radius:13px;
-    padding:15px 24px;
+    border-radius:14px;
+    padding:15px 22px;
     color:white;
+    font-size:16px;
     font-weight:900;
-    background:linear-gradient(135deg,#0874ff,#46baff);
-    box-shadow:0 10px 30px rgba(22,131,255,.25);
+    cursor:pointer;
     transition:.2s;
 }
 
-.primary:hover{
+.btn:hover{
     transform:translateY(-3px);
 }
 
-.secondary{
-    border:1px solid #24486e;
-    border-radius:13px;
-    padding:14px 20px;
-    color:white;
-    background:#0a192c;
+.btn.red{
+    background:#ff3154;
 }
 
-.home-stats{
+.btn.blue{
+    background:#1683ff;
+}
+
+.btn.dark{
+    background:#151b27;
+    border:1px solid #273142;
+}
+
+.hero-card{
+    min-height:400px;
+    border-radius:30px;
+    padding:30px;
+    background:
+        linear-gradient(145deg,rgba(255,49,84,.13),rgba(22,131,255,.12)),
+        #0d121b;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 30px 100px rgba(0,0,0,.4);
     display:flex;
+    flex-direction:column;
     justify-content:center;
-    flex-wrap:wrap;
+}
+
+.big-globe{
+    font-size:130px;
+    text-align:center;
+    filter:drop-shadow(0 0 35px rgba(22,131,255,.5));
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
     gap:12px;
-    margin-top:30px;
+    margin-top:25px;
 }
 
-.home-stat{
-    min-width:150px;
-    padding:15px 20px;
-    background:#071528;
-    border:1px solid #18385d;
+.stat{
+    background:#111722;
+    border:1px solid #202a38;
     border-radius:15px;
+    padding:20px;
+    text-align:center;
 }
 
-.home-stat strong{
+.stat strong{
     display:block;
-    font-size:24px;
-    color:var(--blue2);
+    font-size:28px;
 }
 
-.home-stat span{
-    color:var(--muted);
+.stat span{
+    color:#8791a0;
     font-size:12px;
 }
 
-/* TITLES */
+/* =========================
+   TITLES
+========================= */
 
-.section-title{
-    margin:35px 0 20px;
+.title{
+    margin-bottom:25px;
 }
 
-.section-title h2{
-    font-size:40px;
-    margin-bottom:8px;
+.title h2{
+    font-size:48px;
+    letter-spacing:-2px;
 }
 
-.section-title p{
-    color:var(--muted);
+.title p{
+    color:#8f99a8;
+    margin-top:8px;
 }
 
-/* MAP */
+/* =========================
+   MAP
+========================= */
 
 .map-card{
-    padding:20px;
-    border-radius:22px;
-    border:1px solid #1b4168;
-    background:
-        radial-gradient(circle at center,rgba(15,69,120,.15),transparent 65%),
-        #061223;
-    box-shadow:0 20px 70px rgba(0,0,0,.25);
+    background:#0c1119;
+    border:1px solid #202a38;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 30px 100px rgba(0,0,0,.3);
 }
 
 #map{
     width:100%;
-    height:550px;
-    overflow:hidden;
-    border-radius:16px;
+    height:650px;
     background:
-        radial-gradient(circle,#0c2947,#04101f);
+        radial-gradient(circle at center,#101c2c,#070a10 75%);
+    position:relative;
 }
 
 #worldMap{
@@ -251,138 +263,163 @@ main{
     height:100%;
 }
 
-.country-path{
-    stroke:#08111e;
-    stroke-width:.7;
+.country{
+    stroke:#111721;
+    stroke-width:.5;
     transition:.15s;
+    cursor:pointer;
 }
 
-.country-path:hover{
+.country:hover{
     stroke:white;
     stroke-width:1.5;
-    filter:brightness(1.35);
-}
-
-.map-tooltip{
-    position:fixed;
-    display:none;
-    pointer-events:none;
-    z-index:5000;
-    padding:10px 14px;
-    border-radius:10px;
-    border:1px solid #31577d;
-    background:#071426;
-    box-shadow:0 10px 30px rgba(0,0,0,.4);
-    font-size:13px;
+    filter:brightness(1.3);
 }
 
 .legend{
-    margin-top:20px;
     display:flex;
+    gap:30px;
     justify-content:center;
+    align-items:center;
     flex-wrap:wrap;
-    gap:20px;
+    padding:20px;
+    background:#0a0f17;
+    border-top:1px solid #202a38;
 }
 
 .legend-item{
     display:flex;
     align-items:center;
     gap:9px;
-    padding:11px 16px;
-    border-radius:12px;
-    background:#09192c;
-    border:1px solid #1b3b60;
+    color:#c5ccd7;
+    font-weight:700;
 }
 
-.legend-color{
-    width:18px;
-    height:18px;
-    border-radius:5px;
+.dot{
+    width:15px;
+    height:15px;
+    border-radius:50%;
 }
 
-.legend-red{
-    background:var(--red);
+.dot.red{
+    background:#ff3154;
+    box-shadow:0 0 15px rgba(255,49,84,.5);
 }
 
-.legend-blue{
-    background:var(--blue);
+.dot.blue{
+    background:#1683ff;
+    box-shadow:0 0 15px rgba(22,131,255,.5);
 }
 
-.legend-gray{
-    background:#1b334c;
+.dot.gray{
+    background:#303947;
 }
 
-.legend-text{
-    color:#c4d0de;
-    font-size:14px;
+#mapTooltip{
+    position:fixed;
+    display:none;
+    z-index:9999;
+    pointer-events:none;
+    background:#080c13;
+    border:1px solid #303b4d;
+    border-radius:14px;
+    padding:14px 17px;
+    box-shadow:0 20px 50px rgba(0,0,0,.6);
+    min-width:190px;
 }
 
-.map-info{
-    margin-top:18px;
-    text-align:center;
-    color:var(--muted);
-    line-height:1.6;
+.tooltip-name{
+    font-size:18px;
+    font-weight:900;
 }
 
-/* COUNTRIES */
+.tooltip-capital{
+    color:#929baa;
+    margin-top:5px;
+    font-size:13px;
+}
+
+.tooltip-lang{
+    margin-top:9px;
+    font-size:12px;
+    font-weight:900;
+}
+
+/* =========================
+   COUNTRIES
+========================= */
 
 .search{
     width:100%;
-    padding:16px;
-    border-radius:13px;
-    outline:none;
+    background:#0c1119;
+    border:1px solid #283345;
     color:white;
-    background:#071629;
-    border:1px solid #1d4166;
+    padding:17px 20px;
+    border-radius:15px;
+    outline:none;
+    font-size:16px;
     margin-bottom:20px;
 }
 
 .search:focus{
-    border-color:var(--blue);
+    border-color:#1683ff;
+}
+
+.country-count{
+    color:#7f8998;
+    margin-bottom:18px;
 }
 
 .country-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-    gap:15px;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:14px;
 }
 
-.country{
+.country-card{
+    background:#0d131d;
+    border:1px solid #202a38;
+    border-radius:17px;
     padding:20px;
-    border-radius:18px;
-    border:1px solid #193b61;
-    background:linear-gradient(145deg,#091b30,#061120);
     transition:.2s;
 }
 
-.country:hover{
+.country-card:hover{
     transform:translateY(-4px);
-    border-color:#479fff;
+    border-color:#3a4658;
 }
 
-.country.primary-country{
-    border-left:4px solid var(--red);
+.country-card.red{
+    border-top:3px solid #ff3154;
 }
 
-.country.secondary-country{
-    border-left:4px solid var(--blue);
+.country-card.blue{
+    border-top:3px solid #1683ff;
+}
+
+.country-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
 }
 
 .flag{
-    font-size:42px;
+    font-size:34px;
 }
 
-.country h3{
-    margin:9px 0;
+.country-name{
+    font-weight:900;
+    font-size:18px;
 }
 
-.country p{
-    color:var(--muted);
+.country-info{
+    color:#8993a2;
+    font-size:13px;
     line-height:1.7;
-    font-size:14px;
 }
 
-.country-tag{
+.language-badge{
     display:inline-block;
     margin-top:12px;
     padding:6px 9px;
@@ -391,196 +428,121 @@ main{
     font-weight:900;
 }
 
-.red-tag{
+.language-badge.red{
+    color:#ff7189;
     background:rgba(255,49,84,.12);
-    color:#ff7188;
 }
 
-.blue-tag{
+.language-badge.blue{
+    color:#5ba5ff;
     background:rgba(22,131,255,.12);
-    color:#63b8ff;
 }
 
-/* QUIZ START */
+.language-badge.gray{
+    color:#929baa;
+    background:#171e29;
+}
 
-.quiz-start{
-    text-align:center;
+/* =========================
+   QUIZ
+========================= */
+
+.quiz-menu{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.quiz-mode{
+    border:1px solid #263142;
+    background:#0d131d;
+    color:white;
+    padding:25px;
+    border-radius:18px;
+    cursor:pointer;
+    text-align:left;
+    transition:.2s;
+}
+
+.quiz-mode:hover{
+    transform:translateY(-5px);
+    border-color:#1683ff;
+}
+
+.quiz-mode h3{
+    font-size:22px;
+    margin-bottom:7px;
+}
+
+.quiz-mode p{
+    color:#858f9e;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.quiz-game{
+    display:none;
     max-width:950px;
     margin:auto;
 }
 
-.quiz-logo{
-    font-size:70px;
-    margin-top:40px;
-}
-
-.mode-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-    gap:15px;
-    margin:30px 0;
-}
-
-.mode{
-    text-align:left;
-    color:white;
-    background:#071629;
-    border:1px solid #1b4168;
-    border-radius:18px;
-    padding:22px;
-    transition:.2s;
-}
-
-.mode:hover{
-    transform:translateY(-5px);
-    border-color:var(--blue2);
-    box-shadow:0 15px 35px rgba(22,131,255,.12);
-}
-
-.mode h3{
-    margin-bottom:9px;
-}
-
-.mode p{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.6;
-}
-
-.best-box{
-    color:#ffd052;
-    font-weight:900;
-}
-
-/* QUIZ */
-
-.quiz-game{
-    max-width:900px;
-    margin:25px auto;
-    display:none;
-}
-
-.quiz-stats{
+.quiz-top{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:10px;
+    margin-bottom:20px;
 }
 
-.stat{
-    padding:14px;
-    text-align:center;
+.quiz-stat{
+    background:#0d131d;
+    border:1px solid #222d3c;
     border-radius:14px;
-    border:1px solid #193d63;
-    background:#071629;
+    padding:15px;
+    text-align:center;
 }
 
-.stat small{
+.quiz-stat small{
     display:block;
-    color:#8297ae;
-    font-size:10px;
+    color:#7e8999;
     margin-bottom:5px;
 }
 
-.stat strong{
+.quiz-stat strong{
     font-size:22px;
 }
 
-#comboStat{
-    color:#ffd052;
-}
-
-#multiplierStat{
-    color:#58c0ff;
-}
-
-.progress-info{
-    display:flex;
-    justify-content:space-between;
-    color:#91a5bb;
-    margin:18px 2px 7px;
-    font-size:13px;
-}
-
 .progress{
-    height:8px;
-    overflow:hidden;
+    height:10px;
+    background:#151d29;
     border-radius:20px;
-    background:#0a1a2d;
+    overflow:hidden;
+    margin-bottom:25px;
 }
 
-.progress-fill{
-    width:0%;
+.progress-bar{
     height:100%;
-    background:linear-gradient(90deg,#1683ff,#54c1ff);
+    width:0;
+    background:linear-gradient(90deg,#ff3154,#1683ff);
     transition:.3s;
 }
 
-.timer{
-    margin:15px 0 20px;
-}
-
-.timer-top{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:7px;
-    font-weight:900;
-}
-
-#timerText{
-    color:#59b9ff;
-}
-
-.timer-bar{
-    height:12px;
-    border-radius:20px;
-    overflow:hidden;
-    background:#0a192b;
-}
-
-#timerFill{
-    width:100%;
-    height:100%;
-    background:var(--blue);
-    transition:width .1s linear;
-}
-
 .question-card{
-    padding:32px;
+    background:#0d131d;
+    border:1px solid #263142;
     border-radius:22px;
-    border:1px solid #214b75;
-    background:
-        radial-gradient(circle at top right,rgba(22,131,255,.1),transparent 35%),
-        #071629;
-    box-shadow:0 20px 70px rgba(0,0,0,.3);
+    padding:35px;
 }
 
-.level{
-    display:inline-block;
-    padding:7px 11px;
-    border-radius:8px;
-    font-size:11px;
+.question-number{
+    color:#1683ff;
     font-weight:900;
-    margin-bottom:18px;
+    margin-bottom:15px;
 }
 
-.easy{
-    color:#4ee69b;
-    background:rgba(50,229,139,.1);
-}
-
-.medium{
-    color:#ffd052;
-    background:rgba(255,208,82,.1);
-}
-
-.hard{
-    color:#ff637c;
-    background:rgba(255,49,84,.1);
-}
-
-#questionText{
-    font-size:clamp(24px,4vw,38px);
-    line-height:1.25;
+.question{
+    font-size:30px;
+    font-weight:900;
+    line-height:1.2;
     margin-bottom:25px;
 }
 
@@ -591,128 +553,162 @@ main{
 }
 
 .answer{
-    min-height:70px;
-    padding:15px;
-    text-align:left;
+    background:#121a26;
+    border:1px solid #2a3546;
     color:white;
-    border:1px solid #21476c;
     border-radius:14px;
-    background:#0a1c31;
+    padding:17px;
+    text-align:left;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
     transition:.15s;
 }
 
-.answer:hover:not(:disabled){
-    transform:translateY(-2px);
-    border-color:#5bb8ff;
-    background:#102a46;
+.answer:hover{
+    background:#192435;
+    border-color:#1683ff;
 }
 
 .answer.correct{
-    border-color:var(--green);
-    background:#0c3928;
+    background:rgba(20,180,100,.15);
+    border-color:#20d58a;
 }
 
 .answer.wrong{
-    border-color:var(--red);
-    background:#401722;
+    background:rgba(255,49,84,.15);
+    border-color:#ff3154;
 }
 
-.answer:disabled{
-    cursor:default;
+.quiz-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+    gap:10px;
 }
 
-.feedback{
-    min-height:35px;
-    margin-top:18px;
-    font-size:16px;
-    font-weight:900;
+.timer-wrap{
+    flex:1;
 }
 
-.next{
+.timer-text{
+    color:#8d96a4;
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+.timer-bar{
+    height:8px;
+    background:#151d29;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.timer-fill{
+    height:100%;
+    width:100%;
+    background:#1683ff;
+    transition:width 1s linear;
+}
+
+.next-btn{
     display:none;
-    margin-top:8px;
 }
 
-/* VICTORY */
+/* =========================
+   VICTORY
+========================= */
 
 .victory{
     display:none;
-    max-width:800px;
-    margin:70px auto;
+    max-width:750px;
+    margin:auto;
     text-align:center;
+    background:#0d131d;
+    border:1px solid #293548;
+    border-radius:25px;
+    padding:45px;
 }
 
-.victory-icon{
-    font-size:90px;
+.trophy{
+    font-size:80px;
 }
 
 .victory h2{
-    margin:15px 0;
     font-size:50px;
+    margin:15px 0;
 }
 
 .final-score{
-    font-size:55px;
-    font-weight:1000;
-    color:#59baff;
+    font-size:65px;
+    font-weight:900;
+    color:#1683ff;
 }
 
-.result-grid{
+.final-stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin:30px 0;
+    gap:10px;
+    margin:25px 0;
 }
 
-.result{
-    padding:18px;
-    border:1px solid #1d4166;
-    border-radius:15px;
-    background:#071629;
-}
+/* =========================
+   POPUP
+========================= */
 
-.result strong{
-    display:block;
-    font-size:25px;
-}
-
-.result span{
-    color:#8297ad;
-    font-size:11px;
-}
-
-.new-record{
-    color:#ffd052;
-    font-weight:1000;
-    margin:15px;
-}
-
-.combo-popup{
+#comboPopup{
     position:fixed;
-    right:20px;
-    top:90px;
-    z-index:3000;
-    padding:13px 18px;
-    border-radius:13px;
-    color:white;
+    left:50%;
+    top:30%;
+    transform:translate(-50%,-50%) scale(.6);
+    opacity:0;
+    pointer-events:none;
+    z-index:9999;
+    font-size:45px;
     font-weight:1000;
-    background:#0b2039;
-    border:1px solid #4daeff;
-    transform:translateX(150%);
+    color:white;
+    text-shadow:0 0 30px rgba(22,131,255,.8);
     transition:.3s;
 }
 
-.combo-popup.show{
-    transform:translateX(0);
+#comboPopup.show{
+    transform:translate(-50%,-50%) scale(1);
+    opacity:1;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+    .hero{
+        grid-template-columns:1fr;
+    }
+
+    .quiz-menu{
+        grid-template-columns:1fr 1fr;
+    }
 }
 
 @media(max-width:700px){
-
     .navbar{
         flex-direction:column;
     }
 
-    .quiz-stats{
+    .hero h1{
+        font-size:55px;
+    }
+
+    #map{
+        height:420px;
+    }
+
+    .quiz-menu{
+        grid-template-columns:1fr;
+    }
+
+    .quiz-top{
         grid-template-columns:1fr 1fr;
     }
 
@@ -720,22 +716,14 @@ main{
         grid-template-columns:1fr;
     }
 
-    .question-card{
-        padding:22px;
+    .question{
+        font-size:23px;
     }
 
-    #map{
-        height:350px;
-    }
-
-    .result-grid{
+    .stats,
+    .final-stats{
         grid-template-columns:1fr;
     }
-
-    .hero h1{
-        font-size:48px;
-    }
-
 }
 </style>
 </head>
@@ -746,59 +734,88 @@ main{
     <div class="navbar">
 
         <div class="logo">
-            🌍 <b>WORLD</b> ENGLISH
+            🌍 World <span>English</span> Explorer
         </div>
 
-        <nav class="nav">
-            <button class="active" data-section="home">Accueil</button>
-            <button data-section="mapSection">🗺️ Carte</button>
-            <button data-section="countries">🌎 Pays</button>
-            <button data-section="quiz">🎯 Quiz</button>
-        </nav>
+        <div class="nav">
+            <button class="nav-btn active" data-section="home">Accueil</button>
+            <button class="nav-btn" data-section="mapSection">Carte</button>
+            <button class="nav-btn" data-section="countries">Pays</button>
+            <button class="nav-btn" data-section="quiz">Quiz</button>
+        </div>
+
+        <div class="best">
+            🏆 <span id="bestScore">0</span>
+        </div>
 
     </div>
 </header>
 
-
 <main>
 
-<!-- ACCUEIL -->
+<!-- =========================
+     HOME
+========================= -->
 
-<section id="home" class="section active">
+<section id="home" class="active">
 
     <div class="hero">
 
-        <div class="hero-globe">🌍</div>
+        <div>
+            <h1>
+                WORLD<br>
+                <span>ENGLISH</span><br>
+                EXPLORER
+            </h1>
 
-        <h1>WORLD ENGLISH</h1>
+            <p>
+                Explore les pays du monde, découvre où l'anglais est
+                parlé et teste tes connaissances avec des quiz rapides
+                et de plus en plus difficiles.
+            </p>
 
-        <p>
-            Découvre les pays où l'anglais est parlé dans le monde,
-            apprends leurs capitales et teste tes connaissances.
-        </p>
+            <div class="buttons">
+                <button class="btn red" data-go="mapSection">
+                    🌍 Explorer la carte
+                </button>
 
-        <br>
-
-        <button class="primary" id="homeQuiz">
-            🚀 JOUER AU QUIZ
-        </button>
-
-        <div class="home-stats">
-
-            <div class="home-stat">
-                <strong id="homeBest">0</strong>
-                <span>Meilleur score</span>
+                <button class="btn blue" data-go="quiz">
+                    🧠 Lancer un quiz
+                </button>
             </div>
 
-            <div class="home-stat">
-                <strong>10</strong>
-                <span>Questions max</span>
-            </div>
+            <div class="stats">
 
-            <div class="home-stat">
-                <strong>2</strong>
-                <span>Catégories de langue</span>
+                <div class="stat">
+                    <strong id="homeCountries">195+</strong>
+                    <span>PAYS</span>
+                </div>
+
+                <div class="stat">
+                    <strong>4</strong>
+                    <span>MODES</span>
+                </div>
+
+                <div class="stat">
+                    <strong>10</strong>
+                    <span>QUESTIONS MAX</span>
+                </div>
+
             </div>
+        </div>
+
+        <div class="hero-card">
+
+            <div class="big-globe">🌎</div>
+
+            <h2 style="text-align:center;margin-top:15px;">
+                English around the world
+            </h2>
+
+            <p style="text-align:center;color:#8993a2;margin-top:10px;">
+                Rouge = anglais principalement parlé<br>
+                Bleu = anglais langue seconde / officielle
+            </p>
 
         </div>
 
@@ -807,18 +824,17 @@ main{
 </section>
 
 
-<!-- CARTE -->
+<!-- =========================
+     MAP
+========================= -->
 
-<section id="mapSection" class="section">
+<section id="mapSection">
 
-    <div class="section-title">
-
-        <h2>🗺️ Carte du monde anglophone</h2>
-
+    <div class="title">
+        <h2>🌍 Carte du monde</h2>
         <p>
-            Les pays sont colorés selon la place de l'anglais dans leur usage.
+            Passe ta souris sur un pays pour découvrir ses informations.
         </p>
-
     </div>
 
     <div class="map-card">
@@ -830,32 +846,20 @@ main{
         <div class="legend">
 
             <div class="legend-item">
-                <div class="legend-color legend-red"></div>
-                <div class="legend-text">
-                    🔴 Anglais comme langue principale
-                </div>
+                <span class="dot red"></span>
+                Anglais langue principale
             </div>
 
             <div class="legend-item">
-                <div class="legend-color legend-blue"></div>
-                <div class="legend-text">
-                    🔵 Anglais comme seconde langue / langue officielle
-                </div>
+                <span class="dot blue"></span>
+                Anglais langue seconde / officielle
             </div>
 
             <div class="legend-item">
-                <div class="legend-color legend-gray"></div>
-                <div class="legend-text">
-                    ⚫ Autres pays
-                </div>
+                <span class="dot gray"></span>
+                Autre pays
             </div>
 
-        </div>
-
-        <div class="map-info">
-            🔴 Rouge = pays où l'anglais est une langue principale.<br>
-            🔵 Bleu = pays où l'anglais est principalement utilisé comme seconde langue
-            ou langue officielle en plus d'autres langues.
         </div>
 
     </div>
@@ -863,231 +867,208 @@ main{
 </section>
 
 
-<!-- PAYS -->
+<!-- =========================
+     COUNTRIES
+========================= -->
 
-<section id="countries" class="section">
+<section id="countries">
 
-    <div class="section-title">
-
-        <h2>🌎 Les pays</h2>
-
+    <div class="title">
+        <h2>🌎 Tous les pays</h2>
         <p>
-            Retrouve leur capitale, continent et utilisation de l'anglais.
+            Recherche parmi tous les pays chargés dans la base.
         </p>
-
     </div>
 
     <input
         id="countrySearch"
         class="search"
+        type="text"
         placeholder="🔎 Rechercher un pays..."
     >
+
+    <div class="country-count">
+        <span id="countryCount">Chargement...</span>
+    </div>
 
     <div id="countryGrid" class="country-grid"></div>
 
 </section>
 
 
-<!-- QUIZ -->
+<!-- =========================
+     QUIZ
+========================= -->
 
-<section id="quiz" class="section">
+<section id="quiz">
 
-    <div id="quizStart" class="quiz-start">
+    <div class="title">
+        <h2>🧠 Quiz</h2>
+        <p>
+            Maximum 10 questions par partie. Le niveau augmente.
+        </p>
+    </div>
 
-        <div class="quiz-logo">🎯</div>
+    <div id="quizMenu" class="quiz-menu">
 
-        <div class="section-title">
-
-            <h2>WORLD QUIZ</h2>
-
+        <button class="quiz-mode" data-mode="classic">
+            <h3>🌍 Classique</h3>
             <p>
-                Chaque partie contient seulement 10 questions maximum.
-                La difficulté augmente pendant la partie.
+                Questions générales sur les pays,
+                capitales et anglais.
             </p>
+        </button>
 
-        </div>
+        <button class="quiz-mode" data-mode="capital">
+            <h3>🏛️ Capitales</h3>
+            <p>
+                Retrouve les capitales des pays
+                du monde entier.
+            </p>
+        </button>
 
-        <div class="mode-grid">
+        <button class="quiz-mode" data-mode="country">
+            <h3>🗺️ Pays</h3>
+            <p>
+                Identifie les pays grâce à
+                différentes informations.
+            </p>
+        </button>
 
-            <button class="mode" data-mode="classic">
-                <h3>🔥 Classique</h3>
-                <p>
-                    10 questions<br>
-                    Capitales + pays
-                </p>
-            </button>
-
-            <button class="mode" data-mode="capitals">
-                <h3>🏛️ Capitales</h3>
-                <p>
-                    10 questions<br>
-                    Trouve la bonne capitale
-                </p>
-            </button>
-
-            <button class="mode" data-mode="countries">
-                <h3>🌍 Pays</h3>
-                <p>
-                    10 questions<br>
-                    Identifie les pays
-                </p>
-            </button>
-
-            <button class="mode" data-mode="challenge">
-                <h3>💀 Challenge</h3>
-                <p>
-                    10 questions<br>
-                    Plus difficile
-                </p>
-            </button>
-
-        </div>
-
-        <div class="best-box">
-            🏆 MEILLEUR SCORE :
-            <span id="startBest">0</span>
-        </div>
+        <button class="quiz-mode" data-mode="challenge">
+            <h3>🔥 Challenge</h3>
+            <p>
+                Plus rapide, plus difficile,
+                plus de points.
+            </p>
+        </button>
 
     </div>
 
 
-    <!-- JEU -->
-
     <div id="quizGame" class="quiz-game">
 
-        <div class="quiz-stats">
+        <div class="quiz-top">
 
-            <div class="stat">
+            <div class="quiz-stat">
+                <small>QUESTION</small>
+                <strong>
+                    <span id="questionNumber">1</span>/10
+                </strong>
+            </div>
+
+            <div class="quiz-stat">
                 <small>SCORE</small>
-                <strong id="scoreStat">0</strong>
+                <strong id="score">0</strong>
             </div>
 
-            <div class="stat">
-                <small>COMBO 🔥</small>
-                <strong id="comboStat">0</strong>
+            <div class="quiz-stat">
+                <small>COMBO</small>
+                <strong id="combo">0</strong>
             </div>
 
-            <div class="stat">
+            <div class="quiz-stat">
                 <small>MULTIPLICATEUR</small>
-                <strong id="multiplierStat">x1</strong>
+                <strong id="multiplier">x1</strong>
             </div>
-
-            <div class="stat">
-                <small>RECORD 🏆</small>
-                <strong id="bestStat">0</strong>
-            </div>
-
-        </div>
-
-
-        <div class="progress-info">
-
-            <span id="questionNumber">
-                Question 1/10
-            </span>
-
-            <span id="difficultyText">
-                FACILE
-            </span>
 
         </div>
 
         <div class="progress">
-            <div id="progressFill" class="progress-fill"></div>
+            <div id="progressBar" class="progress-bar"></div>
         </div>
-
-
-        <div class="timer">
-
-            <div class="timer-top">
-
-                <span>⏱️ TEMPS</span>
-
-                <span id="timerText">
-                    15s
-                </span>
-
-            </div>
-
-            <div class="timer-bar">
-                <div id="timerFill"></div>
-            </div>
-
-        </div>
-
 
         <div class="question-card">
 
-            <div id="levelBadge" class="level easy">
-                🟢 FACILE
+            <div id="difficulty" class="question-number">
+                NIVEAU 1
             </div>
 
-            <h2 id="questionText">
-                Question
-            </h2>
+            <div id="question" class="question">
+                Chargement...
+            </div>
 
             <div id="answers" class="answers"></div>
 
-            <div id="feedback" class="feedback"></div>
+            <div class="quiz-bottom">
 
-            <button
-                id="nextBtn"
-                class="primary next"
-            >
-                Question suivante →
-            </button>
+                <div class="timer-wrap">
+
+                    <div class="timer-text">
+                        Temps restant :
+                        <span id="timerText">15</span>s
+                    </div>
+
+                    <div class="timer-bar">
+                        <div id="timerFill" class="timer-fill"></div>
+                    </div>
+
+                </div>
+
+                <button
+                    id="nextBtn"
+                    class="btn blue next-btn"
+                >
+                    Question suivante →
+                </button>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- VICTOIRE -->
-
     <div id="victory" class="victory">
 
-        <div id="victoryIcon" class="victory-icon">
-            🏆
-        </div>
+        <div class="trophy">🏆</div>
 
-        <h2 id="victoryTitle">
-            VICTOIRE !
-        </h2>
+        <h2>Quiz terminé !</h2>
 
         <div id="finalScore" class="final-score">
             0
         </div>
 
-        <p id="victoryMessage"></p>
+        <div class="final-stats">
 
-        <div class="result-grid">
-
-            <div class="result">
-                <strong id="finalCorrect">0/10</strong>
+            <div class="stat">
+                <strong id="finalCorrect">0</strong>
                 <span>BONNES RÉPONSES</span>
             </div>
 
-            <div class="result">
+            <div class="stat">
                 <strong id="finalAccuracy">0%</strong>
                 <span>PRÉCISION</span>
             </div>
 
-            <div class="result">
+            <div class="stat">
                 <strong id="finalCombo">0</strong>
                 <span>MEILLEUR COMBO</span>
             </div>
 
         </div>
 
-        <div id="newRecord" class="new-record"></div>
+        <div id="newRecord" style="
+            display:none;
+            color:#ffcf33;
+            font-size:20px;
+            font-weight:900;
+            margin-bottom:20px;
+        ">
+            🏆 NOUVEAU RECORD !
+        </div>
 
-        <button id="replayBtn" class="primary">
-            🔄 REJOUER
-        </button>
+        <div class="buttons" style="justify-content:center">
 
-        <button id="homeBtn" class="secondary">
-            🏠 ACCUEIL
-        </button>
+            <button id="restartQuiz" class="btn blue">
+                🔄 Rejouer
+            </button>
+
+            <button id="backQuiz" class="btn dark">
+                ← Choisir un mode
+            </button>
+
+        </div>
 
     </div>
 
@@ -1095,913 +1076,1130 @@ main{
 
 </main>
 
-
-<div id="mapTooltip" class="map-tooltip"></div>
-
-<div id="comboPopup" class="combo-popup">
-    🔥 COMBO !
-</div>
+<div id="mapTooltip"></div>
+<div id="comboPopup"></div>
 
 
 <script>
 
-/* =====================================================
-   DONNÉES DES PAYS
-===================================================== */
+/* =========================================================
+   DONNÉES ANGLAIS
+========================================================= */
+
+/*
+    ISO alpha-2.
+
+    RED = pays où l'anglais est principalement utilisé
+    BLUE = pays où l'anglais est une langue seconde,
+           officielle ou largement utilisée.
+
+    La carte possède ensuite TOUS les pays grâce à
+    World Atlas.
+*/
+
+const englishPrimary = new Set([
+
+    "GB",
+    "US",
+    "IE",
+    "AU",
+    "NZ",
+
+    "JM",
+    "BS",
+    "BB",
+    "TT",
+    "GD",
+    "LC",
+    "VC",
+    "AG",
+    "DM",
+    "KN",
+
+    "GY",
+
+    "BZ"
+
+]);
+
+
+const englishSecondary = new Set([
+
+    "CA",
+    "ZA",
+    "IN",
+    "SG",
+    "PH",
+    "NG",
+    "KE",
+    "GH",
+    "UG",
+    "ZM",
+    "ZW",
+    "BW",
+    "NA",
+    "RW",
+    "SL",
+    "LR",
+    "GM",
+    "MW",
+    "SZ",
+    "LS",
+    "MU",
+    "SC",
+    "PK",
+    "BD",
+    "MY",
+    "MT",
+    "FJ",
+    "PG",
+    "VU",
+    "SB",
+    "WS",
+    "TO",
+    "KI",
+    "NR",
+    "TV",
+    "FM",
+    "MH",
+    "PW",
+    "GU",
+    "MP"
+
+]);
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let countries = [];
+let countryById = new Map();
+let iso2ByNumeric = new Map();
+
+let quizQuestions = [];
+let currentQuestion = 0;
+let score = 0;
+let combo = 0;
+let maxCombo = 0;
+let correctAnswers = 0;
+let answered = false;
+let timer = null;
+let timeLeft = 15;
+let currentMode = "classic";
 
-const countries = [
+let bestScore =
+    Number(localStorage.getItem("worldEnglishBest")) || 0;
 
-    {
-        id:"826",
-        flag:"🇬🇧",
-        name:"Royaume-Uni",
-        capital:"Londres",
-        continent:"Europe",
-        type:"primary"
-    },
+document.getElementById("bestScore").textContent = bestScore;
 
-    {
-        id:"840",
-        flag:"🇺🇸",
-        name:"États-Unis",
-        capital:"Washington D.C.",
-        continent:"Amérique du Nord",
-        type:"primary"
-    },
 
-    {
-        id:"036",
-        flag:"🇦🇺",
-        name:"Australie",
-        capital:"Canberra",
-        continent:"Océanie",
-        type:"primary"
-    },
-
-    {
-        id:"554",
-        flag:"🇳🇿",
-        name:"Nouvelle-Zélande",
-        capital:"Wellington",
-        continent:"Océanie",
-        type:"primary"
-    },
-
-    {
-        id:"372",
-        flag:"🇮🇪",
-        name:"Irlande",
-        capital:"Dublin",
-        continent:"Europe",
-        type:"primary"
-    },
-
-    {
-        id:"124",
-        flag:"🇨🇦",
-        name:"Canada",
-        capital:"Ottawa",
-        continent:"Amérique du Nord",
-        type:"secondary"
-    },
-
-    {
-        id:"710",
-        flag:"🇿🇦",
-        name:"Afrique du Sud",
-        capital:"Pretoria",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"356",
-        flag:"🇮🇳",
-        name:"Inde",
-        capital:"New Delhi",
-        continent:"Asie",
-        type:"secondary"
-    },
-
-    {
-        id:"702",
-        flag:"🇸🇬",
-        name:"Singapour",
-        capital:"Singapour",
-        continent:"Asie",
-        type:"secondary"
-    },
-
-    {
-        id:"608",
-        flag:"🇵🇭",
-        name:"Philippines",
-        capital:"Manille",
-        continent:"Asie",
-        type:"secondary"
-    },
-
-    {
-        id:"566",
-        flag:"🇳🇬",
-        name:"Nigeria",
-        capital:"Abuja",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"404",
-        flag:"🇰🇪",
-        name:"Kenya",
-        capital:"Nairobi",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"288",
-        flag:"🇬🇭",
-        name:"Ghana",
-        capital:"Accra",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"388",
-        flag:"🇯🇲",
-        name:"Jamaïque",
-        capital:"Kingston",
-        continent:"Caraïbes",
-        type:"primary"
-    },
-
-    {
-        id:"044",
-        flag:"🇧🇸",
-        name:"Bahamas",
-        capital:"Nassau",
-        continent:"Caraïbes",
-        type:"primary"
-    },
-
-    {
-        id:"052",
-        flag:"🇧🇧",
-        name:"Barbade",
-        capital:"Bridgetown",
-        continent:"Caraïbes",
-        type:"primary"
-    },
-
-    {
-        id:"084",
-        flag:"🇧🇿",
-        name:"Belize",
-        capital:"Belmopan",
-        continent:"Amérique centrale",
-        type:"secondary"
-    },
-
-    {
-        id:"470",
-        flag:"🇲🇹",
-        name:"Malte",
-        capital:"La Valette",
-        continent:"Europe",
-        type:"secondary"
-    },
-
-    {
-        id:"800",
-        flag:"🇺🇬",
-        name:"Ouganda",
-        capital:"Kampala",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"716",
-        flag:"🇿🇼",
-        name:"Zimbabwe",
-        capital:"Harare",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"894",
-        flag:"🇿🇲",
-        name:"Zambie",
-        capital:"Lusaka",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"072",
-        flag:"🇧🇼",
-        name:"Botswana",
-        capital:"Gaborone",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"516",
-        flag:"🇳🇦",
-        name:"Namibie",
-        capital:"Windhoek",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"646",
-        flag:"🇷🇼",
-        name:"Rwanda",
-        capital:"Kigali",
-        continent:"Afrique",
-        type:"secondary"
-    },
-
-    {
-        id:"586",
-        flag:"🇵🇰",
-        name:"Pakistan",
-        capital:"Islamabad",
-        continent:"Asie",
-        type:"secondary"
-    },
-
-    {
-        id:"458",
-        flag:"🇲🇾",
-        name:"Malaisie",
-        capital:"Kuala Lumpur",
-        continent:"Asie",
-        type:"secondary"
-    },
-
-    {
-        id:"242",
-        flag:"🇫🇯",
-        name:"Fidji",
-        capital:"Suva",
-        continent:"Océanie",
-        type:"secondary"
-    }
-
-];
-
-
-/* =====================================================
-   QUESTIONS
-   MAX 10 PAR PARTIE
-===================================================== */
-
-const questionPools = {
-
-classic:[
-
-{
-q:"Quelle est la capitale de l'Angleterre ?",
-a:"Londres",
-options:["Londres","Manchester","Liverpool","Birmingham"],
-level:1
-},
-
-{
-q:"Quelle est la capitale des États-Unis ?",
-a:"Washington D.C.",
-options:["New York","Washington D.C.","Chicago","Boston"],
-level:1
-},
-
-{
-q:"Quelle est la capitale du Canada ?",
-a:"Ottawa",
-options:["Toronto","Ottawa","Vancouver","Montréal"],
-level:1
-},
-
-{
-q:"Quelle est la capitale de l'Australie ?",
-a:"Canberra",
-options:["Sydney","Canberra","Melbourne","Perth"],
-level:1
-},
-
-{
-q:"Quelle est la capitale de l'Irlande ?",
-a:"Dublin",
-options:["Dublin","Cork","Galway","Limerick"],
-level:2
-},
-
-{
-q:"Quelle est la capitale de la Nouvelle-Zélande ?",
-a:"Wellington",
-options:["Auckland","Wellington","Hamilton","Christchurch"],
-level:2
-},
-
-{
-q:"Quelle est la capitale du Ghana ?",
-a:"Accra",
-options:["Accra","Kumasi","Lagos","Abuja"],
-level:2
-},
-
-{
-q:"Quelle est la capitale du Nigeria ?",
-a:"Abuja",
-options:["Lagos","Abuja","Kano","Ibadan"],
-level:3
-},
-
-{
-q:"Quelle est la capitale de la Namibie ?",
-a:"Windhoek",
-options:["Windhoek","Gaborone","Lusaka","Harare"],
-level:3
-},
-
-{
-q:"Quelle est la capitale du Rwanda ?",
-a:"Kigali",
-options:["Kigali","Nairobi","Kampala","Bujumbura"],
-level:3
-}
-
-],
-
-capitals:[
-
-{
-q:"Londres est la capitale de quel pays ?",
-a:"Royaume-Uni",
-options:["Royaume-Uni","Canada","Australie","Irlande"],
-level:1
-},
-
-{
-q:"Washington D.C. est la capitale de quel pays ?",
-a:"États-Unis",
-options:["États-Unis","Canada","Royaume-Uni","Australie"],
-level:1
-},
-
-{
-q:"Canberra est la capitale de quel pays ?",
-a:"Australie",
-options:["Australie","Nouvelle-Zélande","Canada","Irlande"],
-level:1
-},
-
-{
-q:"Dublin est la capitale de quel pays ?",
-a:"Irlande",
-options:["Irlande","Royaume-Uni","Malte","Jamaïque"],
-level:1
-},
-
-{
-q:"Ottawa est la capitale de quel pays ?",
-a:"Canada",
-options:["Canada","États-Unis","Australie","Nouvelle-Zélande"],
-level:2
-},
-
-{
-q:"New Delhi est la capitale de quel pays ?",
-a:"Inde",
-options:["Inde","Pakistan","Malaisie","Singapour"],
-level:2
-},
-
-{
-q:"Islamabad est la capitale de quel pays ?",
-a:"Pakistan",
-options:["Pakistan","Inde","Bangladesh","Malaisie"],
-level:2
-},
-
-{
-q:"Pretoria est l'une des capitales de quel pays ?",
-a:"Afrique du Sud",
-options:["Afrique du Sud","Kenya","Nigeria","Ghana"],
-level:3
-},
-
-{
-q:"Kuala Lumpur est la capitale de quel pays ?",
-a:"Malaisie",
-options:["Malaisie","Singapour","Indonésie","Philippines"],
-level:3
-},
-
-{
-q:"Bridgetown est la capitale de quel pays ?",
-a:"Barbade",
-options:["Barbade","Bahamas","Jamaïque","Belize"],
-level:3
-}
-
-],
-
-countries:[
-
-{
-q:"Quel pays a Londres comme capitale ?",
-a:"Royaume-Uni",
-options:["Royaume-Uni","Irlande","Canada","Australie"],
-level:1
-},
-
-{
-q:"Quel pays a Canberra comme capitale ?",
-a:"Australie",
-options:["Australie","Nouvelle-Zélande","Fidji","Canada"],
-level:1
-},
-
-{
-q:"Quel pays a Wellington comme capitale ?",
-a:"Nouvelle-Zélande",
-options:["Nouvelle-Zélande","Australie","Irlande","Fidji"],
-level:1
-},
-
-{
-q:"Quel pays a Kingston comme capitale ?",
-a:"Jamaïque",
-options:["Jamaïque","Bahamas","Barbade","Belize"],
-level:1
-},
-
-{
-q:"Quel pays a Nairobi comme capitale ?",
-a:"Kenya",
-options:["Kenya","Ghana","Nigeria","Ouganda"],
-level:2
-},
-
-{
-q:"Quel pays a Kampala comme capitale ?",
-a:"Ouganda",
-options:["Ouganda","Kenya","Rwanda","Ghana"],
-level:2
-},
-
-{
-q:"Quel pays a Lusaka comme capitale ?",
-a:"Zambie",
-options:["Zambie","Zimbabwe","Namibie","Botswana"],
-level:2
-},
-
-{
-q:"Quel pays a Harare comme capitale ?",
-a:"Zimbabwe",
-options:["Zimbabwe","Zambie","Botswana","Namibie"],
-level:3
-},
-
-{
-q:"Quel pays a Gaborone comme capitale ?",
-a:"Botswana",
-options:["Botswana","Namibie","Zambie","Rwanda"],
-level:3
-},
-
-{
-q:"Quel pays a Windhoek comme capitale ?",
-a:"Namibie",
-options:["Namibie","Botswana","Zimbabwe","Afrique du Sud"],
-level:3
-}
-
-],
-
-challenge:[
-
-{
-q:"Dans quel pays l'anglais et le français sont-ils langues officielles ?",
-a:"Canada",
-options:["Canada","Australie","Jamaïque","Ghana"],
-level:1
-},
-
-{
-q:"Quel pays d'Océanie a Suva pour capitale ?",
-a:"Fidji",
-options:["Fidji","Australie","Nouvelle-Zélande","Samoa"],
-level:1
-},
-
-{
-q:"Quel pays des Caraïbes a Nassau pour capitale ?",
-a:"Bahamas",
-options:["Bahamas","Jamaïque","Barbade","Belize"],
-level:2
-},
-
-{
-q:"Quel pays a Belmopan comme capitale ?",
-a:"Belize",
-options:["Belize","Bahamas","Malte","Jamaïque"],
-level:2
-},
-
-{
-q:"Quel pays a Accra comme capitale ?",
-a:"Ghana",
-options:["Ghana","Nigeria","Kenya","Ouganda"],
-level:2
-},
-
-{
-q:"Quel pays a Abuja comme capitale ?",
-a:"Nigeria",
-options:["Nigeria","Ghana","Kenya","Zambie"],
-level:3
-},
-
-{
-q:"Quel pays a Kigali comme capitale ?",
-a:"Rwanda",
-options:["Rwanda","Ouganda","Kenya","Burundi"],
-level:3
-},
-
-{
-q:"Quel pays a Windhoek comme capitale ?",
-a:"Namibie",
-options:["Namibie","Botswana","Zimbabwe","Zambie"],
-level:3
-},
-
-{
-q:"Quel pays a Islamabad comme capitale ?",
-a:"Pakistan",
-options:["Pakistan","Inde","Malaisie","Philippines"],
-level:3
-},
-
-{
-q:"Quel pays a Pretoria comme capitale administrative ?",
-a:"Afrique du Sud",
-options:["Afrique du Sud","Nigeria","Ghana","Kenya"],
-level:3
-}
-
-]
-
-};
-
-
-/* =====================================================
+/* =========================================================
    NAVIGATION
-===================================================== */
+========================================================= */
+
+const sections =
+    document.querySelectorAll("main section");
 
 const navButtons =
-document.querySelectorAll(".nav button");
-
-navButtons.forEach(button=>{
-
-    button.addEventListener("click",()=>{
-
-        showSection(button.dataset.section);
-
-    });
-
-});
+    document.querySelectorAll(".nav-btn");
 
 
 function showSection(id){
 
-    document.querySelectorAll(".section")
-        .forEach(section=>{
-            section.classList.remove("active");
-        });
-
-    document.getElementById(id)
-        .classList.add("active");
-
-    navButtons.forEach(button=>{
-        button.classList.remove("active");
-
-        if(button.dataset.section === id){
-            button.classList.add("active");
-        }
+    sections.forEach(section=>{
+        section.classList.toggle(
+            "active",
+            section.id === id
+        );
     });
 
-    clearInterval(timerInterval);
+    navButtons.forEach(button=>{
+        button.classList.toggle(
+            "active",
+            button.dataset.section === id
+        );
+    });
 
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
+}
 
-    if(id === "mapSection"){
-        setTimeout(drawMap,100);
+
+navButtons.forEach(button=>{
+    button.addEventListener("click",()=>{
+        showSection(button.dataset.section);
+    });
+});
+
+
+document.querySelectorAll("[data-go]").forEach(button=>{
+    button.addEventListener("click",()=>{
+        showSection(button.dataset.go);
+    });
+});
+
+
+/* =========================================================
+   CHARGEMENT DE TOUS LES PAYS
+========================================================= */
+
+async function loadCountries(){
+
+    try{
+
+        const response =
+            await fetch(
+                "https://restcountries.com/v3.1/all?fields=name,cca2,ccn3,capital,region,subregion,flags,languages"
+            );
+
+        if(!response.ok){
+            throw new Error("API error");
+        }
+
+        const data = await response.json();
+
+        countries = data
+            .filter(c => c.cca2 && c.ccn3)
+            .map(c => {
+
+                const iso = c.cca2.toUpperCase();
+
+                let englishType = "none";
+
+                if(englishPrimary.has(iso)){
+                    englishType = "primary";
+                }
+                else if(englishSecondary.has(iso)){
+                    englishType = "secondary";
+                }
+
+                return {
+
+                    name:
+                        c.name?.common ||
+                        "Unknown",
+
+                    officialName:
+                        c.name?.official ||
+                        c.name?.common ||
+                        "Unknown",
+
+                    iso,
+
+                    numeric:
+                        String(c.ccn3).padStart(3,"0"),
+
+                    capital:
+                        c.capital?.[0] ||
+                        "Pas de capitale indiquée",
+
+                    region:
+                        c.region ||
+                        "Unknown",
+
+                    subregion:
+                        c.subregion ||
+                        "",
+
+                    flag:
+                        c.flags?.emoji ||
+                        getFlagEmoji(iso),
+
+                    englishType,
+
+                    languages:
+                        c.languages
+                            ? Object.values(c.languages)
+                            : []
+
+                };
+
+            })
+            .sort((a,b)=>
+                a.name.localeCompare(
+                    b.name,
+                    "fr"
+                )
+            );
+
+        countryById.clear();
+
+        countries.forEach(country=>{
+            countryById.set(
+                country.numeric,
+                country
+            );
+        });
+
+        document.getElementById(
+            "homeCountries"
+        ).textContent =
+            countries.length + "+";
+
+        renderCountries(countries);
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        document.getElementById(
+            "countryCount"
+        ).textContent =
+            "Impossible de charger les pays. Vérifie la connexion Internet.";
+
     }
 
 }
 
 
-/* =====================================================
+/* =========================================================
+   DRAPEAUX
+========================================================= */
+
+function getFlagEmoji(countryCode){
+
+    if(!countryCode || countryCode.length !== 2){
+        return "🌍";
+    }
+
+    return countryCode
+        .toUpperCase()
+        .replace(
+            /./g,
+            char =>
+                String.fromCodePoint(
+                    127397 + char.charCodeAt(0)
+                )
+        );
+
+}
+
+
+/* =========================================================
    PAYS
-===================================================== */
-
-const countryGrid =
-document.getElementById("countryGrid");
-
+========================================================= */
 
 function renderCountries(list){
 
-    countryGrid.innerHTML="";
+    const grid =
+        document.getElementById("countryGrid");
+
+    grid.innerHTML = "";
+
+    document.getElementById(
+        "countryCount"
+    ).textContent =
+        `${list.length} pays affiché${list.length > 1 ? "s" : ""}`;
+
+
+    if(list.length === 0){
+
+        grid.innerHTML = `
+            <div style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:50px;
+                color:#7f8998;
+            ">
+                Aucun pays trouvé 🔎
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const fragment =
+        document.createDocumentFragment();
+
 
     list.forEach(country=>{
 
-        const div =
-        document.createElement("div");
+        const card =
+            document.createElement("div");
 
-        div.className =
-            "country " +
-            (country.type === "primary"
-                ? "primary-country"
-                : "secondary-country");
+        const type =
+            country.englishType;
 
-        const label =
-            country.type === "primary"
-                ? "🔴 Anglais principal"
-                : "🔵 Anglais seconde langue / officiel";
 
-        const tagClass =
-            country.type === "primary"
-                ? "red-tag"
-                : "blue-tag";
+        card.className =
+            "country-card " +
+            (
+                type === "primary"
+                ? "red"
+                : type === "secondary"
+                ? "blue"
+                : ""
+            );
 
-        div.innerHTML=`
 
-            <div class="flag">
-                ${country.flag}
+        let badge = "";
+
+        if(type === "primary"){
+
+            badge = `
+                <span class="language-badge red">
+                    🔴 ANGLAIS PRINCIPAL
+                </span>
+            `;
+
+        }
+        else if(type === "secondary"){
+
+            badge = `
+                <span class="language-badge blue">
+                    🔵 ANGLAIS SECONDE LANGUE
+                </span>
+            `;
+
+        }
+        else{
+
+            badge = `
+                <span class="language-badge gray">
+                    ⚪ PAS CLASSÉ ANGLAIS
+                </span>
+            `;
+
+        }
+
+
+        card.innerHTML = `
+
+            <div class="country-top">
+
+                <div class="flag">
+                    ${country.flag}
+                </div>
+
+                <div class="country-name">
+                    ${escapeHTML(country.name)}
+                </div>
+
             </div>
 
-            <h3>
-                ${country.name}
-            </h3>
+            <div class="country-info">
 
-            <p>
-                🏛️ Capitale :
-                <strong>${country.capital}</strong><br>
+                🏛️
+                ${escapeHTML(country.capital)}
+                <br>
 
-                🌍 Continent :
-                ${country.continent}
-            </p>
+                🌍
+                ${escapeHTML(country.region)}
 
-            <span class="country-tag ${tagClass}">
-                ${label}
-            </span>
+                ${
+                    country.subregion
+                    ? `<br>📍 ${escapeHTML(country.subregion)}`
+                    : ""
+                }
+
+            </div>
+
+            ${badge}
 
         `;
 
-        countryGrid.appendChild(div);
+
+        fragment.appendChild(card);
 
     });
+
+
+    grid.appendChild(fragment);
 
 }
 
 
-renderCountries(countries);
-
+/* =========================================================
+   SEARCH
+========================================================= */
 
 document
-.getElementById("countrySearch")
-.addEventListener("input",event=>{
+    .getElementById("countrySearch")
+    .addEventListener("input",event=>{
 
-    const value =
-        event.target.value
-        .toLowerCase()
-        .trim();
-
-    const filtered =
-        countries.filter(country=>
-
-            country.name
+        const query =
+            event.target.value
                 .toLowerCase()
-                .includes(value)
+                .trim();
 
-            ||
+        const filtered =
+            countries.filter(country=>
 
-            country.capital
-                .toLowerCase()
-                .includes(value)
+                country.name
+                    .toLowerCase()
+                    .includes(query)
 
-            ||
+                ||
 
-            country.continent
-                .toLowerCase()
-                .includes(value)
+                country.capital
+                    .toLowerCase()
+                    .includes(query)
 
-        );
+                ||
 
-    renderCountries(filtered);
+                country.region
+                    .toLowerCase()
+                    .includes(query)
 
-});
+            );
+
+        renderCountries(filtered);
+
+    });
 
 
-/* =====================================================
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
    CARTE DU MONDE
-===================================================== */
+========================================================= */
 
-let mapLoaded=false;
+async function loadMap(){
 
+    try{
 
-const primaryIDs =
-new Set(
-    countries
-        .filter(c=>c.type==="primary")
-        .map(c=>c.id)
-);
-
-
-const secondaryIDs =
-new Set(
-    countries
-        .filter(c=>c.type==="secondary")
-        .map(c=>c.id)
-);
+        const world =
+            await d3.json(
+                "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
+            );
 
 
-function drawMap(){
+        const container =
+            document.getElementById("map");
 
-    if(mapLoaded) return;
+        const width =
+            container.clientWidth;
 
-    const container =
-        document.getElementById("map");
+        const height =
+            container.clientHeight;
 
-    const width =
-        container.clientWidth;
 
-    const height =
-        container.clientHeight;
+        const svg =
+            d3.select("#worldMap")
+                .attr("viewBox",
+                    `0 0 ${width} ${height}`
+                );
 
-    if(width < 100) return;
 
-    const svg =
-        d3.select("#worldMap");
-
-    svg.attr("viewBox",`0 0 ${width} ${height}`);
-
-    const projection =
-        d3.geoNaturalEarth1()
-        .fitSize(
-            [width,height],
-            {type:"Sphere"}
-        );
-
-    const path =
-        d3.geoPath()
-        .projection(projection);
-
-    svg.append("path")
-        .datum({type:"Sphere"})
-        .attr("fill","#061a30")
-        .attr("stroke","#28537c")
-        .attr("stroke-width","1")
-        .attr("d",path);
-
-    d3.json(
-        "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
-    )
-    .then(world=>{
-
-        const land =
+        const countriesFeatures =
             topojson.feature(
                 world,
                 world.objects.countries
-            );
+            ).features;
 
-        const tooltip =
-            document.getElementById("mapTooltip");
 
-        svg.selectAll(".country-path")
-            .data(land.features)
-            .enter()
-            .append("path")
-            .attr("class","country-path")
+        const projection =
+            d3.geoNaturalEarth1()
+                .fitSize(
+                    [width,height],
+                    {
+                        type:"FeatureCollection",
+                        features:countriesFeatures
+                    }
+                );
+
+
+        const path =
+            d3.geoPath()
+                .projection(projection);
+
+
+        svg.selectAll("*").remove();
+
+
+        svg.selectAll("path")
+            .data(countriesFeatures)
+            .join("path")
+            .attr("class","country")
             .attr("d",path)
-            .attr("fill",d=>{
+            .attr("fill",feature=>{
 
                 const id =
-                    String(d.id).padStart(3,"0");
+                    String(feature.id)
+                        .padStart(3,"0");
 
-                if(primaryIDs.has(id)){
+                const country =
+                    countryById.get(id);
+
+
+                if(!country){
+                    return "#303947";
+                }
+
+
+                if(
+                    country.englishType ===
+                    "primary"
+                ){
                     return "#ff3154";
                 }
 
-                if(secondaryIDs.has(id)){
+
+                if(
+                    country.englishType ===
+                    "secondary"
+                ){
                     return "#1683ff";
                 }
 
-                return "#173049";
+
+                return "#303947";
 
             })
-            .on("mousemove",(event,d)=>{
+            .on("mousemove",(event,feature)=>{
 
                 const id =
-                    String(d.id).padStart(3,"0");
+                    String(feature.id)
+                        .padStart(3,"0");
 
                 const country =
-                    countries.find(c=>c.id===id);
+                    countryById.get(id);
 
-                if(country){
 
-                    tooltip.style.display="block";
-
-                    tooltip.innerHTML=`
-                        <strong>
-                            ${country.flag} ${country.name}
-                        </strong><br>
-                        Capitale : ${country.capital}
-                    `;
-
-                    tooltip.style.left =
-                        (event.clientX+15)+"px";
-
-                    tooltip.style.top =
-                        (event.clientY+15)+"px";
+                if(!country){
+                    return;
                 }
+
+
+                showTooltip(
+                    event,
+                    country
+                );
 
             })
             .on("mouseleave",()=>{
-
-                tooltip.style.display="none";
-
+                hideTooltip();
             });
 
-        mapLoaded=true;
+    }
+    catch(error){
 
-    })
-    .catch(()=>{
+        console.error(
+            "Erreur carte:",
+            error
+        );
 
-        svg.append("text")
-            .attr("x",width/2)
-            .attr("y",height/2)
-            .attr("text-anchor","middle")
-            .attr("fill","#8da1b9")
-            .attr("font-size","18")
-            .text("Carte indisponible hors connexion");
+        document.getElementById(
+            "map"
+        ).innerHTML = `
 
-    });
+            <div style="
+                height:100%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                text-align:center;
+                color:#8791a0;
+                padding:30px;
+            ">
+                🌍 Impossible de charger la carte.<br>
+                Vérifie ta connexion Internet.
+            </div>
+
+        `;
+
+    }
 
 }
 
 
-/* =====================================================
-   QUIZ
-===================================================== */
+/* =========================================================
+   TOOLTIP CARTE
+========================================================= */
 
-let quizQuestions=[];
-let currentQuestion=0;
-let score=0;
-let combo=0;
-let maxCombo=0;
-let correctAnswers=0;
-let answered=false;
+function showTooltip(event,country){
 
-let timeLeft=15;
-let maxTime=15;
-let timerInterval=null;
-
-let currentMode="classic";
+    const tooltip =
+        document.getElementById(
+            "mapTooltip"
+        );
 
 
-let bestScore =
-Number(
-    localStorage.getItem("worldEnglishBest") || 0
-);
+    let language =
+        "Autre pays";
 
+
+    if(
+        country.englishType ===
+        "primary"
+    ){
+
+        language =
+            "🔴 Anglais langue principale";
+
+    }
+    else if(
+        country.englishType ===
+        "secondary"
+    ){
+
+        language =
+            "🔵 Anglais langue seconde / officielle";
+
+    }
+
+
+    tooltip.innerHTML = `
+
+        <div class="tooltip-name">
+            ${country.flag}
+            ${escapeHTML(country.name)}
+        </div>
+
+        <div class="tooltip-capital">
+            🏛️ Capitale :
+            ${escapeHTML(country.capital)}
+        </div>
+
+        <div class="tooltip-lang">
+            ${language}
+        </div>
+
+    `;
+
+
+    tooltip.style.display =
+        "block";
+
+
+    let x =
+        event.clientX + 18;
+
+    let y =
+        event.clientY + 18;
+
+
+    const rect =
+        tooltip.getBoundingClientRect();
+
+
+    if(
+        x + rect.width >
+        window.innerWidth - 15
+    ){
+
+        x =
+            event.clientX -
+            rect.width -
+            18;
+
+    }
+
+
+    if(
+        y + rect.height >
+        window.innerHeight - 15
+    ){
+
+        y =
+            event.clientY -
+            rect.height -
+            18;
+
+    }
+
+
+    tooltip.style.left =
+        x + "px";
+
+    tooltip.style.top =
+        y + "px";
+
+}
+
+
+function hideTooltip(){
+
+    document.getElementById(
+        "mapTooltip"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   QUIZ DATABASE
+========================================================= */
+
+const quizQuestionsBase = [
+
+/* ---------- NIVEAU 1 ---------- */
+
+{
+    difficulty:1,
+    mode:["classic"],
+    question:"Quelle est la capitale de l'Angleterre ?",
+    answers:["Londres","Paris","Dublin","Manchester"],
+    correct:"Londres"
+},
+
+{
+    difficulty:1,
+    mode:["classic"],
+    question:"Quel pays parle principalement anglais ?",
+    answers:["Royaume-Uni","France","Espagne","Italie"],
+    correct:"Royaume-Uni"
+},
+
+{
+    difficulty:1,
+    mode:["classic"],
+    question:"Quelle est la capitale des États-Unis ?",
+    answers:["Washington, D.C.","New York","Los Angeles","Chicago"],
+    correct:"Washington, D.C."
+},
+
+{
+    difficulty:1,
+    mode:["classic"],
+    question:"Quel pays possède la ville de Canberra ?",
+    answers:["Australie","Canada","Irlande","Inde"],
+    correct:"Australie"
+},
+
+{
+    difficulty:1,
+    mode:["classic"],
+    question:"Quelle langue est principalement utilisée au Royaume-Uni ?",
+    answers:["Anglais","Français","Allemand","Italien"],
+    correct:"Anglais"
+},
+
+/* ---------- CAPITALES ---------- */
+
+{
+    difficulty:1,
+    mode:["capital"],
+    question:"Quelle est la capitale de la France ?",
+    answers:["Paris","Londres","Madrid","Rome"],
+    correct:"Paris"
+},
+
+{
+    difficulty:1,
+    mode:["capital"],
+    question:"Quelle est la capitale du Canada ?",
+    answers:["Ottawa","Toronto","Vancouver","Montréal"],
+    correct:"Ottawa"
+},
+
+{
+    difficulty:1,
+    mode:["capital"],
+    question:"Quelle est la capitale de l'Irlande ?",
+    answers:["Dublin","Cork","Galway","Limerick"],
+    correct:"Dublin"
+},
+
+{
+    difficulty:1,
+    mode:["capital"],
+    question:"Quelle est la capitale de l'Australie ?",
+    answers:["Canberra","Sydney","Melbourne","Perth"],
+    correct:"Canberra"
+},
+
+{
+    difficulty:1,
+    mode:["capital"],
+    question:"Quelle est la capitale de la Nouvelle-Zélande ?",
+    answers:["Wellington","Auckland","Christchurch","Hamilton"],
+    correct:"Wellington"
+},
+
+/* ---------- PAYS ---------- */
+
+{
+    difficulty:1,
+    mode:["country"],
+    question:"Dans quel pays se trouve Londres ?",
+    answers:["Royaume-Uni","Canada","Australie","Irlande"],
+    correct:"Royaume-Uni"
+},
+
+{
+    difficulty:1,
+    mode:["country"],
+    question:"Dans quel pays se trouve Washington, D.C. ?",
+    answers:["États-Unis","Canada","Royaume-Uni","Mexique"],
+    correct:"États-Unis"
+},
+
+{
+    difficulty:1,
+    mode:["country"],
+    question:"Dans quel pays se trouve Dublin ?",
+    answers:["Irlande","Écosse","Canada","Australie"],
+    correct:"Irlande"
+},
+
+{
+    difficulty:1,
+    mode:["country"],
+    question:"Dans quel pays se trouve Canberra ?",
+    answers:["Australie","Nouvelle-Zélande","Canada","Afrique du Sud"],
+    correct:"Australie"
+},
+
+{
+    difficulty:1,
+    mode:["country"],
+    question:"Quel pays possède la ville de Wellington ?",
+    answers:["Nouvelle-Zélande","Australie","Irlande","Canada"],
+    correct:"Nouvelle-Zélande"
+},
+
+/* ---------- NIVEAU 2 ---------- */
+
+{
+    difficulty:2,
+    mode:["classic","challenge"],
+    question:"Quel pays utilise l'anglais comme langue officielle parmi de nombreuses autres langues ?",
+    answers:["Afrique du Sud","France","Brésil","Japon"],
+    correct:"Afrique du Sud"
+},
+
+{
+    difficulty:2,
+    mode:["classic","challenge"],
+    question:"Dans quel pays l'anglais est-il une langue officielle avec le français ?",
+    answers:["Canada","Espagne","Italie","Allemagne"],
+    correct:"Canada"
+},
+
+{
+    difficulty:2,
+    mode:["classic","challenge"],
+    question:"Quelle ville est la capitale du Ghana ?",
+    answers:["Accra","Lagos","Kumasi","Abuja"],
+    correct:"Accra"
+},
+
+{
+    difficulty:2,
+    mode:["classic","challenge"],
+    question:"Quelle est la capitale du Kenya ?",
+    answers:["Nairobi","Mombasa","Kisumu","Kampala"],
+    correct:"Nairobi"
+},
+
+{
+    difficulty:2,
+    mode:["classic","challenge"],
+    question:"Quelle est la capitale du Nigeria ?",
+    answers:["Abuja","Lagos","Kano","Ibadan"],
+    correct:"Abuja"
+},
+
+{
+    difficulty:2,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale de l'Inde ?",
+    answers:["New Delhi","Mumbai","Kolkata","Bangalore"],
+    correct:"New Delhi"
+},
+
+{
+    difficulty:2,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale des Philippines ?",
+    answers:["Manille","Cebu","Davao","Quezon City"],
+    correct:"Manille"
+},
+
+{
+    difficulty:2,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale de Singapour ?",
+    answers:["Singapour","Kuala Lumpur","Jakarta","Bangkok"],
+    correct:"Singapour"
+},
+
+{
+    difficulty:2,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale de l'Afrique du Sud ?",
+    answers:["Pretoria","Le Cap","Johannesburg","Durban"],
+    correct:"Pretoria"
+},
+
+{
+    difficulty:2,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale du Pakistan ?",
+    answers:["Islamabad","Karachi","Lahore","Peshawar"],
+    correct:"Islamabad"
+},
+
+/* ---------- NIVEAU 3 ---------- */
+
+{
+    difficulty:3,
+    mode:["classic","challenge"],
+    question:"Quel pays possède l'anglais comme l'une de ses langues officielles avec le français et le kiswahili ?",
+    answers:["Kenya","Espagne","Brésil","Chine"],
+    correct:"Kenya"
+},
+
+{
+    difficulty:3,
+    mode:["classic","challenge"],
+    question:"Quel pays d'Afrique a Accra pour capitale ?",
+    answers:["Ghana","Nigeria","Kenya","Ouganda"],
+    correct:"Ghana"
+},
+
+{
+    difficulty:3,
+    mode:["classic","challenge"],
+    question:"Quel pays possède Kampala comme capitale ?",
+    answers:["Ouganda","Kenya","Ghana","Zambie"],
+    correct:"Ouganda"
+},
+
+{
+    difficulty:3,
+    mode:["classic","challenge"],
+    question:"Quel pays possède Lusaka comme capitale ?",
+    answers:["Zambie","Zimbabwe","Botswana","Namibie"],
+    correct:"Zambie"
+},
+
+{
+    difficulty:3,
+    mode:["classic","challenge"],
+    question:"Quel pays possède Harare comme capitale ?",
+    answers:["Zimbabwe","Zambie","Malawi","Namibie"],
+    correct:"Zimbabwe"
+},
+
+{
+    difficulty:3,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale de la Zambie ?",
+    answers:["Lusaka","Harare","Gaborone","Windhoek"],
+    correct:"Lusaka"
+},
+
+{
+    difficulty:3,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale du Zimbabwe ?",
+    answers:["Harare","Lusaka","Maputo","Gaborone"],
+    correct:"Harare"
+},
+
+{
+    difficulty:3,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale de la Namibie ?",
+    answers:["Windhoek","Gaborone","Lusaka","Harare"],
+    correct:"Windhoek"
+},
+
+{
+    difficulty:3,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale du Botswana ?",
+    answers:["Gaborone","Windhoek","Lusaka","Maseru"],
+    correct:"Gaborone"
+},
+
+{
+    difficulty:3,
+    mode:["capital","challenge"],
+    question:"Quelle est la capitale du Rwanda ?",
+    answers:["Kigali","Kampala","Nairobi","Bujumbura"],
+    correct:"Kigali"
+},
+
+{
+    difficulty:3,
+    mode:["country","challenge"],
+    question:"Quel pays possède Kigali comme capitale ?",
+    answers:["Rwanda","Kenya","Ouganda","Ghana"],
+    correct:"Rwanda"
+},
+
+{
+    difficulty:3,
+    mode:["country","challenge"],
+    question:"Quel pays possède Gaborone comme capitale ?",
+    answers:["Botswana","Namibie","Zambie","Zimbabwe"],
+    correct:"Botswana"
+},
+
+{
+    difficulty:3,
+    mode:["country","challenge"],
+    question:"Quel pays possède Windhoek comme capitale ?",
+    answers:["Namibie","Botswana","Zambie","Afrique du Sud"],
+    correct:"Namibie"
+},
+
+{
+    difficulty:3,
+    mode:["country","challenge"],
+    question:"Quel pays possède Lusaka comme capitale ?",
+    answers:["Zambie","Zimbabwe","Malawi","Botswana"],
+    correct:"Zambie"
+},
+
+{
+    difficulty:3,
+    mode:["country","challenge"],
+    question:"Quel pays possède Islamabad comme capitale ?",
+    answers:["Pakistan","Inde","Bangladesh","Népal"],
+    correct:"Pakistan"
+
+}
+
+];
+
+
+/* =========================================================
+   SHUFFLE
+========================================================= */
 
 function shuffle(array){
 
-    const arr=[...array];
+    const arr = [...array];
 
-    for(let i=arr.length-1;i>0;i--){
+    for(
+        let i = arr.length - 1;
+        i > 0;
+        i--
+    ){
 
         const j =
-            Math.floor(Math.random()*(i+1));
+            Math.floor(
+                Math.random() * (i + 1)
+            );
 
-        const temp=arr[i];
+        const temp =
+            arr[i];
 
-        arr[i]=arr[j];
+        arr[i] =
+            arr[j];
 
-        arr[j]=temp;
+        arr[j] =
+            temp;
 
     }
 
@@ -2010,656 +2208,751 @@ function shuffle(array){
 }
 
 
+/* =========================================================
+   DÉMARRER QUIZ
+========================================================= */
+
+document
+    .querySelectorAll(".quiz-mode")
+    .forEach(button=>{
+
+        button.addEventListener(
+            "click",
+            ()=>{
+                startQuiz(
+                    button.dataset.mode
+                );
+            }
+        );
+
+    });
+
+
+function startQuiz(mode){
+
+    currentMode =
+        mode;
+
+    score =
+        0;
+
+    combo =
+        0;
+
+    maxCombo =
+        0;
+
+    correctAnswers =
+        0;
+
+    currentQuestion =
+        0;
+
+    answered =
+        false;
+
+
+    let pool =
+        quizQuestionsBase.filter(q=>
+            q.mode.includes(mode)
+        );
+
+
+    if(pool.length < 10){
+
+        pool =
+            [...quizQuestionsBase];
+
+    }
+
+
+    /*
+       On mélange et on prend EXACTEMENT
+       10 questions maximum.
+    */
+
+    quizQuestions =
+        shuffle(pool)
+            .slice(0,10)
+            .map((question,index)=>({
+
+                ...question,
+
+                answers:
+                    shuffle(
+                        question.answers
+                    ),
+
+                difficulty:
+                    index < 4
+                    ? 1
+                    : index < 7
+                    ? 2
+                    : 3
+
+            }));
+
+
+    document.getElementById(
+        "quizMenu"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "victory"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "quizGame"
+    ).style.display =
+        "block";
+
+
+    updateQuizStats();
+
+    showQuestion();
+
+}
+
+
+/* =========================================================
+   QUESTION
+========================================================= */
+
+function showQuestion(){
+
+    clearInterval(timer);
+
+    answered =
+        false;
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    if(!q){
+
+        finishQuiz();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "questionNumber"
+    ).textContent =
+        currentQuestion + 1;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        (
+            currentQuestion /
+            quizQuestions.length *
+            100
+        ) + "%";
+
+
+    document.getElementById(
+        "difficulty"
+    ).textContent =
+        "NIVEAU " +
+        q.difficulty;
+
+
+    document.getElementById(
+        "question"
+    ).textContent =
+        q.question;
+
+
+    const answers =
+        document.getElementById(
+            "answers"
+        );
+
+
+    answers.innerHTML = "";
+
+
+    q.answers.forEach(answer=>{
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+        button.className =
+            "answer";
+
+        button.textContent =
+            answer;
+
+        button.addEventListener(
+            "click",
+            ()=>{
+                selectAnswer(
+                    answer,
+                    button
+                );
+            }
+        );
+
+        answers.appendChild(
+            button
+        );
+
+    });
+
+
+    document.getElementById(
+        "nextBtn"
+    ).style.display =
+        "none";
+
+
+    timeLeft =
+        currentMode === "challenge"
+        ? (
+            q.difficulty === 1
+            ? 12
+            : q.difficulty === 2
+            ? 9
+            : 7
+        )
+        : (
+            q.difficulty === 1
+            ? 15
+            : q.difficulty === 2
+            ? 12
+            : 9
+        );
+
+
+    updateTimer();
+
+    timer =
+        setInterval(()=>{
+
+            timeLeft--;
+
+            updateTimer();
+
+            if(timeLeft <= 0){
+
+                clearInterval(timer);
+
+                timeOut();
+
+            }
+
+        },1000);
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function updateTimer(){
+
+    document.getElementById(
+        "timerText"
+    ).textContent =
+        timeLeft;
+
+
+    const maxTime =
+        currentMode === "challenge"
+        ? (
+            quizQuestions[currentQuestion]
+                ?.difficulty === 1
+            ? 12
+            : quizQuestions[currentQuestion]
+                ?.difficulty === 2
+            ? 9
+            : 7
+        )
+        : (
+            quizQuestions[currentQuestion]
+                ?.difficulty === 1
+            ? 15
+            : quizQuestions[currentQuestion]
+                ?.difficulty === 2
+            ? 12
+            : 9
+        );
+
+
+    document.getElementById(
+        "timerFill"
+    ).style.width =
+        Math.max(
+            0,
+            timeLeft / maxTime * 100
+        ) + "%";
+
+}
+
+
+/* =========================================================
+   RÉPONSE
+========================================================= */
+
+function selectAnswer(answer,button){
+
+    if(answered){
+        return;
+    }
+
+
+    answered =
+        true;
+
+    clearInterval(timer);
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const allAnswers =
+        document.querySelectorAll(
+            ".answer"
+        );
+
+
+    allAnswers.forEach(btn=>{
+
+        btn.disabled =
+            true;
+
+
+        if(
+            btn.textContent ===
+            q.correct
+        ){
+
+            btn.classList.add(
+                "correct"
+            );
+
+        }
+
+    });
+
+
+    if(answer === q.correct){
+
+        button.classList.add(
+            "correct"
+        );
+
+
+        correctAnswers++;
+
+        combo++;
+
+        maxCombo =
+            Math.max(
+                maxCombo,
+                combo
+            );
+
+
+        const multiplier =
+            getMultiplier();
+
+
+        const base =
+            q.difficulty === 1
+            ? 100
+            : q.difficulty === 2
+            ? 150
+            : 200;
+
+
+        const speedBonus =
+            Math.round(
+                timeLeft * 5
+            );
+
+
+        const gained =
+            Math.round(
+                base *
+                multiplier
+            ) +
+            speedBonus;
+
+
+        score +=
+            gained;
+
+
+        showCombo(
+            combo,
+            gained
+        );
+
+    }
+    else{
+
+        button.classList.add(
+            "wrong"
+        );
+
+        combo =
+            0;
+
+    }
+
+
+    updateQuizStats();
+
+
+    document.getElementById(
+        "nextBtn"
+    ).style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   TEMPS ÉCOULÉ
+========================================================= */
+
+function timeOut(){
+
+    if(answered){
+        return;
+    }
+
+
+    answered =
+        true;
+
+
+    combo =
+        0;
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    document
+        .querySelectorAll(".answer")
+        .forEach(button=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                button.textContent ===
+                q.correct
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+        });
+
+
+    updateQuizStats();
+
+
+    document.getElementById(
+        "nextBtn"
+    ).style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   MULTIPLICATEUR
+========================================================= */
+
 function getMultiplier(){
 
-    if(combo>=8) return 4;
+    if(combo >= 10){
+        return 4;
+    }
 
-    if(combo>=6) return 3;
+    if(combo >= 7){
+        return 3;
+    }
 
-    if(combo>=4) return 2;
+    if(combo >= 4){
+        return 2;
+    }
 
-    if(combo>=2) return 1.5;
+    if(combo >= 2){
+        return 1.5;
+    }
 
     return 1;
 
 }
 
 
-function getLevelData(level){
-
-    if(level===1){
-
-        return {
-            name:"FACILE",
-            icon:"🟢",
-            time:15,
-            base:100,
-            class:"easy"
-        };
-
-    }
-
-    if(level===2){
-
-        return {
-            name:"MOYEN",
-            icon:"🟡",
-            time:12,
-            base:150,
-            class:"medium"
-        };
-
-    }
-
-    return {
-        name:"DIFFICILE",
-        icon:"🔴",
-        time:9,
-        base:200,
-        class:"hard"
-    };
-
-}
-
-
-/* BOUTONS DES MODES */
-
-document
-.querySelectorAll(".mode")
-.forEach(button=>{
-
-    button.addEventListener("click",()=>{
-
-        startQuiz(button.dataset.mode);
-
-    });
-
-});
-
-
-document
-.getElementById("homeQuiz")
-.addEventListener("click",()=>{
-
-    showSection("quiz");
-
-});
-
-
-function startQuiz(mode){
-
-    currentMode=mode;
-
-    clearInterval(timerInterval);
-
-    score=0;
-    combo=0;
-    maxCombo=0;
-    correctAnswers=0;
-    currentQuestion=0;
-    answered=false;
-
-    quizQuestions =
-        shuffle(questionPools[mode]);
-
-    quizQuestions =
-        quizQuestions.slice(0,10);
-
-    document
-        .getElementById("quizStart")
-        .style.display="none";
-
-    document
-        .getElementById("victory")
-        .style.display="none";
-
-    document
-        .getElementById("quizGame")
-        .style.display="block";
-
-    updateQuizStats();
-
-    loadQuestion();
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-function loadQuestion(){
-
-    clearInterval(timerInterval);
-
-    answered=false;
-
-    const question =
-        quizQuestions[currentQuestion];
-
-    const data =
-        getLevelData(question.level);
-
-    maxTime=data.time;
-    timeLeft=maxTime;
-
-    document
-        .getElementById("questionNumber")
-        .textContent=
-        `Question ${currentQuestion+1}/${quizQuestions.length}`;
-
-    document
-        .getElementById("difficultyText")
-        .textContent=
-        data.name;
-
-    const badge =
-        document.getElementById("levelBadge");
-
-    badge.textContent=
-        `${data.icon} ${data.name}`;
-
-    badge.className=
-        `level ${data.class}`;
-
-    document
-        .getElementById("questionText")
-        .textContent=
-        question.q;
-
-    document
-        .getElementById("feedback")
-        .innerHTML="";
-
-    document
-        .getElementById("nextBtn")
-        .style.display="none";
-
-    document
-        .getElementById("progressFill")
-        .style.width=
-        `${(currentQuestion/quizQuestions.length)*100}%`;
-
-    const answers =
-        document.getElementById("answers");
-
-    answers.innerHTML="";
-
-    shuffle(question.options)
-        .forEach(option=>{
-
-            const button =
-                document.createElement("button");
-
-            button.className="answer";
-
-            button.textContent=option;
-
-            button.addEventListener(
-                "click",
-                ()=>answerQuestion(
-                    option,
-                    button
-                )
-            );
-
-            answers.appendChild(button);
-
-        });
-
-    updateTimer();
-
-    timerInterval =
-        setInterval(()=>{
-
-            timeLeft-=0.1;
-
-            if(timeLeft<0){
-                timeLeft=0;
-            }
-
-            updateTimer();
-
-            if(timeLeft<=0){
-
-                clearInterval(timerInterval);
-
-                timeoutQuestion();
-
-            }
-
-        },100);
-
-}
-
-
-function updateTimer(){
-
-    const percentage =
-        (timeLeft/maxTime)*100;
-
-    document
-        .getElementById("timerFill")
-        .style.width=
-        percentage+"%";
-
-    document
-        .getElementById("timerText")
-        .textContent=
-        Math.ceil(timeLeft)+"s";
-
-    const fill =
-        document.getElementById("timerFill");
-
-    const text =
-        document.getElementById("timerText");
-
-    if(percentage<=30){
-
-        fill.style.background="#ff3154";
-        text.style.color="#ff637d";
-
-    }
-
-    else if(percentage<=60){
-
-        fill.style.background="#ffd04d";
-        text.style.color="#ffd04d";
-
-    }
-
-    else{
-
-        fill.style.background="#1683ff";
-        text.style.color="#59baff";
-
-    }
-
-}
-
-
-function answerQuestion(selected,button){
-
-    if(answered) return;
-
-    answered=true;
-
-    clearInterval(timerInterval);
-
-    const question =
-        quizQuestions[currentQuestion];
-
-    const buttons =
-        document.querySelectorAll(".answer");
-
-    buttons.forEach(btn=>{
-
-        btn.disabled=true;
-
-        if(btn.textContent===question.a){
-            btn.classList.add("correct");
-        }
-
-    });
-
-
-    if(selected===question.a){
-
-        button.classList.add("correct");
-
-        correctAnswers++;
-
-        combo++;
-
-        if(combo>maxCombo){
-            maxCombo=combo;
-        }
-
-        const multiplier =
-            getMultiplier();
-
-        const data =
-            getLevelData(question.level);
-
-        const speedBonus =
-            Math.round(
-                (timeLeft/maxTime)*50
-            );
-
-        const points =
-            Math.round(
-                data.base*multiplier
-            )+speedBonus;
-
-        score+=points;
-
-        document
-            .getElementById("feedback")
-            .innerHTML=
-            `✅ Correct ! <span style="color:#50e99b">+${points} points</span>`;
-
-        if(combo>=2){
-            showCombo();
-        }
-
-    }
-
-    else{
-
-        button.classList.add("wrong");
-
-        combo=0;
-
-        document
-            .getElementById("feedback")
-            .innerHTML=
-            `❌ Raté ! La bonne réponse était <strong>${question.a}</strong>`;
-
-    }
-
-    updateQuizStats();
-
-    document
-        .getElementById("nextBtn")
-        .style.display="inline-block";
-
-}
-
-
-function timeoutQuestion(){
-
-    if(answered) return;
-
-    answered=true;
-
-    combo=0;
-
-    const question =
-        quizQuestions[currentQuestion];
-
-    document
-        .querySelectorAll(".answer")
-        .forEach(button=>{
-
-            button.disabled=true;
-
-            if(button.textContent===question.a){
-                button.classList.add("correct");
-            }
-
-        });
-
-    document
-        .getElementById("feedback")
-        .innerHTML=
-        `⏰ Temps écoulé ! La réponse était <strong>${question.a}</strong>`;
-
-    updateQuizStats();
-
-    document
-        .getElementById("nextBtn")
-        .style.display="inline-block";
-
-}
-
-
-document
-.getElementById("nextBtn")
-.addEventListener("click",()=>{
-
-    currentQuestion++;
-
-    if(currentQuestion>=quizQuestions.length){
-
-        finishQuiz();
-
-    }
-    else{
-
-        loadQuestion();
-
-    }
-
-});
-
-
 function updateQuizStats(){
 
-    document
-        .getElementById("scoreStat")
-        .textContent=score;
+    document.getElementById(
+        "score"
+    ).textContent =
+        score;
 
-    document
-        .getElementById("comboStat")
-        .textContent=combo;
 
-    document
-        .getElementById("multiplierStat")
-        .textContent=
-        "x"+getMultiplier();
+    document.getElementById(
+        "combo"
+    ).textContent =
+        combo;
 
-    document
-        .getElementById("bestStat")
-        .textContent=bestScore;
 
-    document
-        .getElementById("homeBest")
-        .textContent=bestScore;
-
-    document
-        .getElementById("startBest")
-        .textContent=bestScore;
+    document.getElementById(
+        "multiplier"
+    ).textContent =
+        "x" +
+        getMultiplier();
 
 }
 
 
-function showCombo(){
+/* =========================================================
+   COMBO POPUP
+========================================================= */
+
+function showCombo(combo,gained){
+
+    if(combo < 2){
+        return;
+    }
+
 
     const popup =
-        document.getElementById("comboPopup");
+        document.getElementById(
+            "comboPopup"
+        );
 
-    popup.textContent=
-        `🔥 COMBO x${combo} • MULTIPLICATEUR x${getMultiplier()}`;
 
-    popup.classList.add("show");
+    popup.textContent =
+        `🔥 COMBO x${combo}  +${gained}`;
+
+
+    popup.classList.add(
+        "show"
+    );
+
 
     setTimeout(()=>{
-
-        popup.classList.remove("show");
-
-    },1200);
+        popup.classList.remove(
+            "show"
+        );
+    },700);
 
 }
 
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+document
+    .getElementById("nextBtn")
+    .addEventListener(
+        "click",
+        ()=>{
+
+            currentQuestion++;
+
+            showQuestion();
+
+        }
+    );
+
+
+/* =========================================================
+   FIN DU QUIZ
+========================================================= */
 
 function finishQuiz(){
 
-    clearInterval(timerInterval);
+    clearInterval(timer);
 
-    document
-        .getElementById("quizGame")
-        .style.display="none";
 
-    document
-        .getElementById("victory")
-        .style.display="block";
+    document.getElementById(
+        "quizGame"
+    ).style.display =
+        "none";
 
-    const total =
-        quizQuestions.length;
 
-    const accuracy =
+    document.getElementById(
+        "victory"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
+        score;
+
+
+    document.getElementById(
+        "finalCorrect"
+    ).textContent =
+        correctAnswers +
+        "/10";
+
+
+    document.getElementById(
+        "finalAccuracy"
+    ).textContent =
         Math.round(
-            correctAnswers/total*100
-        );
+            correctAnswers /
+            10 *
+            100
+        ) + "%";
 
-    let title;
-    let icon;
-    let message;
 
-    if(accuracy>=90){
-
-        icon="🏆";
-        title="MAÎTRE DU MONDE";
-        message="Tu connais vraiment bien les pays anglophones.";
-
-    }
-
-    else if(accuracy>=70){
-
-        icon="🔥";
-        title="EXCELLENT";
-        message="Très bon résultat. Continue comme ça !";
-
-    }
-
-    else if(accuracy>=50){
-
-        icon="🌍";
-        title="BIEN JOUÉ";
-        message="Tu progresses, encore quelques révisions !";
-
-    }
-
-    else{
-
-        icon="📚";
-        title="À RÉVISER";
-        message="Rejoue une partie pour améliorer ton score !";
-
-    }
-
-    document
-        .getElementById("victoryIcon")
-        .textContent=icon;
-
-    document
-        .getElementById("victoryTitle")
-        .textContent=title;
-
-    document
-        .getElementById("finalScore")
-        .textContent=
-        score+" points";
-
-    document
-        .getElementById("victoryMessage")
-        .textContent=
-        message;
-
-    document
-        .getElementById("finalCorrect")
-        .textContent=
-        `${correctAnswers}/${total}`;
-
-    document
-        .getElementById("finalAccuracy")
-        .textContent=
-        accuracy+"%";
-
-    document
-        .getElementById("finalCombo")
-        .textContent=
+    document.getElementById(
+        "finalCombo"
+    ).textContent =
         maxCombo;
 
+
     const record =
-        document.getElementById("newRecord");
+        document.getElementById(
+            "newRecord"
+        );
 
-    if(score>bestScore){
 
-        bestScore=score;
+    if(score > bestScore){
+
+        bestScore =
+            score;
+
 
         localStorage.setItem(
             "worldEnglishBest",
             bestScore
         );
 
-        record.textContent=
-            "🏆 NOUVEAU RECORD !";
+
+        document.getElementById(
+            "bestScore"
+        ).textContent =
+            bestScore;
+
+
+        record.style.display =
+            "block";
 
     }
-
     else{
 
-        record.textContent=
-            `🏆 Record à battre : ${bestScore}`;
+        record.style.display =
+            "none";
 
     }
-
-    updateQuizStats();
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
 
 }
 
 
-/* REJOUER */
+/* =========================================================
+   REJOUER
+========================================================= */
 
 document
-.getElementById("replayBtn")
-.addEventListener("click",()=>{
+    .getElementById("restartQuiz")
+    .addEventListener(
+        "click",
+        ()=>{
+            startQuiz(
+                currentMode
+            );
+        }
+    );
 
-    startQuiz(currentMode);
-
-});
-
-
-/* ACCUEIL */
 
 document
-.getElementById("homeBtn")
-.addEventListener("click",()=>{
+    .getElementById("backQuiz")
+    .addEventListener(
+        "click",
+        ()=>{
 
-    document
-        .getElementById("victory")
-        .style.display="none";
+            document.getElementById(
+                "victory"
+            ).style.display =
+                "none";
 
-    document
-        .getElementById("quizStart")
-        .style.display="block";
+            document.getElementById(
+                "quizGame"
+            ).style.display =
+                "none";
 
-    showSection("home");
+            document.getElementById(
+                "quizMenu"
+            ).style.display =
+                "grid";
 
-});
-
-
-/* =====================================================
-   INITIALISATION
-===================================================== */
-
-document
-.getElementById("homeBest")
-.textContent=bestScore;
-
-document
-.getElementById("startBest")
-.textContent=bestScore;
-
-document
-.getElementById("bestStat")
-.textContent=bestScore;
+        }
+    );
 
 
-/* Redessine la carte si la fenêtre change */
+/* =========================================================
+   RESIZE MAP
+========================================================= */
 
-window.addEventListener("resize",()=>{
+let resizeTimeout;
 
-    if(mapLoaded){
+window.addEventListener(
+    "resize",
+    ()=>{
 
-        mapLoaded=false;
+        clearTimeout(
+            resizeTimeout
+        );
 
-        d3.select("#worldMap")
-            .selectAll("*")
-            .remove();
-
-        drawMap();
+        resizeTimeout =
+            setTimeout(
+                loadMap,
+                200
+            );
 
     }
+);
 
-});
+
+/* =========================================================
+   START
+========================================================= */
+
+(async function(){
+
+    await loadCountries();
+
+    await loadMap();
+
+})();
 
 </script>
 
